@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import React, {Component} from 'react';
+import {Text, View} from 'react-native';
 
 export class Leaderboard extends Component {
   render() {
@@ -7,8 +7,8 @@ export class Leaderboard extends Component {
       <View>
         <Text> Leaderboard </Text>
       </View>
-    )
+    );
   }
 }
 
-export default Leaderboard
+export default Leaderboard;
