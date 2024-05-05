@@ -3,6 +3,7 @@ import React, {PropsWithChildren} from 'react';
 import {
   Dimensions,
   Image,
+  ImageSourcePropType,
   NativeScrollEvent,
   NativeSyntheticEvent,
   SafeAreaView,
@@ -14,6 +15,7 @@ import {
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {wp} from '../utils/ScreenDimension';
 import logo from '../assests/images/Illustration.png';
+import LinearGradient from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('window');
 
@@ -22,22 +24,30 @@ const COLORS = {primary: '#000DFF', white: '#fff'};
 const slides = [
   {
     id: '1',
+    img: require('../assests/images/Illustration.png'),
     title: 'Make Your Habits Consistent.',
+    para: 'Change your life by slowly adding new healty habits and sticking to them.',
   },
   {
     id: '2',
+    img: require('../assests/images/Illustration1.png'),
     title: 'Stake & Bet on Your Habits.',
+    para: 'Everyday you become one step closer to your goal. Don’t give up!',
   },
   {
     id: '3',
+    img: require('../assests/images/Illustration2.png'),
     title: 'Prove Consistency & Earn Tokens.',
+    para: 'Find friends to discuss common topics. Complete challenges together.',
   },
 ];
 
 type slideProps = PropsWithChildren<{
   item: {
     id: string;
+    img: ImageSourcePropType;
     title: string;
+    para: string;
   };
 }>;
 
@@ -58,22 +68,22 @@ const MyComponent = () => {
     setCurrentSlideIndex(currentIndex);
   };
 
-  console.log(navigation);
-
   // eslint-disable-next-line react/no-unstable-nested-components
   function Slide({item}: slideProps) {
     return (
       <View style={styles.slide}>
-        <Image source={logo} style={styles.image} />
+        <Image source={item?.img} style={styles.image} />
         <Text style={styles.title}>{item?.title}</Text>
+        <Text style={styles.para}>{item?.para}</Text>
       </View>
     );
   }
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={COLORS.primary} />
-      <Text style={{color: 'black'}}> textInComponent </Text>
-
+    <LinearGradient
+      colors={['#6B73FF', '#000DFF']}
+      start={{x: 0, y: 0}}
+      end={{x: 0.5, y: 0.5}}
+      style={styles.container}>
       <FlatList
         ref={ref}
         onMomentumScrollEnd={updateCurrentSlideIndex}
@@ -96,17 +106,23 @@ const MyComponent = () => {
           />
         ))}
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('Bottom')}>
-        <Text>Create Bottom</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+      <View style={styles.btnContainer}>
+        <TouchableOpacity
+          activeOpacity={1}
+          disabled={!(currentSlideIndex === slides.length - 1)}
+          style={styles.btn}
+          onPress={() => navigation.navigate('Bottom')}>
+          <Text style={styles.btnText}>Connect with wallet</Text>
+        </TouchableOpacity>
+      </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
     padding: 16,
   },
   slideContainer: {
@@ -116,8 +132,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   slide: {
-    alignItems: 'center',
-    width: wp(100) - 32,
+    // alignItems: 'center',
+    position: 'static',
+    width: wp(100),
   },
   slideIndex: {
     backgroundColor: 'white',
@@ -128,11 +145,18 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: '600',
     marginHorizontal: 20,
-    fontFamily: 'Quicksand-Bold',
+    fontFamily: 'Quicksand-SemiBold',
+  },
+  para: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '300',
+    marginLeft: 20,
+    fontFamily: 'Quicksand',
   },
   image: {
-    height: 207,
-    width: 156,
+    height: 340,
+    width: 340,
     resizeMode: 'contain',
   },
   indicatorContainer: {
@@ -157,14 +181,14 @@ const styles = StyleSheet.create({
     height: 60,
     width: wp(100) - 32,
     borderRadius: 8,
-    backgroundColor: '#2D2D30',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },
   btnText: {
     fontWeight: '400',
     fontSize: 18,
-    color: '#fff',
+    color: '#040415',
     fontFamily: 'Quicksand-Regular',
   },
 });
