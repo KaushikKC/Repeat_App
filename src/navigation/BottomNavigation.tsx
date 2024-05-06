@@ -12,7 +12,6 @@ import Explore from '../screens/Explore';
 import Leaderboard from '../screens/Leaderboard';
 import Profile from '../screens/Profile';
 
-
 type BottomTabNavigatorParamList = {
   Home: StackParamList;
   Explore: undefined;
@@ -202,7 +201,7 @@ const BottomNavigator = () => {
           tabBarLabel: 'Profile',
           tabBarIcon: ({focused}) => (
             <>
-             <Image
+              <Image
                 source={
                   focused
                     ? require('../assests/images/Discovery.png')

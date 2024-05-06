@@ -7,19 +7,18 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {wp} from '../utils/ScreenDimension';
-import logo from '../assests/images/Illustration.png';
 import LinearGradient from 'react-native-linear-gradient';
+import apple from '../assests/images/apple.png';
+import google from '../assests/images/Google.png';
+import facebook from '../assests/images/facebook.png';
 
 const {width, height} = Dimensions.get('window');
-
-const COLORS = {primary: '#000DFF', white: '#fff'};
 
 const slides = [
   {
@@ -51,10 +50,6 @@ type slideProps = PropsWithChildren<{
   };
 }>;
 
-type OnboardingProps = PropsWithChildren<{
-  navigation: any;
-}>;
-
 // create a component
 const MyComponent = () => {
   var navigation = useNavigation();
@@ -72,18 +67,22 @@ const MyComponent = () => {
   function Slide({item}: slideProps) {
     return (
       <View style={styles.slide}>
-        <Image source={item?.img} style={styles.image} />
+        <View style={styles.imageDiv}>
+          <Image source={item?.img} style={styles.image} />
+        </View>
         <Text style={styles.title}>{item?.title}</Text>
         <Text style={styles.para}>{item?.para}</Text>
       </View>
     );
   }
   return (
-    <LinearGradient
-      colors={['#6B73FF', '#000DFF']}
-      start={{x: 0, y: 0}}
-      end={{x: 0.5, y: 0.5}}
-      style={styles.container}>
+    <SafeAreaView>
+      <LinearGradient
+        colors={['#6B73FF', '#000DFF']}
+        start={{x: 0, y: 0}}
+        end={{x: 0.5, y: 0.5}}
+        style={styles.container}
+      />
       <FlatList
         ref={ref}
         onMomentumScrollEnd={updateCurrentSlideIndex}
@@ -94,6 +93,7 @@ const MyComponent = () => {
         pagingEnabled
         renderItem={({item}) => <Slide item={item} />}
       />
+
       {/* Render indicators */}
       <View style={styles.indicatorContainer}>
         {slides.map((_, index) => (
@@ -109,36 +109,54 @@ const MyComponent = () => {
       <View style={styles.btnContainer}>
         <TouchableOpacity
           activeOpacity={1}
-          disabled={!(currentSlideIndex === slides.length - 1)}
           style={styles.btn}
           onPress={() => navigation.navigate('Bottom')}>
           <Text style={styles.btnText}>Connect with wallet</Text>
         </TouchableOpacity>
+        <View style={styles.bottomSocial}>
+          <TouchableOpacity style={styles.btnSocial}>
+            <Image source={apple} style={styles.socialImg} />
+            <Text style={styles.btnText}>Apple</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnSocial}>
+            <Image source={google} style={styles.socialImg} />
+            <Text style={styles.btnText}>Google</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btnSocial}>
+            <Image source={facebook} style={styles.socialImg} />
+            <Text style={styles.btnText}>Facebook</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.terms}>
+          By continuing you agree Terms of Services & Privacy Policy{' '}
+        </Text>
       </View>
-    </LinearGradient>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: COLORS.primary,
+    position: 'absolute',
     padding: 16,
+    bottom: -162,
+    height: height,
+    width: wp(100),
   },
   slideContainer: {
-    height: height * 0.75,
+    height: height * 0.6,
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     marginTop: 20,
   },
   slide: {
-    // alignItems: 'center',
     position: 'static',
     width: wp(100),
   },
   slideIndex: {
     backgroundColor: 'white',
-    width: 45,
+    width: 20,
   },
   title: {
     color: 'white',
@@ -149,10 +167,13 @@ const styles = StyleSheet.create({
   },
   para: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '300',
     marginLeft: 20,
     fontFamily: 'Quicksand',
+  },
+  imageDiv: {
+    alignItems: 'center',
   },
   image: {
     height: 340,
@@ -161,8 +182,7 @@ const styles = StyleSheet.create({
   },
   indicatorContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 16,
+    marginLeft: 20,
   },
   indicator: {
     height: 5,
@@ -175,21 +195,49 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 8,
     alignItems: 'center',
+    marginTop: height - 780,
   },
   btn: {
     flex: 1,
-    height: 60,
+    height: 100,
     width: wp(100) - 32,
     borderRadius: 8,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 10,
   },
   btnText: {
-    fontWeight: '400',
-    fontSize: 18,
+    fontWeight: '600',
+    fontSize: 16,
     color: '#040415',
     fontFamily: 'Quicksand-Regular',
+  },
+  bottomSocial: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    width: wp(100) - 32,
+    height: 40,
+  },
+  btnSocial: {
+    flex: 1,
+    height: 36,
+    width: 100,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  socialImg: {
+    // width: 10,
+    marginRight: 5,
+  },
+  terms: {
+    fontSize: 12,
+    opacity: 50,
+    color: '#AFB4FF',
+    marginTop: 10,
   },
 });
 

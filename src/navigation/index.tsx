@@ -27,4 +27,4 @@ const MyStack = () => {
   );
 };
 
-export default MyStack
+export default MyStack;

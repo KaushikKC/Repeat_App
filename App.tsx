@@ -14,7 +14,7 @@ import MyStack from './src/navigation';
 function App(): React.JSX.Element {
   return (
     // <SafeAreaView style={{backgroundColor:"#fff"}}>
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#F6F9FF'}}>
       <NavigationContainer>
         <MyStack />
       </NavigationContainer>
