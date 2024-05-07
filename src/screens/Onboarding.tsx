@@ -1,9 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {PropsWithChildren} from 'react';
+import React from 'react';
 import {
   Dimensions,
   Image,
-  ImageSourcePropType,
   NativeScrollEvent,
   NativeSyntheticEvent,
   SafeAreaView,
@@ -12,45 +11,14 @@ import {
   View,
 } from 'react-native';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
-import {wp} from '../utils/ScreenDimension';
+import {hp, wp} from '../utils/ScreenDimension';
 import LinearGradient from 'react-native-linear-gradient';
 import apple from '../assests/images/apple.png';
 import google from '../assests/images/Google.png';
 import facebook from '../assests/images/facebook.png';
+import {slides} from '../constants/data';
+import {Slide} from '../components/Slide';
 
-const {width, height} = Dimensions.get('window');
-
-const slides = [
-  {
-    id: '1',
-    img: require('../assests/images/Illustration.png'),
-    title: 'Make Your Habits Consistent.',
-    para: 'Change your life by slowly adding new healty habits and sticking to them.',
-  },
-  {
-    id: '2',
-    img: require('../assests/images/Illustration1.png'),
-    title: 'Stake & Bet on Your Habits.',
-    para: 'Everyday you become one step closer to your goal. Don’t give up!',
-  },
-  {
-    id: '3',
-    img: require('../assests/images/Illustration2.png'),
-    title: 'Prove Consistency & Earn Tokens.',
-    para: 'Find friends to discuss common topics. Complete challenges together.',
-  },
-];
-
-type slideProps = PropsWithChildren<{
-  item: {
-    id: string;
-    img: ImageSourcePropType;
-    title: string;
-    para: string;
-  };
-}>;
-
-// create a component
 const MyComponent = () => {
   var navigation = useNavigation();
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
@@ -59,22 +27,10 @@ const MyComponent = () => {
     e: NativeSyntheticEvent<NativeScrollEvent>,
   ) => {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
-    const currentIndex = Math.round(contentOffsetX / width);
+    const currentIndex = Math.round(contentOffsetX / wp(100));
     setCurrentSlideIndex(currentIndex);
   };
 
-  // eslint-disable-next-line react/no-unstable-nested-components
-  function Slide({item}: slideProps) {
-    return (
-      <View style={styles.slide}>
-        <View style={styles.imageDiv}>
-          <Image source={item?.img} style={styles.image} />
-        </View>
-        <Text style={styles.title}>{item?.title}</Text>
-        <Text style={styles.para}>{item?.para}</Text>
-      </View>
-    );
-  }
   return (
     <SafeAreaView>
       <LinearGradient
@@ -94,7 +50,6 @@ const MyComponent = () => {
         renderItem={({item}) => <Slide item={item} />}
       />
 
-      {/* Render indicators */}
       <View style={styles.indicatorContainer}>
         {slides.map((_, index) => (
           <View
@@ -141,44 +96,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     padding: 16,
     bottom: -162,
-    height: height,
+    height: hp(100),
     width: wp(100),
   },
   slideContainer: {
-    height: height * 0.6,
+    height: hp(100) * 0.6,
     justifyContent: 'center',
-    // alignItems: 'center',
     marginTop: 20,
-  },
-  slide: {
-    position: 'static',
-    width: wp(100),
   },
   slideIndex: {
     backgroundColor: 'white',
     width: 20,
-  },
-  title: {
-    color: 'white',
-    fontSize: 40,
-    fontWeight: '600',
-    marginHorizontal: 20,
-    fontFamily: 'Quicksand-SemiBold',
-  },
-  para: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '300',
-    marginLeft: 20,
-    fontFamily: 'Quicksand',
-  },
-  imageDiv: {
-    alignItems: 'center',
-  },
-  image: {
-    height: 340,
-    width: 340,
-    resizeMode: 'contain',
   },
   indicatorContainer: {
     flexDirection: 'row',
@@ -195,7 +123,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 8,
     alignItems: 'center',
-    marginTop: height - 780,
+    marginTop: hp(100) - 780,
   },
   btn: {
     flex: 1,
@@ -230,7 +158,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   socialImg: {
-    // width: 10,
     marginRight: 5,
   },
   terms: {
@@ -241,5 +168,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//make this component available to the app
 export default MyComponent;
