@@ -2,6 +2,8 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {COLORS} from '../constants/color';
+import {wp} from '../utils/ScreenDimension';
+import ChallengesCard from '../components/ChallegengesCard';
 
 // create a component
 const Home = () => {
@@ -51,19 +53,11 @@ const Home = () => {
             <Text style={styles.SectionTitle}>Challenges</Text>
             <Text style={styles.SectionView}>VIEW ALL</Text>
           </View>
-          <View>
-            <View>
-              <Image source={require('../assests/images/TimeCircle.png')} />
-              <View>
-                <Text>Daily Fit Challenge!</Text>
-                <Text>5 days left</Text>
-              </View>
-              <View>
-                <Image source={require('../assests/images/Avatar.png')} />
-                <Text>4 people joined</Text>
-              </View>
-            </View>
-          </View>
+          <ChallengesCard
+            name="Daily Fit Challenge!"
+            description="5 days left"
+            people="4"
+          />
         </View>
         <View>
           <View style={styles.SectionHeading}>
