@@ -1,8 +1,8 @@
 //import liraries
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {COLORS} from '../constants/color';
-import {wp} from '../utils/ScreenDimension';
+import {View, Text, StyleSheet, Image, Platform} from 'react-native';
+import {COLORS} from '../../constants/color';
+import {wp} from '../../utils/ScreenDimension';
 
 type ChallengesCardProps = {
   name: string;
@@ -17,7 +17,7 @@ const ChallengesCard = ({name, description, people}: ChallengesCardProps) => {
         <View style={styles.NameContainer}>
           <Image
             style={styles.timerLogo}
-            source={require('../assests/images/TimeCircle.png')}
+            source={require('../../assests/images/TimeCircle.png')}
           />
           <View>
             <Text style={styles.Name}>{name}</Text>
@@ -25,11 +25,11 @@ const ChallengesCard = ({name, description, people}: ChallengesCardProps) => {
           </View>
         </View>
         <View style={styles.peopleContainer}>
-          <Image source={require('../assests/images/Avatar.png')} />
+          <Image source={require('../../assests/images/Avatar.png')} />
           <Text style={styles.people}>{people} people joined</Text>
         </View>
       </View>
-      <Image source={require('../assests/images/ProgresBar.png')} />
+      <Image source={require('../../assests/images/ProgresBar.png')} />
     </View>
   );
 };
@@ -44,6 +44,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     marginVertical: 5,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.2,
+        shadowRadius: 3.84,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   InnerContainer: {
     flexDirection: 'row',

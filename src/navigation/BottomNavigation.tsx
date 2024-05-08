@@ -11,6 +11,7 @@ import Home from '../screens/Home';
 import Explore from '../screens/Explore';
 import Leaderboard from '../screens/Leaderboard';
 import Profile from '../screens/Profile';
+import {COLORS} from '../constants/color';
 
 type BottomTabNavigatorParamList = {
   Home: StackParamList;
@@ -35,12 +36,12 @@ const BottomNavigator = () => {
         tabBarStyle: {
           height: 69,
           width: wp(100) - 32,
-          backgroundColor: 'blue',
+          backgroundColor: COLORS.WhiteBG,
           position: 'absolute',
           borderRadius: 16,
           bottom: 24,
           marginHorizontal: 16,
-          borderColor: '#000',
+          borderColor: '#fff',
           borderWidth: 1,
         },
       }}>

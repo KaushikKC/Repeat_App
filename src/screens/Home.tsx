@@ -3,11 +3,12 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {COLORS} from '../constants/color';
 import {wp} from '../utils/ScreenDimension';
-import ChallengesCard from '../components/ChallegengesCard';
+import ChallengesCard from '../components/Home/ChallegengesCard';
+import HabitsCard from '../components/Home/HabitsCard';
 
 // create a component
 const Home = () => {
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState('Today');
   return (
     <View style={styles.container}>
       <View style={styles.headerDiv}>
@@ -64,6 +65,21 @@ const Home = () => {
             <Text style={styles.SectionTitle}>Habits</Text>
             <Text style={styles.SectionView}>VIEW ALL</Text>
           </View>
+          <HabitsCard
+            name="Drink the water"
+            description="500/2000 ML"
+            logo={require('../assests/images/Water.png')}
+          />
+          <HabitsCard
+            name="Walk"
+            description="0/10000 Steps"
+            logo={require('../assests/images/Walking.png')}
+          />
+          <HabitsCard
+            name="Water Plants"
+            description="0/1 Times"
+            logo={require('../assests/images/Plants.png')}
+          />
         </View>
       </View>
     </View>
@@ -131,6 +147,7 @@ const styles = StyleSheet.create({
   SectionHeading: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginVertical: 8,
   },
   SectionTitle: {
     fontSize: 14,
@@ -139,6 +156,5 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
   },
 });
-
 //make this component available to the app
 export default Home;
