@@ -56,8 +56,8 @@ const BottomNavigator = () => {
               <Image
                 source={
                   focused
-                    ? require('../assests/images/Discovery.png')
-                    : require('../assests/images/Discovery.png')
+                    ? require('../assests/images/BottomNavigator/HomeActive.png')
+                    : require('../assests/images/BottomNavigator/Home.png')
                 }
                 style={{
                   width: 20,
@@ -93,8 +93,8 @@ const BottomNavigator = () => {
               <Image
                 source={
                   focused
-                    ? require('../assests/images/Discovery.png')
-                    : require('../assests/images/Discovery.png')
+                    ? require('../assests/images/BottomNavigator/ExploreActive.png')
+                    : require('../assests/images/BottomNavigator/Explore.png')
                 }
                 style={{
                   width: 20,
@@ -119,43 +119,6 @@ const BottomNavigator = () => {
           ),
         }}
       />
-      {/* <Bottom.Screen
-        name="Marketplace"
-        component={Marketplace}
-        options={{
-          tabBarShowLabel: false,
-
-          tabBarLabel: 'Marketplace',
-          tabBarIcon: ({focused}) => (
-            <>
-              <Image
-                source={
-                  focused
-                    ? require('../assets/images/marketplace.png')
-                    : require('../assets/images/marketplace.png')
-                }
-                style={{
-                  width: 20,
-                  height: 20,
-                }}
-              />
-              <Text
-                style={
-                  focused
-                    ? {
-                        borderBottomWidth: 2,
-                        width: 18,
-                        borderBottomColor: '#fff',
-                        marginTop: -12,
-                      }
-                    : {
-                        height: 0,
-                      }
-                }></Text>
-            </>
-          ),
-        }}
-      /> */}
       <Bottom.Screen
         name="LeaderBoard"
         component={Leaderboard}
@@ -167,8 +130,8 @@ const BottomNavigator = () => {
               <Image
                 source={
                   focused
-                    ? require('../assests/images/Discovery.png')
-                    : require('../assests/images/Discovery.png')
+                    ? require('../assests/images/BottomNavigator/LeaderboardActive.png')
+                    : require('../assests/images/BottomNavigator/Leaderboard.png')
                 }
                 style={{
                   width: 20,
@@ -204,8 +167,8 @@ const BottomNavigator = () => {
               <Image
                 source={
                   focused
-                    ? require('../assests/images/Discovery.png')
-                    : require('../assests/images/Discovery.png')
+                    ? require('../assests/images/BottomNavigator/ProfileActive.png')
+                    : require('../assests/images/BottomNavigator/Profile.png')
                 }
                 style={{
                   width: 20,
