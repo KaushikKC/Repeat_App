@@ -1,21 +1,25 @@
 //import liraries
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, ImageSourcePropType} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../../constants/color';
 
+type LearnCardProps = {
+  image: ImageSourcePropType;
+  title: string;
+};
 // create a component
-const LearnCard = () => {
+const LearnCard = ({image, title}: LearnCardProps) => {
   return (
     <View style={styles.container}>
-      <Image source={require('../../assets/images/DrinkingWater.png')} />
+      <Image source={image} />
       <LinearGradient
         colors={['#6B73FF', '#000DFF']}
         start={{x: 0, y: 0}}
         end={{x: 0.5, y: 0.5}}
         style={styles.innerContainer}>
         <Image source={require('../../assets/images/Folder.png')} />
-        <Text style={styles.name}>Why should we drink water often?</Text>
+        <Text style={styles.name}>{title}</Text>
       </LinearGradient>
     </View>
   );

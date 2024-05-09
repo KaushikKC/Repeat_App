@@ -59,3 +59,21 @@ export const Circlesdata = [
   },
   // Add more data for other CircleCards if needed
 ];
+
+export const ChallengeExploredata = [
+  {name: 'Daily Fit Routine! 🏃🏻‍♂️', description: '1 week challenge', people: '2'},
+  {name: 'Weekend Cycling! 🚴🏻‍', description: '2 days challenge', people: '1'},
+  // Add more data for other ChallengesCards if needed
+];
+
+export const LearnCarddata = [
+  {
+    image: require('../assets/images/DrinkingWater.png'),
+    title: 'Why should we drink water often?',
+  },
+  {
+    image: require('../assets/images/WalkingDaily.png'),
+    title: 'Benefits of regular walking',
+  },
+  // Add more data for other LearnCards if needed
+];

@@ -13,7 +13,12 @@ import HabitCard from '../components/Explore/HabitCard';
 import CircleCard from '../components/Explore/CircleCard';
 import ChallengesCard from '../components/Explore/ChallengesCard';
 import LearnCard from '../components/Explore/LearnCard';
-import {Circlesdata, HabbitExploredata} from '../constants/data';
+import {
+  ChallengeExploredata,
+  Circlesdata,
+  HabbitExploredata,
+  LearnCarddata,
+} from '../constants/data';
 
 // create a component
 const Explore = () => {
@@ -67,14 +72,34 @@ const Explore = () => {
             <Text style={styles.SectionTitle}>Challenges</Text>
             <Text style={styles.SectionView}>VIEW ALL</Text>
           </View>
-          <ChallengesCard />
+          <FlatList
+            data={ChallengeExploredata}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => (
+              <ChallengesCard
+                name={item.name}
+                description={item.description}
+                people={item.people}
+              />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
         </View>
         <View>
           <View style={styles.SectionHeading}>
             <Text style={styles.SectionTitle}>Learn</Text>
             <Text style={styles.SectionView}>VIEW ALL</Text>
           </View>
-          <LearnCard />
+          <FlatList
+            data={LearnCarddata}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => (
+              <LearnCard image={item.image} title={item.title} />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
         </View>
         <View style={styles.Container}></View>
       </ScrollView>

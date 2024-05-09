@@ -4,8 +4,13 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../../constants/color';
 
+type ChallengesCardProps = {
+  name: string;
+  description: string;
+  people: string;
+};
 // create a component
-const ChallengesCard = () => {
+const ChallengesCard = ({name, description, people}: ChallengesCardProps) => {
   return (
     <LinearGradient
       colors={['#6B73FF', '#000DFF']}
@@ -14,12 +19,12 @@ const ChallengesCard = () => {
       style={styles.OuterContainer}>
       <View style={styles.Innercontainer}>
         <Image source={require('../../assets/images/TimeCircle.png')} />
-        <Text style={styles.name}>Daily Fit Routine</Text>
-        <Text style={styles.description}>1 week Challenge</Text>
+        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.description}>{description}</Text>
         <Image source={require('../../assets/images/ProgressBar1.png')} />
         <View style={styles.friendsContainer}>
           <Image source={require('../../assets/images/Avatar.png')} />
-          <Text style={styles.friendsText}>2 friends joined</Text>
+          <Text style={styles.friendsText}>{people} friends joined</Text>
         </View>
       </View>
     </LinearGradient>
