@@ -39,6 +39,20 @@ const CreateScreen = () => {
     setIsReminderEnabled(previousState => !previousState);
   };
 
+  const toggleHabitSelection = (habit: never) => {
+    // Check if the habit is already selected
+    const isSelected = selectedHabits.includes(habit);
+    if (isSelected) {
+      // If it's selected, remove it from the selected habits
+      setSelectedHabits(prevHabits =>
+        prevHabits.filter(item => item !== habit),
+      );
+    } else {
+      // If it's not selected, add it to the selected habits
+      setSelectedHabits(prevHabits => [...prevHabits, habit]);
+    }
+  };
+
   const openHabitPopup = () => {
     setHabitPopupVisible(true);
   };
@@ -258,10 +272,28 @@ const CreateScreen = () => {
                           {selectedHabits
                             .slice(index, index + 4)
                             .map((habit, subIndex) => (
-                              <Text key={subIndex} style={styles.habitItem}>
-                                {habit}
-                              </Text>
+                              <TouchableOpacity
+                                key={subIndex}
+                                style={styles.habitItem}
+                                onPress={() => toggleHabitSelection(habit)}>
+                                <Text style={styles.habitItemText}>
+                                  {habit}
+                                </Text>
+                              </TouchableOpacity>
                             ))}
+                          {/* Add empty TouchableOpacity components to fill empty slots */}
+                          {[
+                            ...Array(
+                              4 - selectedHabits.slice(index, index + 4).length,
+                            ),
+                          ].map((_, emptyIndex) => (
+                            <TouchableOpacity
+                              key={emptyIndex}
+                              style={styles.habitItem}>
+                              <Text> </Text>
+                              {/* Ensure a Text component is rendered even for empty slots */}
+                            </TouchableOpacity>
+                          ))}
                         </View>
                       ),
                   )}
@@ -537,12 +569,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   habitItem: {
-    width: '23%', // Adjust this width based on your preference
+    width: '100%', // Adjust this width based on your preference
     marginVertical: 5,
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
+    textAlign: 'center',
+  },
+  habitItemText: {
+    marginVertical: 5,
     textAlign: 'center',
   },
   createButton: {

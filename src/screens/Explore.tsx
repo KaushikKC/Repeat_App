@@ -1,13 +1,6 @@
 //import liraries
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-  FlatList,
-} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
 import {COLORS} from '../constants/color';
 import HabitCard from '../components/Explore/HabitCard';
 import CircleCard from '../components/Explore/CircleCard';
