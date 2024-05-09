@@ -70,10 +70,12 @@ const styles = StyleSheet.create({
   },
   Name: {
     fontSize: 14,
+    fontFamily: 'Quicksand-semiBold',
   },
   description: {
     fontSize: 12,
     color: COLORS.Grey,
+    fontFamily: 'Quicksand-Regular',
   },
   logo: {
     marginRight: 12,

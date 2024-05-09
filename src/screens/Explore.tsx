@@ -1,14 +1,120 @@
-import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+//import liraries
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  FlatList,
+} from 'react-native';
+import {COLORS} from '../constants/color';
+import HabitCard from '../components/Explore/HabitCard';
+import CircleCard from '../components/Explore/CircleCard';
+import ChallengesCard from '../components/Explore/ChallengesCard';
+import LearnCard from '../components/Explore/LearnCard';
+import {Circlesdata, HabbitExploredata} from '../constants/data';
 
-export class Explore extends Component {
-  render() {
-    return (
-      <View>
-        <Text> Explore </Text>
+// create a component
+const Explore = () => {
+  return (
+    <View>
+      <View style={styles.topHeader}>
+        <Text style={styles.headerTitle}>Explore</Text>
       </View>
-    );
-  }
-}
+      <ScrollView style={styles.ExploreContent}>
+        <View>
+          <View style={styles.SectionHeading}>
+            <Text style={styles.SectionTitle}>Suggested for You</Text>
+            <Text style={styles.SectionView}>VIEW ALL</Text>
+          </View>
+          <FlatList
+            data={HabbitExploredata}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => (
+              <HabitCard
+                name={item.name}
+                description={item.description}
+                logo={item.logo}
+                color={item.color}
+              />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+        <View>
+          <View style={styles.SectionHeading}>
+            <Text style={styles.SectionTitle}>Circles</Text>
+            <Text style={styles.SectionView}>VIEW ALL</Text>
+          </View>
+          <FlatList
+            data={Circlesdata}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => (
+              <CircleCard
+                name={item.name}
+                description={item.description}
+                logo={item.logo}
+              />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+        <View>
+          <View style={styles.SectionHeading}>
+            <Text style={styles.SectionTitle}>Challenges</Text>
+            <Text style={styles.SectionView}>VIEW ALL</Text>
+          </View>
+          <ChallengesCard />
+        </View>
+        <View>
+          <View style={styles.SectionHeading}>
+            <Text style={styles.SectionTitle}>Learn</Text>
+            <Text style={styles.SectionView}>VIEW ALL</Text>
+          </View>
+          <LearnCard />
+        </View>
+        <View style={styles.Container}></View>
+      </ScrollView>
+    </View>
+  );
+};
 
+// define your styles
+const styles = StyleSheet.create({
+  Container: {
+    height: 230,
+  },
+  topHeader: {
+    height: 135,
+    backgroundColor: COLORS.WhiteBG,
+    paddingTop: 80,
+    paddingHorizontal: 24,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontFamily: 'Quicksand-SemiBold',
+  },
+  SectionHeading: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 8,
+  },
+  SectionTitle: {
+    fontSize: 14,
+    fontFamily: 'Quicksand-semiBold',
+  },
+  SectionView: {
+    color: COLORS.primary,
+    fontFamily: 'Quicksand-semiBold',
+  },
+  ExploreContent: {
+    paddingHorizontal: 24,
+    marginTop: 12,
+  },
+});
+
+//make this component available to the app
 export default Explore;

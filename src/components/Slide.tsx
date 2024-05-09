@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '300',
     marginLeft: 20,
-    fontFamily: 'Quicksand',
+    fontFamily: 'Quicksand-Regular',
   },
   imageDiv: {
     alignItems: 'center',

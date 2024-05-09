@@ -20,7 +20,7 @@ const Home = () => {
                 Let’s make habits together!
               </Text>
             </View>
-            <Image source={require('../assests/images/Mood.png')} />
+            <Image source={require('../assets/images/Mood.png')} />
           </View>
           <View style={styles.HeaderMenu}>
             <TouchableOpacity
@@ -68,17 +68,17 @@ const Home = () => {
           <HabitsCard
             name="Drink the water"
             description="500/2000 ML"
-            logo={require('../assests/images/Water.png')}
+            logo={require('../assets/images/Water.png')}
           />
           <HabitsCard
             name="Walk"
             description="0/10000 Steps"
-            logo={require('../assests/images/Walking.png')}
+            logo={require('../assets/images/Walking.png')}
           />
           <HabitsCard
             name="Water Plants"
             description="0/1 Times"
-            logo={require('../assests/images/Plants.png')}
+            logo={require('../assets/images/Plants.png')}
           />
         </View>
       </View>
@@ -101,16 +101,16 @@ const styles = StyleSheet.create({
   },
   Headertitle: {
     fontSize: 18,
-    fontWeight: 600,
-    fontFamily: 'Quicksand-Bold',
+    fontFamily: 'Quicksand-semiBold',
   },
   HeaderSubTitle: {
     color: COLORS.Grey,
     fontSize: 14,
+    fontFamily: 'Quicksand-Regular',
   },
   HeaderMenu: {
     height: 36,
-    width: 345,
+    width: wp(100) - 48,
     backgroundColor: COLORS.Gray,
     flexDirection: 'row',
     borderRadius: 10,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   HeaderMenuTitle: {
     height: 28,
-    width: 168.5,
+    width: wp(43),
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   HeaderMenuTitleActive: {
     height: 28,
-    width: 168.5,
+    width: wp(43),
     backgroundColor: COLORS.WhiteBG,
     justifyContent: 'center',
     alignItems: 'center',
@@ -151,10 +151,11 @@ const styles = StyleSheet.create({
   },
   SectionTitle: {
     fontSize: 14,
+    fontFamily: 'Quicksand-semiBold',
   },
   SectionView: {
     color: COLORS.primary,
+    fontFamily: 'Quicksand-semiBold',
   },
 });
-//make this component available to the app
 export default Home;

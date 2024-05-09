@@ -1,7 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
-  Dimensions,
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -13,9 +12,9 @@ import {
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {hp, wp} from '../utils/ScreenDimension';
 import LinearGradient from 'react-native-linear-gradient';
-import apple from '../assests/images/apple.png';
-import google from '../assests/images/Google.png';
-import facebook from '../assests/images/facebook.png';
+import apple from '../assets/images/apple.png';
+import google from '../assets/images/Google.png';
+import facebook from '../assets/images/facebook.png';
 import {slides} from '../constants/data';
 import {Slide} from '../components/Slide';
 
@@ -165,6 +164,7 @@ const styles = StyleSheet.create({
     opacity: 50,
     color: '#AFB4FF',
     marginTop: 10,
+    fontFamily: 'Quicksand-Regular',
   },
 });
 

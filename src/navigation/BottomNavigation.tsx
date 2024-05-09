@@ -12,6 +12,7 @@ import Explore from '../screens/Explore';
 import Leaderboard from '../screens/Leaderboard';
 import Profile from '../screens/Profile';
 import {COLORS} from '../constants/color';
+import CreateScreen from '../screens/CreateScreen';
 
 type BottomTabNavigatorParamList = {
   Home: StackParamList;
@@ -19,6 +20,7 @@ type BottomTabNavigatorParamList = {
   Marketplace: undefined;
   LeaderBoard: undefined;
   Profile: undefined;
+  Create: undefined;
 };
 
 const Bottom = createBottomTabNavigator<BottomTabNavigatorParamList>();
@@ -57,8 +59,8 @@ const BottomNavigator = () => {
               <Image
                 source={
                   focused
-                    ? require('../assests/images/BottomNavigator/HomeActive.png')
-                    : require('../assests/images/BottomNavigator/Home.png')
+                    ? require('../assets/images/BottomNavigator/HomeActive.png')
+                    : require('../assets/images/BottomNavigator/Home.png')
                 }
                 style={{
                   width: 20,
@@ -94,12 +96,50 @@ const BottomNavigator = () => {
               <Image
                 source={
                   focused
-                    ? require('../assests/images/BottomNavigator/ExploreActive.png')
-                    : require('../assests/images/BottomNavigator/Explore.png')
+                    ? require('../assets/images/BottomNavigator/ExploreActive.png')
+                    : require('../assets/images/BottomNavigator/Explore.png')
                 }
                 style={{
                   width: 20,
                   height: 20,
+                }}
+              />
+              <Text
+                style={
+                  focused
+                    ? {
+                        borderBottomWidth: 2,
+                        width: 15,
+                        borderBottomColor: '#fff',
+                        marginTop: -14,
+                      }
+                    : {
+                        height: 0,
+                      }
+                }
+              />
+            </>
+          ),
+        }}
+      />
+      <Bottom.Screen
+        name="Create"
+        component={CreateScreen}
+        options={{
+          tabBarShowLabel: false,
+          tabBarLabel: 'Create',
+
+          tabBarIcon: ({focused}) => (
+            <>
+              <Image
+                source={
+                  focused
+                    ? require('../assets/images/BottomNavigator/Add.png')
+                    : require('../assets/images/BottomNavigator/Add.png')
+                }
+                style={{
+                  width: 50,
+                  height: 50,
                 }}
               />
               <Text
@@ -131,8 +171,8 @@ const BottomNavigator = () => {
               <Image
                 source={
                   focused
-                    ? require('../assests/images/BottomNavigator/LeaderboardActive.png')
-                    : require('../assests/images/BottomNavigator/Leaderboard.png')
+                    ? require('../assets/images/BottomNavigator/LeaderboardActive.png')
+                    : require('../assets/images/BottomNavigator/Leaderboard.png')
                 }
                 style={{
                   width: 20,
@@ -168,8 +208,8 @@ const BottomNavigator = () => {
               <Image
                 source={
                   focused
-                    ? require('../assests/images/BottomNavigator/ProfileActive.png')
-                    : require('../assests/images/BottomNavigator/Profile.png')
+                    ? require('../assets/images/BottomNavigator/ProfileActive.png')
+                    : require('../assets/images/BottomNavigator/Profile.png')
                 }
                 style={{
                   width: 20,

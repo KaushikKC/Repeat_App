@@ -17,7 +17,7 @@ const ChallengesCard = ({name, description, people}: ChallengesCardProps) => {
         <View style={styles.NameContainer}>
           <Image
             style={styles.timerLogo}
-            source={require('../../assests/images/TimeCircle.png')}
+            source={require('../../assets/images/TimeCircle.png')}
           />
           <View>
             <Text style={styles.Name}>{name}</Text>
@@ -25,11 +25,11 @@ const ChallengesCard = ({name, description, people}: ChallengesCardProps) => {
           </View>
         </View>
         <View style={styles.peopleContainer}>
-          <Image source={require('../../assests/images/Avatar.png')} />
+          <Image source={require('../../assets/images/Avatar.png')} />
           <Text style={styles.people}>{people} people joined</Text>
         </View>
       </View>
-      <Image source={require('../../assests/images/ProgresBar.png')} />
+      <Image source={require('../../assets/images/ProgresBar.png')} />
     </View>
   );
 };
@@ -67,14 +67,17 @@ const styles = StyleSheet.create({
   },
   Name: {
     fontSize: 14,
+    fontFamily: 'Quicksand-semiBold',
   },
   description: {
     fontSize: 12,
     color: COLORS.Grey,
+    fontFamily: 'Quicksand-Regular',
   },
   people: {
     fontSize: 12,
     color: COLORS.Grey,
+    fontFamily: 'Quicksand-Regular',
   },
   timerLogo: {
     marginRight: 6,
