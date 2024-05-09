@@ -1,24 +1,55 @@
 //import liraries
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Switch} from 'react-native';
 import {COLORS} from '../constants/color';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {wp} from '../utils/ScreenDimension';
 import EditableInputContainer from '../components/Create/InputContainer';
+import HabitPopup from '../components/Create/HabitPopup';
 
 // create a component
 const CreateScreen = () => {
   const [selected, setSelected] = useState('Habit');
   const [dataselected, setDataSelected] = useState('Mobile');
+  const [validatorSelected, setValidatorSelected] = useState('Enable');
   const [habitName, setHabitName] = useState('');
+  const [icon, setIcon] = useState('🚶‍♂️');
+  const [challengeName, setChallengeName] = useState('');
   const [goalName, setGoalName] = useState('1 times');
   const [goalDescription, setGoalDescription] = useState('or more per day');
   const [targetName, setTargetName] = useState('5,000 steps');
   const [targetDescription, setTargetDescription] = useState('or more per day');
   const [isReminderEnabled, setIsReminderEnabled] = useState(false);
+  const [stakeAmount, setStakeAmount] = useState('');
+  const [selectedCurrency, setSelectedCurrency] = useState('USDC');
+  const [minPeople, setMinPeople] = useState('3');
+  const [maxPeople, setMaxPeople] = useState('10');
+  const [habitPopupVisible, setHabitPopupVisible] = useState(false);
+  const [selectedHabits, setSelectedHabits] = useState([]);
+
+  // Function to open image picker
+
+  const handleSelect = (option: React.SetStateAction<string>) => {
+    setSelectedCurrency(option);
+  };
+
+  const currencies = ['USDC', 'ETH', 'BTC', 'SOL'];
 
   const toggleReminder = () => {
     setIsReminderEnabled(previousState => !previousState);
+  };
+
+  const openHabitPopup = () => {
+    setHabitPopupVisible(true);
+  };
+
+  const closeHabitPopup = () => {
+    setHabitPopupVisible(false);
+  };
+
+  const handleHabitSelect = habit => {
+    setSelectedHabits(prevHabits => [...prevHabits, habit]);
+    setHabitPopupVisible(false);
   };
 
   const handleSave = (label, name, description) => {
@@ -47,7 +78,7 @@ const CreateScreen = () => {
   return (
     <View>
       <View style={styles.topHeader}>
-        <Text style={styles.headerTitle}>Create Habit</Text>
+        <Text style={styles.headerTitle}>Create {selected}</Text>
       </View>
       <ScrollView style={styles.CreateContent}>
         <View>
@@ -86,6 +117,15 @@ const CreateScreen = () => {
                 placeholder="Name"
                 value={habitName}
                 onChangeText={text => setHabitName(text)}
+              />
+            </View>
+            <View>
+              <Text style={styles.inputLabel}>Icon</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Icon"
+                value={icon}
+                onChangeText={text => setIcon(text)}
               />
             </View>
             <View>
@@ -163,11 +203,156 @@ const CreateScreen = () => {
           </>
         ) : (
           <View>
-            <Text>Challenge</Text>
+            <View>
+              <Text style={styles.inputLabel}>Name</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Name"
+                value={challengeName}
+                onChangeText={text => setChallengeName(text)}
+              />
+            </View>
+            <Text style={styles.inputLabel}>Stake Amount</Text>
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter stake amount"
+                keyboardType="numeric"
+                value={stakeAmount}
+                onChangeText={text => setStakeAmount(text)}
+              />
+            </View>
+            <Text style={styles.inputLabel}>Stake Currency</Text>
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter stake Currency"
+                value={selectedCurrency}
+                onChangeText={text => setSelectedCurrency(text)}
+              />
+            </View>
+            <Text style={styles.inputLabel}>Habbits</Text>
+            <View>
+              <View style={styles.habbitinputContainer}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={styles.description}>
+                    Remember to set off time for habits.
+                  </Text>
+                  <Switch
+                    trackColor={{false: '#767577', true: COLORS.Green}}
+                    thumbColor={COLORS.WhiteBG}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleReminder}
+                    value={isReminderEnabled}
+                  />
+                </View>
+                <View style={styles.habitsGridContainer}>
+                  {selectedHabits.map(
+                    (habit, index) =>
+                      index % 4 === 0 && (
+                        <View key={index} style={styles.habitsGridRow}>
+                          {selectedHabits
+                            .slice(index, index + 4)
+                            .map((habit, subIndex) => (
+                              <Text key={subIndex} style={styles.habitItem}>
+                                {habit}
+                              </Text>
+                            ))}
+                        </View>
+                      ),
+                  )}
+                </View>
+                <TouchableOpacity
+                  style={styles.habitsAdd}
+                  onPress={openHabitPopup}>
+                  <Text style={styles.habitAddText}>Add Habit</Text>
+                </TouchableOpacity>
+              </View>
+              <HabitPopup
+                isVisible={habitPopupVisible}
+                onClose={closeHabitPopup}
+                habits={['Exercise', 'Read', 'Meditate', 'Drink water', 'Walk']}
+                onHabitSelect={handleHabitSelect}
+              />
+              <Text style={styles.inputLabel}>Limit</Text>
+              <View>
+                <View style={[styles.inputContainer, {height: 82}]}>
+                  <View>
+                    <Text style={styles.description}>
+                      Should stake to join the challenge
+                    </Text>
+                    <View style={styles.regularBox}>
+                      <View style={styles.limitDiv}>
+                        <View style={styles.limitDiv}>
+                          <Text style={{marginRight: 5}}>Min:</Text>
+                          <TextInput
+                            style={styles.limitinput}
+                            placeholder="Enter Maxmimum peopley"
+                            keyboardType="numeric"
+                            value={minPeople}
+                            onChangeText={text => setMinPeople(text)}
+                          />
+                        </View>
+                        <View style={styles.limitDiv}>
+                          <Text style={{marginRight: 5}}>Max:</Text>
+                          <TextInput
+                            style={styles.limitinput}
+                            placeholder="Enter Maxmimum people"
+                            keyboardType="numeric"
+                            value={maxPeople}
+                            onChangeText={text => setMaxPeople(text)}
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <Text style={styles.inputLabel}>Validator</Text>
+              <View style={styles.HeaderMenu}>
+                <TouchableOpacity
+                  style={
+                    validatorSelected === 'Enable'
+                      ? styles.HeaderMenuTitleActive
+                      : styles.HeaderMenuTitle
+                  }
+                  onPress={() => setValidatorSelected('Enable')}>
+                  <Text
+                    style={
+                      validatorSelected === 'Enable' && {color: COLORS.primary}
+                    }>
+                    Enable
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={
+                    validatorSelected === 'Disable'
+                      ? styles.HeaderMenuTitleActive
+                      : styles.HeaderMenuTitle
+                  }
+                  onPress={() => setValidatorSelected('Disable')}>
+                  <Text
+                    style={
+                      validatorSelected === 'Disable' && {color: COLORS.primary}
+                    }>
+                    Disable
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
         )}
         <View style={styles.Container}></View>
       </ScrollView>
+      <TouchableOpacity style={styles.createButton}>
+        <Text style={styles.createButtonText}>
+          {selected === 'Habit' ? 'Create Habit' : 'Create Challenge'}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -175,7 +360,7 @@ const CreateScreen = () => {
 // define your styles
 const styles = StyleSheet.create({
   Container: {
-    height: 230,
+    height: 300,
   },
   topHeader: {
     height: 135,
@@ -241,8 +426,15 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: wp(100) - 48,
-    height: 68,
-    padding: 16,
+    height: 72,
+    padding: 15,
+    backgroundColor: COLORS.WhiteBG,
+    borderRadius: 10,
+    justifyContent: 'space-between',
+  },
+  habbitinputContainer: {
+    width: wp(100) - 48,
+    padding: 15,
     backgroundColor: COLORS.WhiteBG,
     borderRadius: 10,
     justifyContent: 'space-between',
@@ -268,6 +460,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-Regular',
     color: COLORS.Grey,
     width: 250,
+    marginBottom: 5,
   },
   regularBox: {
     height: 32,
@@ -303,6 +496,66 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   saveButtonText: {
+    color: COLORS.WhiteBG,
+    fontSize: 18,
+    fontFamily: 'Quicksand-Bold',
+  },
+  picker: {
+    height: 40,
+    width: 100, // Adjust width as needed
+  },
+  habitsAdd: {
+    height: 36,
+    backgroundColor: COLORS.WhiteBG,
+    borderRadius: 10,
+    marginVertical: 8,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  habitAddText: {
+    fontSize: 16,
+    fontFamily: 'Quicksand-SemiBold',
+  },
+  limitDiv: {
+    flexDirection: 'row',
+    marginRight: 10,
+  },
+  limitinput: {
+    height: 15,
+    borderColor: 'gray',
+    borderBottomWidth: 1,
+    paddingHorizontal: 10,
+    fontFamily: 'Quicksand-Regular',
+  },
+  habitsGridContainer: {
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+  },
+  habitsGridRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  habitItem: {
+    width: '23%', // Adjust this width based on your preference
+    marginVertical: 5,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    textAlign: 'center',
+  },
+  createButton: {
+    position: 'absolute',
+    bottom: 240, // Adjust as needed to position the button above the bottom navigation
+    left: 24,
+    right: 24,
+    backgroundColor: COLORS.primary,
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  createButtonText: {
     color: COLORS.WhiteBG,
     fontSize: 18,
     fontFamily: 'Quicksand-Bold',
