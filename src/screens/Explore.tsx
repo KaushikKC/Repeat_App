@@ -117,6 +117,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.WhiteBG,
     paddingTop: 80,
     paddingHorizontal: 24,
+    borderBottomWidth: 1,
+    borderColor: COLORS.Gray,
   },
   headerTitle: {
     fontSize: 24,
