@@ -1,8 +1,9 @@
 //import liraries
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../../constants/color';
+import {useNavigation} from '@react-navigation/native';
 
 type ChallengesCardProps = {
   name: string;
@@ -11,23 +12,26 @@ type ChallengesCardProps = {
 };
 // create a component
 const ChallengesCard = ({name, description, people}: ChallengesCardProps) => {
+  var navigation = useNavigation();
   return (
-    <LinearGradient
-      colors={['#6B73FF', '#000DFF']}
-      start={{x: 0, y: 0}}
-      end={{x: 0.5, y: 0.5}}
-      style={styles.OuterContainer}>
-      <View style={styles.Innercontainer}>
-        <Image source={require('../../assets/images/TimeCircle.png')} />
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.description}>{description}</Text>
-        <Image source={require('../../assets/images/ProgressBar1.png')} />
-        <View style={styles.friendsContainer}>
-          <Image source={require('../../assets/images/Avatar.png')} />
-          <Text style={styles.friendsText}>{people} friends joined</Text>
+    <TouchableOpacity onPress={() => navigation.navigate('JoinChallenge')}>
+      <LinearGradient
+        colors={['#6B73FF', '#000DFF']}
+        start={{x: 0, y: 0}}
+        end={{x: 0.5, y: 0.5}}
+        style={styles.OuterContainer}>
+        <View style={styles.Innercontainer}>
+          <Image source={require('../../assets/images/TimeCircle.png')} />
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.description}>{description}</Text>
+          <Image source={require('../../assets/images/ProgressBar1.png')} />
+          <View style={styles.friendsContainer}>
+            <Image source={require('../../assets/images/Avatar.png')} />
+            <Text style={styles.friendsText}>{people} friends joined</Text>
+          </View>
         </View>
-      </View>
-    </LinearGradient>
+      </LinearGradient>
+    </TouchableOpacity>
   );
 };
 
