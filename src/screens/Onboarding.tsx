@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 8,
     alignItems: 'center',
-    marginTop: hp(100) - 780,
+    marginTop: hp(10),
   },
   btn: {
     flex: 1,

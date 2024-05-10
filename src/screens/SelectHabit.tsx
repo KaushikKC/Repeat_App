@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS} from '../constants/color';
-import {hp} from '../utils/ScreenDimension'; // Import wp from utils
+import {hp, wp} from '../utils/ScreenDimension'; // Import wp from utils
 import ChooseContainer from '../components/ChooseContainer';
 import {useNavigation} from '@react-navigation/native';
 
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
   chooseContainer: {},
   headerTitleContainer: {
     marginVertical: 10,
+    width: wp(100) - 48,
   },
   headerTitle2: {
     fontSize: 18,
