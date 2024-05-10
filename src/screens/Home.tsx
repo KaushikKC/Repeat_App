@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {COLORS} from '../constants/color';
-import {wp} from '../utils/ScreenDimension';
+import {hp, wp} from '../utils/ScreenDimension';
 import ChallengesCard from '../components/Home/ChallegengesCard';
 import HabitsCard from '../components/Home/HabitsCard';
 
@@ -48,40 +48,46 @@ const Home = () => {
           </View>
         </View>
       </View>
-      <View style={styles.HomeContent}>
-        <View>
-          <View style={styles.SectionHeading}>
-            <Text style={styles.SectionTitle}>Challenges</Text>
-            <Text style={styles.SectionView}>VIEW ALL</Text>
+      {selected === 'Today' ? (
+        <View style={styles.HomeContent}>
+          <View>
+            <View style={styles.SectionHeading}>
+              <Text style={styles.SectionTitle}>Challenges</Text>
+              <Text style={styles.SectionView}>VIEW ALL</Text>
+            </View>
+            <ChallengesCard
+              name="Daily Fit Challenge!"
+              description="5 days left"
+              people="4"
+            />
           </View>
-          <ChallengesCard
-            name="Daily Fit Challenge!"
-            description="5 days left"
-            people="4"
-          />
-        </View>
-        <View>
-          <View style={styles.SectionHeading}>
-            <Text style={styles.SectionTitle}>Habits</Text>
-            <Text style={styles.SectionView}>VIEW ALL</Text>
+          <View>
+            <View style={styles.SectionHeading}>
+              <Text style={styles.SectionTitle}>Habits</Text>
+              <Text style={styles.SectionView}>VIEW ALL</Text>
+            </View>
+            <HabitsCard
+              name="Drink the water"
+              description="500/2000 ML"
+              logo={require('../assets/images/Water.png')}
+            />
+            <HabitsCard
+              name="Walk"
+              description="0/10000 Steps"
+              logo={require('../assets/images/Walking.png')}
+            />
+            <HabitsCard
+              name="Water Plants"
+              description="0/1 Times"
+              logo={require('../assets/images/Plants.png')}
+            />
           </View>
-          <HabitsCard
-            name="Drink the water"
-            description="500/2000 ML"
-            logo={require('../assets/images/Water.png')}
-          />
-          <HabitsCard
-            name="Walk"
-            description="0/10000 Steps"
-            logo={require('../assets/images/Walking.png')}
-          />
-          <HabitsCard
-            name="Water Plants"
-            description="0/1 Times"
-            logo={require('../assets/images/Plants.png')}
-          />
         </View>
-      </View>
+      ) : (
+        <View style={styles.commingSoonContainer}>
+          <Text>Coming Soon...</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -156,6 +162,11 @@ const styles = StyleSheet.create({
   SectionView: {
     color: COLORS.primary,
     fontFamily: 'Quicksand-semiBold',
+  },
+  commingSoonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: hp(100) - 340,
   },
 });
 export default Home;

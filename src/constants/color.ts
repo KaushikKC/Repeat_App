@@ -6,5 +6,5 @@ export const COLORS = {
   WhiteBG: '#F6F9FF',
   Green: '#3BA935',
   Yellow: '#FFC148',
-  Black: "#000"
+  Black: '#000',
 };

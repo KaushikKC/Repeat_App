@@ -77,3 +77,98 @@ export const LearnCarddata = [
   },
   // Add more data for other LearnCards if needed
 ];
+
+export const Peopledata = [
+  {
+    id: '1',
+    name: 'Sharie Bento',
+    points: '912 Points',
+    image: require('../assets/images/Avatar.png'),
+  },
+  {
+    id: '2',
+    name: 'Micah Dantoni',
+    points: '672 Points',
+    image: require('../assets/images/Avatar.png'),
+  },
+  {
+    id: '3',
+    name: 'Oral Padlo',
+    points: '892 Points',
+    image: require('../assets/images/Avatar.png'),
+  },
+  {
+    id: '4',
+    name: 'Regina Stire',
+    points: '542 Points',
+    image: require('../assets/images/Avatar.png'),
+  },
+  {
+    id: '5',
+    name: 'Regina Stire',
+    points: '542 Points',
+    image: require('../assets/images/Avatar.png'),
+  },
+  {
+    id: '6',
+    name: 'Regina Stire',
+    points: '542 Points',
+    image: require('../assets/images/Avatar.png'),
+  },
+];
+
+export const AchievementData = [
+  {
+    id: '1',
+    name: 'Best Runner NFT',
+    desc: '1 months ago',
+    emoji: '🏃🏻‍♂️',
+    color: '#DDF2FC',
+  },
+  {
+    id: '2',
+    name: 'Best of the month NFT',
+    desc: '2 Days ago',
+    emoji: '🥇',
+    color: '#FFF3DA',
+  },
+];
+
+export const Activitydata = [
+  {
+    id: '1',
+    name: '112 points earned!',
+    desc: 'Today, 12:34 PM',
+    image: require('../assets/images/ArrowUp.png'),
+  },
+  {
+    id: '2',
+    name: '62 points earned!',
+    desc: 'Today, 07:12 AM',
+    image: require('../assets/images/ArrowUp.png'),
+  },
+  {
+    id: '3',
+    name: 'Challenge completed!',
+    desc: 'Yesterday, 14:12 PM',
+    image: require('../assets/images/Medal.png'),
+  },
+  {
+    id: '4',
+    name: 'Weekly winning streak is broken!',
+    desc: '12 Jun, 16:14 PM',
+    image: require('../assets/images/ArrowDown.png'),
+  },
+  {
+    id: '5',
+    name: '96 points earned!',
+    desc: '11 Jun, 17:45 PM',
+    image: require('../assets/images/ArrowUp.png'),
+  },
+  {
+    id: '6',
+    name: '110 points earned!',
+    desc: '10 Jun, 18:32 PM',
+    image: require('../assets/images/ArrowUp.png'),
+  },
+];

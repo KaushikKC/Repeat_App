@@ -1,5 +1,5 @@
 //import liraries
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Switch} from 'react-native';
 import {COLORS} from '../constants/color';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
@@ -28,12 +28,6 @@ const CreateScreen = () => {
   const [selectedHabits, setSelectedHabits] = useState([]);
 
   // Function to open image picker
-
-  const handleSelect = (option: React.SetStateAction<string>) => {
-    setSelectedCurrency(option);
-  };
-
-  const currencies = ['USDC', 'ETH', 'BTC', 'SOL'];
 
   const toggleReminder = () => {
     setIsReminderEnabled(previousState => !previousState);

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS} from '../constants/color';
-import {hp, wp} from '../utils/ScreenDimension'; // Import wp from utils
+import {hp} from '../utils/ScreenDimension'; // Import wp from utils
 import ChooseContainer from '../components/ChooseContainer';
 import {useNavigation} from '@react-navigation/native';
 
