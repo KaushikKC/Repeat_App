@@ -5,4 +5,6 @@ export const COLORS = {
   Gray: '#EAECF0',
   WhiteBG: '#F6F9FF',
   Green: '#3BA935',
+  Yellow: '#FFC148',
+  Black: "#000"
 };

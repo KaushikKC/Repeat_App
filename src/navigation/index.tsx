@@ -27,13 +27,13 @@ const MyStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
+      <Stack.Screen name="ClaimSplit" component={ClaimSplit} />
       <Stack.Screen name="Onboarding" component={Onboarding} />
       <Stack.Screen name="Bottom" component={BottomNavigator} />
       <Stack.Screen name="JoinChallenge" component={JoinChallenge} />
       <Stack.Screen name="CreateAccount" component={CreateAccount} />
       <Stack.Screen name="SelectHabit" component={SelectHabit} />
       <Stack.Screen name="ClaimPoints" component={ClaimPoints} />
-      <Stack.Screen name="ClaimSplit" component={ClaimSplit} />
     </Stack.Navigator>
   );
 };
