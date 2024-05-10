@@ -64,7 +64,7 @@ const MyComponent = () => {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.btn}
-          onPress={() => navigation.navigate('Bottom')}>
+          onPress={() => navigation.navigate('CreateAccount')}>
           <Text style={styles.btnText}>Connect with wallet</Text>
         </TouchableOpacity>
         <View style={styles.bottomSocial}>
