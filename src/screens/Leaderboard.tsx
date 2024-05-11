@@ -1,4 +1,3 @@
-//import liraries
 import React, {useState} from 'react';
 import {
   View,
@@ -7,14 +6,44 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  FlatList,
 } from 'react-native';
 import {COLORS} from '../constants/color';
-import {hp, wp} from '../utils/ScreenDimension';
+import {wp} from '../utils/ScreenDimension';
 import LinearGradient from 'react-native-linear-gradient';
+import PositionCard from '../components/Leaderboard/PositionCard';
+import {leaderboardData} from '../constants/data';
 
-// create a component
 const Leaderboard = () => {
   const [selected, setSelected] = useState('Daily');
+
+  const topThreeData = leaderboardData.slice(0, 3);
+
+  // Extracting the rest of the items
+  const restData = leaderboardData.slice(3);
+
+  const renderPositionSuffix = (position: any) => {
+    switch (position) {
+      case 1:
+        return '1st';
+      case 2:
+        return '2nd';
+      case 3:
+        return '3rd';
+      default:
+        return `${position}th`;
+    }
+  };
+
+  const renderItem = ({item}) => (
+    <PositionCard
+      name={item.name}
+      position={item.position}
+      points={item.points}
+      image={require('../assets/images/Avatar.png')}
+    />
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.topHeader}>
@@ -65,56 +94,36 @@ const Leaderboard = () => {
         />
         <View style={styles.outerContainer}>
           <View style={styles.topthreeContainer}>
-            <View style={styles.secondPlaceContainer}>
-              <Image
-                style={styles.profileImg}
-                source={require('../assets/images/Avatar.png')}
-              />
-              <Text style={styles.name}>Kaushik</Text>
-              <View style={styles.secondPlacePointsContainer}>
-                <Text style={styles.positionText}>2nd</Text>
-                <View style={styles.userPointsContainer}>
-                  <Image source={require('../assets/images/Medal.png')} />
-                  <Text style={styles.userPoints}>1452</Text>
+            {topThreeData.map((item, index) => (
+              <View key={item.id} style={styles[`placeContainer${index + 1}`]}>
+                <Image
+                  style={styles.profileImg}
+                  source={require('../assets/images/Avatar.png')}
+                />
+                <Text style={styles.name}>{item.name}</Text>
+                <View style={styles[`placePointsContainer${index + 1}`]}>
+                  <Text style={styles.positionText}>
+                    {renderPositionSuffix(item.position)}
+                  </Text>
+                  <View style={styles.userPointsContainer}>
+                    <Image source={require('../assets/images/Medal.png')} />
+                    <Text style={styles.userPoints}>{item.points}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View style={styles.firstPlaceContainer}>
-              <Image
-                style={styles.profileImg}
-                source={require('../assets/images/Avatar.png')}
-              />
-              <Text style={styles.name}>Thiru</Text>
-              <View style={styles.firstPlacePointsContainer}>
-                <Text style={styles.positionText}>1st</Text>
-                <View style={styles.userPointsContainer}>
-                  <Image source={require('../assets/images/Medal.png')} />
-                  <Text style={styles.userPoints}>1452</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.thirdPlaceContainer}>
-              <Image
-                style={styles.profileImg}
-                source={require('../assets/images/Avatar.png')}
-              />
-              <Text style={styles.name}>Kaushik</Text>
-              <View style={styles.thirdPlacePointsContainer}>
-                <Text style={styles.positionText}>3rd</Text>
-                <View style={styles.userPointsContainer}>
-                  <Image source={require('../assets/images/Medal.png')} />
-                  <Text style={styles.userPoints}>1452</Text>
-                </View>
-              </View>
-            </View>
+            ))}
           </View>
+          <FlatList
+            data={restData}
+            keyExtractor={item => item.id.toString()}
+            renderItem={renderItem}
+          />
         </View>
       </ScrollView>
     </View>
   );
 };
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -167,7 +176,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute',
     padding: 16,
-    height: hp(100) - 183,
+    height: '100%',
     width: wp(100),
   },
   userPointsContainer: {
@@ -190,11 +199,7 @@ const styles = StyleSheet.create({
   topthreeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-  },
-  secondPlaceContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: 25,
+    marginBottom: 10,
   },
   profileImg: {
     width: 64,
@@ -214,7 +219,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Quicksand-Bold',
   },
-  secondPlacePointsContainer: {
+  placeContainer1: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 25,
+  },
+  placeContainer2: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  placeContainer3: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 35,
+  },
+  placePointsContainer1: {
     backgroundColor: COLORS.WhiteBG,
     flexDirection: 'column',
     paddingVertical: 16,
@@ -224,11 +243,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  firstPlaceContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  firstPlacePointsContainer: {
+  placePointsContainer2: {
     backgroundColor: COLORS.WhiteBG,
     flexDirection: 'column',
     paddingVertical: 16,
@@ -238,12 +253,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  thirdPlaceContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: 35,
-  },
-  thirdPlacePointsContainer: {
+  placePointsContainer3: {
     backgroundColor: COLORS.WhiteBG,
     flexDirection: 'column',
     paddingVertical: 16,
@@ -253,7 +263,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  positionCardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.Gray,
+    paddingVertical: 10,
+  },
+  positionCardName: {
+    fontFamily: 'Quicksand-Regular',
+    fontSize: 16,
+  },
+  positionCardPoints: {
+    fontFamily: 'Quicksand-Bold',
+    fontSize: 16,
+  },
 });
 
-//make this component available to the app
 export default Leaderboard;

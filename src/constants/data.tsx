@@ -172,3 +172,15 @@ export const Activitydata = [
     image: require('../assets/images/ArrowUp.png'),
   },
 ];
+
+export const leaderboardData = [
+  {id: '1', name: 'Kaushik', points: '1452', position: '2'},
+  {id: '2', name: 'Thiru', points: '1452', position: '1'},
+  {id: '3', name: 'Kaushik', points: '1452', position: '3'},
+  {id: '4', name: 'Jennings Stohler', points: '912', position: '4'},
+  {id: '5', name: 'Scotty Tovias', points: '846', position: '5'},
+  {id: '6', name: 'Amelina Aguila', points: '846', position: '6'},
+  {id: '7', name: 'Kally', points: '846', position: '7'},
+  {id: '8', name: 'Layla Schupbach', points: '846', position: '8'},
+  {id: '9', name: 'Scotty Tovias', points: '846', position: '9'},
+];
