@@ -50,7 +50,12 @@ const Profile = () => {
                 : styles.HeaderMenuTitle
             }
             onPress={() => setSelected('Activity')}>
-            <Text style={selected === 'Activity' && {color: COLORS.primary}}>
+            <Text
+              style={
+                selected === 'Activity'
+                  ? {color: COLORS.primary}
+                  : {color: COLORS.Black}
+              }>
               Activity
             </Text>
           </TouchableOpacity>
@@ -61,7 +66,12 @@ const Profile = () => {
                 : styles.HeaderMenuTitle
             }
             onPress={() => setSelected('People')}>
-            <Text style={selected === 'People' && {color: COLORS.primary}}>
+            <Text
+              style={
+                selected === 'People'
+                  ? {color: COLORS.primary}
+                  : {color: COLORS.Black}
+              }>
               People
             </Text>
           </TouchableOpacity>
@@ -73,7 +83,11 @@ const Profile = () => {
             }
             onPress={() => setSelected('Achievements')}>
             <Text
-              style={selected === 'Achievements' && {color: COLORS.primary}}>
+              style={
+                selected === 'Achievements'
+                  ? {color: COLORS.primary}
+                  : {color: COLORS.Black}
+              }>
               Achievements
             </Text>
           </TouchableOpacity>
@@ -153,6 +167,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.Gray,
   },
   headerTitle: {
+    color: COLORS.Black,
     fontSize: 24,
     fontFamily: 'Quicksand-SemiBold',
   },
@@ -170,6 +185,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userName: {
+    color: COLORS.Black,
     fontSize: 18,
     fontFamily: 'Quicksand-SemiBold',
   },
@@ -224,6 +240,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   connectedText: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-SemiBold',
   },

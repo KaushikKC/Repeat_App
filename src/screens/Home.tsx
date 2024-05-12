@@ -30,7 +30,12 @@ const Home = () => {
                   : styles.HeaderMenuTitle
               }
               onPress={() => setSelected('Today')}>
-              <Text style={selected === 'Today' && {color: COLORS.primary}}>
+              <Text
+                style={
+                  selected === 'Today'
+                    ? {color: COLORS.primary}
+                    : {color: COLORS.Black}
+                }>
                 Today
               </Text>
             </TouchableOpacity>
@@ -41,7 +46,12 @@ const Home = () => {
                   : styles.HeaderMenuTitle
               }
               onPress={() => setSelected('Circles')}>
-              <Text style={selected === 'Circles' && {color: COLORS.primary}}>
+              <Text
+                style={
+                  selected === 'Circles'
+                    ? {color: COLORS.primary}
+                    : {color: COLORS.Black}
+                }>
                 Circles
               </Text>
             </TouchableOpacity>
@@ -106,6 +116,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   Headertitle: {
+    color: COLORS.Black,
     fontSize: 18,
     fontFamily: 'Quicksand-semiBold',
   },
@@ -156,6 +167,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   SectionTitle: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-semiBold',
   },

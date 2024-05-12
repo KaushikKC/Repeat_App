@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   para: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: wp(100) * 0.035,
     fontWeight: '300',
     marginLeft: 20,
     fontFamily: 'Quicksand-Regular',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontSize: 40,
+    fontSize: wp(100) * 0.105,
     fontWeight: '600',
     marginHorizontal: 20,
     fontFamily: 'Quicksand-SemiBold',

@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   Name: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-semiBold',
   },

@@ -99,7 +99,12 @@ const CreateScreen = () => {
                   : styles.HeaderMenuTitle
               }
               onPress={() => setSelected('Habit')}>
-              <Text style={selected === 'Habit' && {color: COLORS.primary}}>
+              <Text
+                style={
+                  selected === 'Habit'
+                    ? {color: COLORS.primary}
+                    : {color: COLORS.Black}
+                }>
                 Habit
               </Text>
             </TouchableOpacity>
@@ -110,7 +115,12 @@ const CreateScreen = () => {
                   : styles.HeaderMenuTitle
               }
               onPress={() => setSelected('Challenge')}>
-              <Text style={selected === 'Challenge' && {color: COLORS.primary}}>
+              <Text
+                style={
+                  selected === 'Challenge'
+                    ? {color: COLORS.primary}
+                    : {color: COLORS.Black}
+                }>
                 Challenge
               </Text>
             </TouchableOpacity>
@@ -187,7 +197,9 @@ const CreateScreen = () => {
                   onPress={() => setDataSelected('Mobile')}>
                   <Text
                     style={
-                      dataselected === 'Mobile' && {color: COLORS.primary}
+                      dataselected === 'Mobile'
+                        ? {color: COLORS.primary}
+                        : {color: COLORS.Black}
                     }>
                     Mobile
                   </Text>
@@ -201,7 +213,9 @@ const CreateScreen = () => {
                   onPress={() => setDataSelected('Device')}>
                   <Text
                     style={
-                      dataselected === 'Device' && {color: COLORS.primary}
+                      dataselected === 'Device'
+                        ? {color: COLORS.primary}
+                        : {color: COLORS.Black}
                     }>
                     Device
                   </Text>
@@ -314,7 +328,9 @@ const CreateScreen = () => {
                     <View style={styles.regularBox}>
                       <View style={styles.limitDiv}>
                         <View style={styles.limitDiv}>
-                          <Text style={{marginRight: 5}}>Min:</Text>
+                          <Text style={{marginRight: 5, color: COLORS.Black}}>
+                            Min:
+                          </Text>
                           <TextInput
                             style={styles.limitinput}
                             placeholder="Enter Maxmimum peopley"
@@ -324,7 +340,9 @@ const CreateScreen = () => {
                           />
                         </View>
                         <View style={styles.limitDiv}>
-                          <Text style={{marginRight: 5}}>Max:</Text>
+                          <Text style={{marginRight: 5, color: COLORS.Black}}>
+                            Max:
+                          </Text>
                           <TextInput
                             style={styles.limitinput}
                             placeholder="Enter Maxmimum people"
@@ -349,7 +367,9 @@ const CreateScreen = () => {
                   onPress={() => setValidatorSelected('Enable')}>
                   <Text
                     style={
-                      validatorSelected === 'Enable' && {color: COLORS.primary}
+                      validatorSelected === 'Enable'
+                        ? {color: COLORS.primary}
+                        : {color: COLORS.Black}
                     }>
                     Enable
                   </Text>
@@ -363,7 +383,9 @@ const CreateScreen = () => {
                   onPress={() => setValidatorSelected('Disable')}>
                   <Text
                     style={
-                      validatorSelected === 'Disable' && {color: COLORS.primary}
+                      validatorSelected === 'Disable'
+                        ? {color: COLORS.primary}
+                        : {color: COLORS.Black}
                     }>
                     Disable
                   </Text>
@@ -397,6 +419,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.Gray,
   },
   headerTitle: {
+    color: COLORS.Black,
     fontSize: 24,
     fontFamily: 'Quicksand-SemiBold',
   },
@@ -422,6 +445,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     borderRadius: 10,
     fontFamily: 'Quicksand-Regular',
+    color: COLORS.Black,
   },
   HeaderMenuTitleActive: {
     height: 28,
@@ -439,11 +463,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   inputLabel: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-SemiBold',
     marginVertical: 8,
   },
   input: {
+    color: COLORS.Black,
     height: 40,
     borderColor: 'gray',
     borderBottomWidth: 1,
@@ -481,6 +507,7 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: 'Quicksand-semiBold',
     fontSize: 14,
+    color: COLORS.Black,
   },
   description: {
     fontFamily: 'Quicksand-Regular',
@@ -493,7 +520,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.Gray,
     borderRadius: 10,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   regularItems: {
     flexDirection: 'row',
@@ -502,6 +530,7 @@ const styles = StyleSheet.create({
   regularItemsText: {
     fontFamily: 'Quicksand-Regular',
     marginHorizontal: 4,
+    color: COLORS.Black,
   },
   regularItem: {
     flexDirection: 'row',
@@ -542,6 +571,7 @@ const styles = StyleSheet.create({
   habitAddText: {
     fontSize: 16,
     fontFamily: 'Quicksand-SemiBold',
+    color: COLORS.Black,
   },
   limitDiv: {
     flexDirection: 'row',
@@ -549,10 +579,12 @@ const styles = StyleSheet.create({
   },
   limitinput: {
     height: 15,
+    width: wp(10),
     borderColor: 'gray',
     borderBottomWidth: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     fontFamily: 'Quicksand-Regular',
+    color: COLORS.Black,
   },
   habitsGridContainer: {
     flexDirection: 'column',

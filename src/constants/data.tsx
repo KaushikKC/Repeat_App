@@ -23,19 +23,19 @@ export const HabbitExploredata = [
   {
     name: 'Walk',
     description: '10 km',
-    logo: require('../assets/images/Walking.png'),
+    emoji: '🚶‍♂️',
     color: '#FCDCD3',
   },
   {
     name: 'Sleep',
     description: '8 hr',
-    logo: require('../assets/images/Sleeping.png'),
+    emoji: '😴',
     color: '#D7D9FF',
   },
   {
     name: 'Read',
     description: '20 min',
-    logo: require('../assets/images/Book.png'),
+    emoji: '📕',
     color: '#D5ECE0',
   },
   // Add more data for other HabitCards if needed
@@ -45,17 +45,17 @@ export const Circlesdata = [
   {
     name: 'Coders Owl',
     description: '462 members',
-    logo: require('../assets/images/Coders.png'),
+    emoji: '😻',
   },
   {
     name: 'Gym Stakers',
     description: '+500 members',
-    logo: require('../assets/images/Gym.png'),
+    emoji: '🏋️',
   },
   {
     name: 'Rnners',
     description: '336 members',
-    logo: require('../assets/images/Walking.png'),
+    emoji: '🏃‍♂️',
   },
   // Add more data for other CircleCards if needed
 ];

@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontWeight: '600',
-    fontSize: 16,
+    fontSize: wp(100) * 0.04,
     color: '#040415',
     fontFamily: 'Quicksand-Regular',
   },
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   terms: {
-    fontSize: 12,
+    fontSize: wp(100) * 0.03,
     opacity: 50,
     color: '#AFB4FF',
     marginTop: 10,

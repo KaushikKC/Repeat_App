@@ -163,13 +163,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.Gray,
     borderRadius: 10,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   regularItems: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   regularItemsText: {
+    color: COLORS.Black,
     fontFamily: 'Quicksand-Regular',
     marginHorizontal: 4,
   },

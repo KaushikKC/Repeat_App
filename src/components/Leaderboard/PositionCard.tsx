@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   name: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-SemiBold',
   },

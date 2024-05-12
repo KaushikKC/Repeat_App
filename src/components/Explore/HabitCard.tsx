@@ -5,7 +5,7 @@ import {COLORS} from '../../constants/color';
 
 // create a component
 type HabitsCardProps = {
-  logo: ImageSourcePropType;
+  emoji: string;
   name: string;
   description: string;
   color: string;
@@ -14,7 +14,9 @@ type HabitsCardProps = {
 const HabitCard = (props: HabitsCardProps) => {
   return (
     <View style={[styles.OuterContainer, {backgroundColor: props.color}]}>
-      <Image style={styles.logo} source={props.logo} />
+      <View style={styles.logo}>
+        <Text style={styles.emoji}>{props.emoji}</Text>
+      </View>
       <Text style={styles.name}>{props.name}</Text>
       <Text style={styles.description}>{props.description}</Text>
     </View>
@@ -31,9 +33,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'space-between',
     marginVertical: 5,
-    marginRight: 8,
+    marginHorizontal: 5,
   },
   name: {
+    color: COLORS.Black,
     fontFamily: 'Quicksand-semiBold',
     fontSize: 14,
   },
@@ -48,6 +51,12 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emoji: {
+    fontSize: 20,
   },
 });
 

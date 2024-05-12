@@ -95,15 +95,18 @@ const styles = StyleSheet.create({
     borderColor: COLORS.Gray,
   },
   headerTitle: {
+    color: COLORS.Black,
     fontSize: 24,
     fontFamily: 'Quicksand-SemiBold',
   },
   inputLabel: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-SemiBold',
     marginVertical: 8,
   },
   input: {
+    color: COLORS.Black,
     height: 40,
     borderColor: 'gray',
     borderBottomWidth: 1,
@@ -126,6 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
   name: {
+    color: COLORS.Black,
     fontSize: 16,
     fontFamily: 'Quicksand-SemiBold',
   },

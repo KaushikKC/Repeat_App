@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.Gray,
   },
   headerTitle: {
+    color: COLORS.Black,
     fontSize: 24,
     fontFamily: 'Quicksand-SemiBold',
   },
@@ -89,10 +90,12 @@ const styles = StyleSheet.create({
     width: wp(100) - 48,
   },
   headerTitle2: {
+    color: COLORS.Black,
     fontSize: 18,
     fontFamily: 'Quicksand-SemiBold',
   },
   headerSubTitle: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-Regular',
     marginTop: 5,

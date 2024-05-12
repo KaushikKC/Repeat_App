@@ -57,7 +57,12 @@ const Leaderboard = () => {
                 : styles.HeaderMenuTitle
             }
             onPress={() => setSelected('Daily')}>
-            <Text style={selected === 'Daily' && {color: COLORS.primary}}>
+            <Text
+              style={
+                selected === 'Daily'
+                  ? {color: COLORS.primary}
+                  : {color: COLORS.Black}
+              }>
               Daily
             </Text>
           </TouchableOpacity>
@@ -68,7 +73,12 @@ const Leaderboard = () => {
                 : styles.HeaderMenuTitle
             }
             onPress={() => setSelected('Weekly')}>
-            <Text style={selected === 'Weekly' && {color: COLORS.primary}}>
+            <Text
+              style={
+                selected === 'Weekly'
+                  ? {color: COLORS.primary}
+                  : {color: COLORS.Black}
+              }>
               Weekly
             </Text>
           </TouchableOpacity>
@@ -79,7 +89,12 @@ const Leaderboard = () => {
                 : styles.HeaderMenuTitle
             }
             onPress={() => setSelected('Monthly')}>
-            <Text style={selected === 'Monthly' && {color: COLORS.primary}}>
+            <Text
+              style={
+                selected === 'Monthly'
+                  ? {color: COLORS.primary}
+                  : {color: COLORS.Black}
+              }>
               Monthly
             </Text>
           </TouchableOpacity>
