@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   FlatList,
+  LogBox,
 } from 'react-native';
 import {COLORS} from '../constants/color';
 import {wp} from '../utils/ScreenDimension';
@@ -16,6 +17,9 @@ import {leaderboardData} from '../constants/data';
 
 const Leaderboard = () => {
   const [selected, setSelected] = useState('Daily');
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, []);
 
   const topThreeData = leaderboardData.slice(0, 3);
 

@@ -1,5 +1,5 @@
 //import liraries
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  LogBox,
 } from 'react-native';
 import {COLORS} from '../constants/color';
 import {wp} from '../utils/ScreenDimension';
@@ -19,6 +20,9 @@ import ActivityCard from '../components/Profile/ActivityCard';
 // create a component
 const Profile = () => {
   const [selected, setSelected] = useState('Activity');
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  }, []);
   return (
     <View>
       <View style={styles.topHeader}>
