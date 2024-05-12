@@ -23,7 +23,7 @@ const PositionCard = ({name, position, points, image}: PositionCardProps) => {
     <View style={styles.container}>
       <View style={styles.nameContainer}>
         <View style={styles.positionContainer}>
-          <Text>{position}</Text>
+          <Text style={styles.position}>{position}</Text>
         </View>
         <View>
           <Text style={styles.name}>{name}</Text>

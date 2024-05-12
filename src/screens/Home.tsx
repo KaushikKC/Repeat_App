@@ -95,7 +95,7 @@ const Home = () => {
         </View>
       ) : (
         <View style={styles.commingSoonContainer}>
-          <Text>Coming Soon...</Text>
+          <Text style={styles.commingSoonText}>Coming Soon...</Text>
         </View>
       )}
     </View>
@@ -179,6 +179,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: hp(100) - 340,
+  },
+  commingSoonText: {
+    color: COLORS.Black,
   },
 });
 export default Home;

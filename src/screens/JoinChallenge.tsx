@@ -10,7 +10,7 @@ import HabitsCard from '../components/Home/HabitsCard';
 // create a component
 const JoinChallenge = () => {
   return (
-    <ScrollView>
+    <View>
       <LinearGradient
         colors={['#6B73FF', '#000DFF']}
         start={{x: 0, y: 0}}
@@ -30,7 +30,7 @@ const JoinChallenge = () => {
           <Text style={styles.createButtonText}>Join the Challenge</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.habitContainer}>
+      <ScrollView style={styles.habitContainer}>
         <View>
           <Text style={styles.habitTitle}>Habits</Text>
         </View>
@@ -44,17 +44,22 @@ const JoinChallenge = () => {
           description="0/10000 Steps"
           logo={require('../assets/images/Walking.png')}
         />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 // define your styles
 const styles = StyleSheet.create({
+  Container: {
+    height: hp(100),
+    width: wp(100),
+  },
   container: {
     flex: 1,
     position: 'absolute',
     padding: 16,
+    // bottom: -289,
     height: hp(100),
     width: wp(100),
   },
@@ -75,6 +80,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 24,
     paddingTop: 100,
+    zIndex: 100,
   },
   emoji: {
     fontSize: 44,
