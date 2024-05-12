@@ -29,7 +29,10 @@ const ChallengesCard = ({name, description, people}: ChallengesCardProps) => {
           <Text style={styles.people}>{people} people joined</Text>
         </View>
       </View>
-      <Image source={require('../../assets/images/ProgresBar.png')} />
+      <Image
+        style={styles.progressBar}
+        source={require('../../assets/images/ProgresBar.png')}
+      />
     </View>
   );
 };
@@ -86,6 +89,9 @@ const styles = StyleSheet.create({
   peopleContainer: {
     flexDirection: 'column',
     alignItems: 'flex-end',
+  },
+  progressBar: {
+    width: wp(100) - 80,
   },
 });
 

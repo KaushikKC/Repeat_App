@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 5,
   },
+  position: {
+    color: COLORS.Black,
+  },
   name: {
     color: COLORS.Black,
     fontSize: 14,

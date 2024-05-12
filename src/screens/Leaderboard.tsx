@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.Gray,
   },
   headerTitle: {
+    color: COLORS.Black,
     fontSize: 24,
     fontFamily: 'Quicksand-SemiBold',
   },

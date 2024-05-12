@@ -2,6 +2,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, ImageSourcePropType} from 'react-native';
 import {COLORS} from '../../constants/color';
+import {wp} from '../../utils/ScreenDimension';
 
 // create a component
 
@@ -28,7 +29,7 @@ const ActivityCard = ({name, desc, image}: ActivityCardProps) => {
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    height: 68,
+    // height: 68,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: COLORS.WhiteBG,
@@ -46,6 +47,7 @@ const styles = StyleSheet.create({
     color: COLORS.Black,
     fontFamily: 'Quicksand-SemiBold',
     fontSize: 14,
+    width: wp(100) - 120,
   },
   points: {
     color: COLORS.Black,

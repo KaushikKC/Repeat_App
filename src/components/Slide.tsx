@@ -1,6 +1,6 @@
 import {PropsWithChildren} from 'react';
 import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
-import {wp} from '../utils/ScreenDimension';
+import {hp, wp} from '../utils/ScreenDimension';
 
 type slideProps = PropsWithChildren<{
   item: {
@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    height: 340,
-    width: 340,
+    height: hp(100) * 0.4,
+    width: wp(100) * 0.8,
     resizeMode: 'contain',
   },
   title: {
     color: 'white',
-    fontSize: wp(100) * 0.105,
+    fontSize: wp(100) * 0.102,
     fontWeight: '600',
     marginHorizontal: 20,
     fontFamily: 'Quicksand-SemiBold',

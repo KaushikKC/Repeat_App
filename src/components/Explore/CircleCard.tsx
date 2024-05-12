@@ -9,6 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import {COLORS} from '../../constants/color';
+import {wp} from '../../utils/ScreenDimension';
 
 // create a component
 type CircleCardProps = {
@@ -56,11 +57,12 @@ const styles = StyleSheet.create({
   name: {
     color: COLORS.Black,
     fontFamily: 'Quicksand-semiBold',
-    fontSize: 14,
+    fontSize: wp(100) * 0.035,
   },
   description: {
     fontFamily: 'Quicksand-Regular',
     color: COLORS.Grey,
+    fontSize: wp(100) * 0.03,
   },
   logo: {
     backgroundColor: COLORS.WhiteBG,
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emoji: {
-    fontSize: 20,
+    fontSize: 16,
   },
 });
 

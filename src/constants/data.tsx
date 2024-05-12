@@ -155,7 +155,7 @@ export const Activitydata = [
   },
   {
     id: '4',
-    name: 'Weekly winning streak is broken!',
+    name: 'Weekly winning streak is broken! Weekly winning streak is broken!',
     desc: '12 Jun, 16:14 PM',
     image: require('../assets/images/ArrowDown.png'),
   },
