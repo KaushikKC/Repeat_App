@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontSize: wp(100) * 0.102,
+    fontSize: wp(100) * 0.09,
     fontWeight: '600',
     marginHorizontal: 20,
     fontFamily: 'Quicksand-SemiBold',

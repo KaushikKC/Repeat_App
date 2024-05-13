@@ -91,10 +91,7 @@ const MyComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     position: 'absolute',
-    padding: 16,
-    bottom: -162,
     height: hp(100),
     width: wp(100),
   },
