@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   NativeScrollEvent,
@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
@@ -14,14 +15,23 @@ import {hp, wp} from '../utils/ScreenDimension';
 import LinearGradient from 'react-native-linear-gradient';
 import apple from '../assets/images/apple.png';
 import google from '../assets/images/Google.png';
-import facebook from '../assets/images/facebook.png';
+import facebook from '../assets/images/Facebook.png';
 import {slides} from '../constants/data';
 import {Slide} from '../components/Slide';
+import {COLORS} from '../constants/color';
+import {Ed25519Keypair} from '@mysten/sui.js/keypairs/ed25519';
+import {web3auth} from '../../App';
+import {LOGIN_PROVIDER} from '@web3auth/react-native-sdk';
+import {useAddress} from '../../Context/AddressContext';
 
 const MyComponent = () => {
   var navigation = useNavigation();
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
+  const [email, setEmail] = useState<string>('');
   const ref = React.useRef<FlatList>(null);
+  const {setAddress} = useAddress();
+  const scheme = 'web3authrnbareauth0example'; // Or your desired app redirection scheme
+  const resolvedRedirectUrl = `${scheme}://openlogin`;
   const updateCurrentSlideIndex = (
     e: NativeSyntheticEvent<NativeScrollEvent>,
   ) => {
@@ -29,7 +39,49 @@ const MyComponent = () => {
     const currentIndex = Math.round(contentOffsetX / wp(100));
     setCurrentSlideIndex(currentIndex);
   };
+  useEffect(() => {
+    const init = async () => {
+      await web3auth.init();
+    };
+    init();
+  }, []);
 
+  const login = async () => {
+    try {
+      if (!web3auth.ready) {
+        return;
+      }
+      if (!email) {
+        return;
+      }
+      await web3auth.login({
+        loginProvider: LOGIN_PROVIDER.EMAIL_PASSWORDLESS,
+        redirectUrl: resolvedRedirectUrl,
+        extraLoginOptions: {
+          login_hint: email,
+        },
+      });
+
+      if (web3auth.privKey) {
+        // Create a Uint8Arrray from private key which is in hex format
+        const privateKeyUint8Array = new Uint8Array(
+          web3auth.privKey
+            .match(/.{1,2}/g)!
+            .map((byte: any) => parseInt(byte, 16)),
+        );
+
+        // Create an instance of the Sui local key pair manager
+        const keyPair = Ed25519Keypair.fromSecretKey(privateKeyUint8Array);
+
+        const address = keyPair.toSuiAddress();
+        // console.log('working');
+        setAddress(address);
+        navigation.navigate('Bottom');
+      }
+    } catch (e: any) {
+      console.error(e.message);
+    }
+  };
   return (
     <SafeAreaView>
       <LinearGradient
@@ -61,14 +113,24 @@ const MyComponent = () => {
         ))}
       </View>
       <View style={styles.btnContainer}>
+        {/* <ConnectButton /> */}
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
         <TouchableOpacity
           activeOpacity={1}
           style={styles.btn}
-          onPress={() => navigation.navigate('CreateAccount')}>
-          <Text style={styles.btnText}>Connect with wallet</Text>
+          onPress={() => login()}>
+          <Text style={styles.btnText}>Login</Text>
         </TouchableOpacity>
         <View style={styles.bottomSocial}>
-          <TouchableOpacity style={styles.btnSocial}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Bottom')}
+            style={styles.btnSocial}>
             <Image source={apple} style={styles.socialImg} />
             <Text style={styles.btnText}>Apple</Text>
           </TouchableOpacity>
@@ -119,7 +181,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 8,
     alignItems: 'center',
-    marginTop: hp(10),
+    marginTop: hp(5),
   },
   btn: {
     flex: 1,
@@ -162,6 +224,16 @@ const styles = StyleSheet.create({
     color: '#AFB4FF',
     marginTop: 10,
     fontFamily: 'Quicksand-Regular',
+  },
+  input: {
+    color: COLORS.white,
+    height: 40,
+    borderColor: COLORS.Grey,
+    borderBottomWidth: 2,
+    paddingHorizontal: 10,
+    fontFamily: 'Quicksand-Regular',
+    width: wp(100) - 48,
+    marginBottom: 5,
   },
 });
 

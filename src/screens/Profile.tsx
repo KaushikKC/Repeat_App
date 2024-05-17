@@ -11,18 +11,61 @@ import {
   LogBox,
 } from 'react-native';
 import {COLORS} from '../constants/color';
-import {wp} from '../utils/ScreenDimension';
+import {hp, wp} from '../utils/ScreenDimension';
 import PeopleCard from '../components/Profile/PeopleCard';
 import {AchievementData, Activitydata, Peopledata} from '../constants/data';
 import AchievementCard from '../components/Profile/AchievementCard';
 import ActivityCard from '../components/Profile/ActivityCard';
+import {getFaucetHost, requestSuiFromFaucetV0} from '@mysten/sui.js/faucet';
+import {CoinBalance, SuiClient, getFullnodeUrl} from '@mysten/sui.js/client';
+import {MIST_PER_SUI} from '@mysten/sui.js/utils';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {useAddress} from '../../Context/AddressContext';
 
 // create a component
 const Profile = () => {
+  const [balanceAddress, setBalance] = useState(0);
+  const {address} = useAddress();
   const [selected, setSelected] = useState('Activity');
+  const rpcUrl = getFullnodeUrl('devnet');
+  const suiClient = new SuiClient({url: rpcUrl});
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    getBalances();
   }, []);
+  const getTokens = async () => {
+    try {
+      await requestSuiFromFaucetV0({
+        // connect to Devnet
+        host: getFaucetHost('devnet'),
+        recipient: address,
+      });
+      getBalances();
+    } catch (e: any) {
+      console.error(e.message);
+    }
+  };
+  const getBalances = async () => {
+    const balanceResponse = await suiClient.getBalance({owner: address});
+    const suiBalance = balance(balanceResponse);
+    setBalance(suiBalance);
+  };
+  const balance = (balance: CoinBalance) => {
+    return Number.parseInt(balance.totalBalance) / Number(MIST_PER_SUI);
+  };
+  const copyToClipboard = () => {
+    Clipboard.setString(address);
+  };
+  const acountHumanReadable = () => {
+    if (!address) {
+      return '';
+    }
+
+    const firstChars = address.slice(0, 5);
+    const lastChars = address.slice(address.length - 3, address.length);
+
+    return `${firstChars}...${lastChars}`;
+  };
   return (
     <View>
       <View style={styles.topHeader}>
@@ -37,6 +80,12 @@ const Profile = () => {
           />
           <View>
             <Text style={styles.userName}>Kaushik</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text>{acountHumanReadable()}</Text>
+              <TouchableOpacity onPress={() => copyToClipboard()}>
+                <Text>📄</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.userPointsContainer}>
               <Image
                 style={styles.userBadgeImage}
@@ -44,6 +93,14 @@ const Profile = () => {
               />
               <Text style={styles.userPoints}>1452 Points</Text>
             </View>
+          </View>
+          <View style={styles.profileDetailContainer}>
+            <Text>Balance: {balanceAddress}</Text>
+            <TouchableOpacity
+              onPress={() => getTokens()}
+              style={styles.depositeButton}>
+              <Text style={styles.depositeButtonText}>Deposite</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.HeaderMenu}>
@@ -165,7 +222,7 @@ const styles = StyleSheet.create({
   topHeader: {
     height: 251,
     backgroundColor: COLORS.WhiteBG,
-    paddingTop: 80,
+    paddingTop: 75,
     paddingHorizontal: 24,
     borderBottomWidth: 1,
     borderColor: COLORS.Gray,
@@ -247,6 +304,23 @@ const styles = StyleSheet.create({
     color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-SemiBold',
+  },
+  depositeButton: {
+    marginTop: 5,
+    backgroundColor: COLORS.primary,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  depositeButtonText: {
+    color: COLORS.WhiteBG,
+    fontSize: 14,
+    fontFamily: 'Quicksand-SemiBold',
+  },
+  profileDetailContainer: {
+    flexDirection: 'column',
+    marginLeft: 'auto',
   },
 });
 

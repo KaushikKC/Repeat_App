@@ -11,17 +11,46 @@ import React from 'react';
 import {SafeAreaView} from 'react-native';
 import MyStack from './src/navigation';
 import {COLORS} from './src/constants/color';
+import * as WebBrowser from '@toruslabs/react-native-web-browser';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import Web3Auth, {OPENLOGIN_NETWORK} from '@web3auth/react-native-sdk';
+import {CommonPrivateKeyProvider} from '@web3auth/base-provider';
+import {CHAIN_NAMESPACES} from '@web3auth/base';
+import {AddressProvider} from './Context/AddressContext';
+
+export const chainConfig = {
+  chainNamespace: CHAIN_NAMESPACES.OTHER,
+  chainId: 'fd2adfa8',
+  rpcTarget: 'https://fullnode.devnet.sui.io:443',
+  displayName: 'Sui Devnet',
+  blockExplorerUrl: 'https://suiexplorer.com/?network=devnet',
+  ticker: 'SUI',
+  tickerName: 'Sui',
+  logo: 'https://cryptologos.cc/logos/sui-sui-logo.png?v=029',
+};
+
+const clientId =
+  'BDB5MjOF1tXy7h-4pUgNC-JOgQ33xmP4fbkihjuZAbqRRlDAfmCG9UzKEi2lcua5D1DqXJjMqQXc9ELzPKfea-Q';
+
+export const privateKeyProvider = new CommonPrivateKeyProvider({
+  config: {chainConfig: chainConfig},
+});
+
+export const web3auth = new Web3Auth(WebBrowser, EncryptedStorage, {
+  // Get it from Web3Auth Dashboard
+  clientId,
+  network: OPENLOGIN_NETWORK.SAPPHIRE_DEVNET,
+});
 
 function App(): React.JSX.Element {
   return (
-    // <SafeAreaView style={{backgroundColor:"#fff"}}>
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.WhiteBG}}>
       <NavigationContainer>
-        <MyStack />
+        <AddressProvider>
+          <MyStack />
+        </AddressProvider>
       </NavigationContainer>
     </SafeAreaView>
-    //      <Text>Hello</Text>
-    //  </SafeAreaView>
   );
 }
 
