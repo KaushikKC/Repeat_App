@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   name: {
+    color: COLORS.Black,
     fontFamily: 'Quicksand-semiBold',
     fontSize: 14,
   },

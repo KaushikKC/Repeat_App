@@ -90,7 +90,7 @@ const CreateScreen = () => {
       </View>
       <ScrollView style={styles.CreateContent}>
         <View>
-          <Text>CREATE</Text>
+          <Text style={styles.createTxt}>CREATE</Text>
           <View style={styles.HeaderMenu}>
             <TouchableOpacity
               style={
@@ -132,7 +132,8 @@ const CreateScreen = () => {
               <Text style={styles.inputLabel}>Name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Name"
+                placeholder="Enter the Name"
+                placeholderTextColor={COLORS.Grey}
                 value={habitName}
                 onChangeText={text => setHabitName(text)}
               />
@@ -142,6 +143,7 @@ const CreateScreen = () => {
               <TextInput
                 style={styles.input}
                 placeholder="Icon"
+                placeholderTextColor={COLORS.Grey}
                 value={icon}
                 onChangeText={text => setIcon(text)}
               />
@@ -229,7 +231,8 @@ const CreateScreen = () => {
               <Text style={styles.inputLabel}>Name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Name"
+                placeholder="Enter the Name"
+                placeholderTextColor={COLORS.Grey}
                 value={challengeName}
                 onChangeText={text => setChallengeName(text)}
               />
@@ -239,6 +242,7 @@ const CreateScreen = () => {
               <TextInput
                 style={styles.input}
                 placeholder="Enter stake amount"
+                placeholderTextColor={COLORS.Grey}
                 keyboardType="numeric"
                 value={stakeAmount}
                 onChangeText={text => setStakeAmount(text)}
@@ -334,6 +338,7 @@ const CreateScreen = () => {
                           <TextInput
                             style={styles.limitinput}
                             placeholder="Enter Maxmimum peopley"
+                            placeholderTextColor={COLORS.Grey}
                             keyboardType="numeric"
                             value={minPeople}
                             onChangeText={text => setMinPeople(text)}
@@ -346,6 +351,7 @@ const CreateScreen = () => {
                           <TextInput
                             style={styles.limitinput}
                             placeholder="Enter Maxmimum people"
+                            placeholderTextColor={COLORS.Grey}
                             keyboardType="numeric"
                             value={maxPeople}
                             onChangeText={text => setMaxPeople(text)}
@@ -576,12 +582,12 @@ const styles = StyleSheet.create({
   limitDiv: {
     flexDirection: 'row',
     marginRight: 10,
+    alignItems: 'center',
   },
   limitinput: {
-    height: 15,
+    height: 45,
     width: wp(10),
     borderColor: 'gray',
-    borderBottomWidth: 1,
     paddingHorizontal: 5,
     fontFamily: 'Quicksand-Regular',
     color: COLORS.Black,
@@ -621,6 +627,12 @@ const styles = StyleSheet.create({
     color: COLORS.WhiteBG,
     fontSize: 18,
     fontFamily: 'Quicksand-Bold',
+  },
+  createTxt: {
+    color: COLORS.Black,
+    fontSize: 14,
+    fontFamily: 'Quicksand-SemiBold',
+    marginVertical: 8,
   },
 });
 

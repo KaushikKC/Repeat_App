@@ -81,7 +81,7 @@ const Profile = () => {
           <View>
             <Text style={styles.userName}>Kaushik</Text>
             <View style={{flexDirection: 'row'}}>
-              <Text>{acountHumanReadable()}</Text>
+              <Text style={styles.addressTxt}>{acountHumanReadable()}</Text>
               <TouchableOpacity onPress={() => copyToClipboard()}>
                 <Text>📄</Text>
               </TouchableOpacity>
@@ -95,7 +95,7 @@ const Profile = () => {
             </View>
           </View>
           <View style={styles.profileDetailContainer}>
-            <Text>Balance: {balanceAddress}</Text>
+            <Text style={styles.balanceTxt}>Balance: {balanceAddress}</Text>
             <TouchableOpacity
               onPress={() => getTokens()}
               style={styles.depositeButton}>
@@ -321,6 +321,12 @@ const styles = StyleSheet.create({
   profileDetailContainer: {
     flexDirection: 'column',
     marginLeft: 'auto',
+  },
+  balanceTxt: {
+    color: COLORS.Black,
+  },
+  addressTxt: {
+    color: COLORS.Black,
   },
 });
 
