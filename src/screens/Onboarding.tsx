@@ -15,7 +15,7 @@ import {hp, wp} from '../utils/ScreenDimension';
 import LinearGradient from 'react-native-linear-gradient';
 import apple from '../assets/images/apple.png';
 import google from '../assets/images/Google.png';
-import facebook from '../assets/images/Facebook.png';
+import facebook from '../assets/images/facebook.png';
 import {slides} from '../constants/data';
 import {Slide} from '../components/Slide';
 import {COLORS} from '../constants/color';
