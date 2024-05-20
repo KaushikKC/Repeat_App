@@ -118,6 +118,7 @@ const MyComponent = () => {
         <TextInput
           style={styles.input}
           placeholder="Enter your email"
+          placeholderTextColor={COLORS.Grey}
           keyboardType="email-address"
           value={email}
           onChangeText={text => setEmail(text)}

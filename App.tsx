@@ -7,7 +7,7 @@
 
 import {NavigationContainer} from '@react-navigation/native';
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
 import MyStack from './src/navigation';
 import {COLORS} from './src/constants/color';
@@ -17,6 +17,7 @@ import Web3Auth, {OPENLOGIN_NETWORK} from '@web3auth/react-native-sdk';
 import {CommonPrivateKeyProvider} from '@web3auth/base-provider';
 import {CHAIN_NAMESPACES} from '@web3auth/base';
 import {AddressProvider} from './Context/AddressContext';
+import SplashScreen from 'react-native-splash-screen';
 
 export const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.OTHER,
@@ -43,6 +44,9 @@ export const web3auth = new Web3Auth(WebBrowser, EncryptedStorage, {
 });
 
 function App(): React.JSX.Element {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.WhiteBG}}>
       <NavigationContainer>
