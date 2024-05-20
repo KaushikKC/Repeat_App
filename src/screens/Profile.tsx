@@ -98,8 +98,8 @@ const Profile = () => {
             <Text style={styles.balanceTxt}>Balance: {balanceAddress}</Text>
             <TouchableOpacity
               onPress={() => getTokens()}
-              style={styles.depositeButton}>
-              <Text style={styles.depositeButtonText}>Deposite</Text>
+              style={styles.depositButton}>
+              <Text style={styles.depositButtonText}>Deposit</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Quicksand-SemiBold',
   },
-  depositeButton: {
+  depositButton: {
     marginTop: 5,
     backgroundColor: COLORS.primary,
     paddingVertical: 8,
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
-  depositeButtonText: {
+  depositButtonText: {
     color: COLORS.WhiteBG,
     fontSize: 14,
     fontFamily: 'Quicksand-SemiBold',

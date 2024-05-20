@@ -29,7 +29,7 @@ const MyComponent = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
   const [email, setEmail] = useState<string>('');
   const ref = React.useRef<FlatList>(null);
-  const {setAddress} = useAddress();
+  const {setAddress, setKeypair} = useAddress();
   const scheme = 'web3authrnbareauth0example'; // Or your desired app redirection scheme
   const resolvedRedirectUrl = `${scheme}://openlogin`;
   const updateCurrentSlideIndex = (
@@ -72,6 +72,7 @@ const MyComponent = () => {
 
         // Create an instance of the Sui local key pair manager
         const keyPair = Ed25519Keypair.fromSecretKey(privateKeyUint8Array);
+        setKeypair(keyPair);
 
         const address = keyPair.toSuiAddress();
         // console.log('working');

@@ -19,7 +19,7 @@ export const slides = [
   },
 ];
 
-export const HabbitExploredata = [
+export const HabitExploredata = [
   {
     name: 'Walk',
     description: '10 km',

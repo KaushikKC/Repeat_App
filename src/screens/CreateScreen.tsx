@@ -257,9 +257,9 @@ const CreateScreen = () => {
                 onChangeText={text => setSelectedCurrency(text)}
               />
             </View>
-            <Text style={styles.inputLabel}>Habbits</Text>
+            <Text style={styles.inputLabel}>Habits</Text>
             <View>
-              <View style={styles.habbitinputContainer}>
+              <View style={styles.habitinputContainer}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -490,7 +490,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'space-between',
   },
-  habbitinputContainer: {
+  habitinputContainer: {
     width: wp(100) - 48,
     padding: 15,
     backgroundColor: COLORS.WhiteBG,
