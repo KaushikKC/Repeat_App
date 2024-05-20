@@ -7,7 +7,6 @@ import CreateAccount from '../screens/CreateAccount';
 import SelectHabit from '../screens/SelectHabit';
 import ClaimPoints from '../screens/ClaimPoints';
 import ClaimSplit from '../screens/ClaimSplit';
-import Login from '../screens/Login';
 
 export type StackParamList = {
   Onboarding: undefined;
@@ -36,7 +35,6 @@ const MyStack = () => {
       <Stack.Screen name="SelectHabit" component={SelectHabit} />
       <Stack.Screen name="ClaimPoints" component={ClaimPoints} />
       <Stack.Screen name="ClaimSplit" component={ClaimSplit} />
-      <Stack.Screen name="login" component={Login} />
     </Stack.Navigator>
   );
 };
