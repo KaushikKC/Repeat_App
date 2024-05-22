@@ -74,6 +74,7 @@ const Explore = () => {
                 name={item.name}
                 description={item.description}
                 people={item.people}
+                progress={item.progress}
               />
             )}
             keyExtractor={(item, index) => index.toString()}

@@ -61,8 +61,18 @@ export const Circlesdata = [
 ];
 
 export const ChallengeExploredata = [
-  {name: 'Daily Fit Routine! 🏃🏻‍♂️', description: '1 week challenge', people: '2'},
-  {name: 'Weekend Cycling! 🚴🏻‍', description: '2 days challenge', people: '1'},
+  {
+    name: 'Daily Fit Routine! 🏃🏻‍♂️',
+    description: '1 week challenge',
+    people: '2',
+    progress: 0.6,
+  },
+  {
+    name: 'Weekend Cycling! 🚴🏻‍',
+    description: '2 days challenge',
+    people: '1',
+    progress: 0.2,
+  },
   // Add more data for other ChallengesCards if needed
 ];
 

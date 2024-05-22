@@ -37,6 +37,7 @@ const ChallengesCard = ({
         </View>
       </View>
       <Progress.Bar
+        height={4}
         progress={progress}
         width={wp(100) - 80}
         color={COLORS.primary}
