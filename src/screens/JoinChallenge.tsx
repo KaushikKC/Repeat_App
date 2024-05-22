@@ -5,7 +5,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import {hp, wp} from '../utils/ScreenDimension';
 import {COLORS} from '../constants/color';
-import HabitsCard from '../components/Home/HabitsCard';
+import HabitsCard from '../components/JoinChallenge/HabitCard';
 
 // create a component
 const JoinChallenge = () => {
