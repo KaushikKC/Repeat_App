@@ -20,6 +20,7 @@
 		B06A3391588741D1967980F3 /* Quicksand-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8EA9EC2A145E464AAA04CC6C /* Quicksand-Medium.ttf */; };
 		B5DF53063A374014BD804693 /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE08A6560D4548C1B7C68847 /* Quicksand-Regular.ttf */; };
 		CDCDA3FEB07643D290B4E8A2 /* Quicksand-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC4DBE13968C4BB1B0654481 /* Quicksand-Bold.ttf */; };
+		E121B8E12BFDEF6F00AD9007 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = E121B8E02BFDEF6F00AD9007 /* main.jsbundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		BE08A6560D4548C1B7C68847 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Regular.ttf"; path = "../src/assets/fonts/Quicksand-Regular.ttf"; sourceTree = "<group>"; };
 		DC4DBE13968C4BB1B0654481 /* Quicksand-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Bold.ttf"; path = "../src/assets/fonts/Quicksand-Bold.ttf"; sourceTree = "<group>"; };
 		DE54E82CEB81465A67108305 /* Pods-Habitude-HabitudeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habitude-HabitudeTests.release.xcconfig"; path = "Target Support Files/Pods-Habitude-HabitudeTests/Pods-Habitude-HabitudeTests.release.xcconfig"; sourceTree = "<group>"; };
+		E121B8E02BFDEF6F00AD9007 /* main.jsbundle */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F4DDBBE46283F20905F3C587 /* libPods-Habitude-HabitudeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Habitude-HabitudeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -131,6 +133,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E121B8E02BFDEF6F00AD9007 /* main.jsbundle */,
 				13B07FAE1A68108700A75B9A /* Habitude */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* HabitudeTests */,
@@ -269,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E121B8E12BFDEF6F00AD9007 /* main.jsbundle in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				875AE5457E912EBDDF5783D0 /* PrivacyInfo.xcprivacy in Resources */,
@@ -623,10 +627,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -699,10 +700,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

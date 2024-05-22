@@ -9,7 +9,7 @@ import LearnCard from '../components/Explore/LearnCard';
 import {
   ChallengeExploredata,
   Circlesdata,
-  HabbitExploredata,
+  HabitExploredata,
   LearnCarddata,
 } from '../constants/data';
 
@@ -27,7 +27,7 @@ const Explore = () => {
             <Text style={styles.SectionView}>VIEW ALL</Text>
           </View>
           <FlatList
-            data={HabbitExploredata}
+            data={HabitExploredata}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (

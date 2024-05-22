@@ -1,29 +1,33 @@
 //import liraries
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ImageSourcePropType,
-  Platform,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {COLORS} from '../../constants/color';
 import {wp} from '../../utils/ScreenDimension';
+import * as Progress from 'react-native-progress';
 
 type HabitsCardProps = {
-  logo: ImageSourcePropType;
+  emoji: string;
   name: string;
   description: string;
+  progress: number;
 };
 // create a component
-const HabitsCard = ({logo, name, description}: HabitsCardProps) => {
+const HabitsCard = ({emoji, name, description, progress}: HabitsCardProps) => {
   return (
     <View style={styles.OuterContainer}>
       <View style={styles.InnerContainer}>
         <View style={styles.NameContainer}>
-          <Image style={styles.logo} source={logo} />
+          <Progress.Circle
+            size={32}
+            progress={progress}
+            indeterminate={false}
+            color={COLORS.primary}
+            thickness={2}
+          />
+          <View style={styles.logo}>
+            <Text>{emoji}</Text>
+          </View>
+
           <View>
             <Text style={styles.Name}>{name}</Text>
             <Text style={styles.description}>{description}</Text>
@@ -79,7 +83,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-Regular',
   },
   logo: {
-    marginRight: 12,
+    //
+    position: 'relative',
+    right: 25,
   },
   plus: {
     paddingVertical: 4,

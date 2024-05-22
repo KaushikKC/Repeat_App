@@ -69,6 +69,7 @@ const Home = () => {
               name="Daily Fit Challenge!"
               description="5 days left"
               people="4"
+              progress={0.8}
             />
           </View>
           <View>
@@ -79,17 +80,20 @@ const Home = () => {
             <HabitsCard
               name="Drink the water"
               description="500/2000 ML"
-              logo={require('../assets/images/Water.png')}
+              emoji="🚶‍♂️"
+              progress={0.4}
             />
             <HabitsCard
               name="Walk"
               description="0/10000 Steps"
-              logo={require('../assets/images/Walking.png')}
+              emoji="💧"
+              progress={0.2}
             />
             <HabitsCard
               name="Water Plants"
               description="0/1 Times"
-              logo={require('../assets/images/Plants.png')}
+              emoji="🌿"
+              progress={0.8}
             />
           </View>
         </View>

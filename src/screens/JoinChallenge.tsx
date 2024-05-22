@@ -37,12 +37,14 @@ const JoinChallenge = () => {
         <HabitsCard
           name="Drink the water"
           description="500/2000 ML"
-          logo={require('../assets/images/Water.png')}
+          emoji="💧"
+          progress={0.2}
         />
         <HabitsCard
           name="Walk"
           description="0/10000 Steps"
-          logo={require('../assets/images/Walking.png')}
+          emoji="🏃‍♂️"
+          progress={0.8}
         />
       </ScrollView>
     </View>
