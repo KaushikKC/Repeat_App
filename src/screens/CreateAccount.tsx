@@ -6,11 +6,17 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Platform,
+  Image,
 } from 'react-native';
 import {COLORS} from '../constants/color';
 import {hp, wp} from '../utils/ScreenDimension';
 import ChooseContainer from '../components/ChooseContainer';
 import {useNavigation} from '@react-navigation/native';
+import ImagePicker from 'react-native-image-crop-picker';
+import {ScrollView} from 'react-native-gesture-handler';
+
+const dummyProfilePic = require('../assets/images/profile.webp');
 
 // create a component
 const CreateAccount = () => {
@@ -18,13 +24,41 @@ const CreateAccount = () => {
   const [age, setAge] = useState('');
   const [email, setEmail] = useState('');
   const [selectedGender, setSelectedGender] = useState('Male');
+  const [selectedImage, setSelectedImage] = useState(dummyProfilePic);
   var navigation = useNavigation();
+  const uploadImg = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true,
+      cropperCircleOverlay: true,
+      avoidEmptySpaceAroundImage: true,
+      freeStyleCropEnabled: true,
+      compressImageMaxHeight: 300,
+      compressImageMaxWidth: 400,
+      compressImageQuality: 0.5,
+      mediaType: 'photo',
+    }).then(image => {
+      setSelectedImage({uri: image.path});
+    });
+  };
   return (
-    <View style={styles.outerContainer}>
+    <ScrollView style={styles.outerContainer}>
       <View style={styles.topHeader}>
         <Text style={styles.headerTitle}>Create Account</Text>
       </View>
       <View style={styles.accountContent}>
+        {selectedImage && ( // Render the image preview if an image is selected
+          <Image
+            source={selectedImage}
+            style={styles.imagePreview}
+            resizeMode="cover"
+          />
+        )}
+        <TouchableOpacity onPress={() => uploadImg()}>
+          <Text style={styles.inputImgLabel}>Upload Profile</Text>
+        </TouchableOpacity>
         <View>
           <Text style={styles.inputLabel}>Name</Text>
           <TextInput
@@ -77,7 +111,7 @@ const CreateAccount = () => {
         style={styles.createButton}>
         <Text style={styles.createButtonText}>Create Account</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -115,6 +149,7 @@ const styles = StyleSheet.create({
   },
   accountContent: {
     padding: 24,
+    marginBottom: 30,
   },
   chooseContainer: {
     height: 134,
@@ -135,7 +170,7 @@ const styles = StyleSheet.create({
   },
   createButton: {
     position: 'absolute',
-    bottom: 100, // Adjust as needed to position the button above the bottom navigation
+    bottom: 0, // Adjust as needed to position the button above the bottom navigation
     left: 24,
     right: 24,
     backgroundColor: COLORS.primary,
@@ -147,6 +182,18 @@ const styles = StyleSheet.create({
     color: COLORS.WhiteBG,
     fontSize: 18,
     fontFamily: 'Quicksand-SemiBold',
+  },
+  imagePreview: {
+    width: 50,
+    height: 50,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  inputImgLabel: {
+    color: COLORS.primary,
+    fontSize: 14,
+    fontFamily: 'Quicksand-Bold',
+    marginBottom: 10,
   },
 });
 

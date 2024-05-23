@@ -131,7 +131,7 @@ const MyComponent = () => {
         </TouchableOpacity>
         <View style={styles.bottomSocial}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Bottom')}
+            onPress={() => navigation.navigate('CreateAccount')}
             style={styles.btnSocial}>
             <Image source={apple} style={styles.socialImg} />
             <Text style={styles.btnText}>Apple</Text>
