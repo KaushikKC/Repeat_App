@@ -18,13 +18,14 @@ import {CommonPrivateKeyProvider} from '@web3auth/base-provider';
 import {CHAIN_NAMESPACES} from '@web3auth/base';
 import {AddressProvider} from './Context/AddressContext';
 import SplashScreen from 'react-native-splash-screen';
+import {HabitudeProvider} from './Context/HabbitudeContext';
 
 export const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.OTHER,
-  chainId: 'fd2adfa8',
-  rpcTarget: 'https://fullnode.devnet.sui.io:443',
-  displayName: 'Sui Devnet',
-  blockExplorerUrl: 'https://suiexplorer.com/?network=devnet',
+  chainId: '103',
+  rpcTarget: 'https://fullnode.testnet.sui.io:443',
+  displayName: 'Sui Testnet',
+  blockExplorerUrl: 'https://suiexplorer.com/?network=testnet',
   ticker: 'SUI',
   tickerName: 'Sui',
   logo: 'https://cryptologos.cc/logos/sui-sui-logo.png?v=029',
@@ -51,7 +52,9 @@ function App(): React.JSX.Element {
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.WhiteBG}}>
       <NavigationContainer>
         <AddressProvider>
-          <MyStack />
+          <HabitudeProvider>
+            <MyStack />
+          </HabitudeProvider>
         </AddressProvider>
       </NavigationContainer>
     </SafeAreaView>

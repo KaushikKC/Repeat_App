@@ -23,7 +23,12 @@ import {Ed25519Keypair} from '@mysten/sui.js/keypairs/ed25519';
 import {web3auth} from '../../App';
 import {LOGIN_PROVIDER} from '@web3auth/react-native-sdk';
 import {useAddress} from '../../Context/AddressContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+type storageProp = {
+  address: string;
+  privateKey: string;
+};
 const MyComponent = () => {
   var navigation = useNavigation();
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
@@ -45,6 +50,30 @@ const MyComponent = () => {
     };
     init();
   }, []);
+
+  const storeCredentials = async (address: string, privateKey: string) => {
+    try {
+      await AsyncStorage.setItem('userAddress', address);
+      await AsyncStorage.setItem('userPrivateKey', privateKey);
+    } catch (error) {
+      console.error('Error storing credentials:', error);
+    }
+  };
+
+  // Function to retrieve user authentication credentials
+  const retrieveCredentials = async (): Promise<{
+    address: string | null;
+    privateKey: string | null;
+  }> => {
+    try {
+      const address = await AsyncStorage.getItem('userAddress');
+      const privateKey = await AsyncStorage.getItem('userPrivateKey');
+      return {address, privateKey};
+    } catch (error) {
+      console.error('Error retrieving credentials:', error);
+      return {address: null, privateKey: null};
+    }
+  };
 
   const login = async () => {
     try {
@@ -75,6 +104,7 @@ const MyComponent = () => {
         setKeypair(keyPair);
 
         const address = keyPair.toSuiAddress();
+        await storeCredentials(address, web3auth.privKey);
         // console.log('working');
         setAddress(address);
         navigation.navigate('Bottom');
@@ -83,6 +113,34 @@ const MyComponent = () => {
       console.error(e.message);
     }
   };
+
+  const checkLoginStatus = async () => {
+    try {
+      const credentials = await retrieveCredentials();
+      if (credentials.address && credentials.privateKey) {
+        const privateKeyUint8Array = new Uint8Array(
+          credentials.privateKey
+            .match(/.{1,2}/g)!
+            .map((byte: any) => parseInt(byte, 16)),
+        );
+        const keyPair = Ed25519Keypair.fromSecretKey(privateKeyUint8Array);
+        // const address = keyPair.toSuiAddress();
+
+        setKeypair(keyPair);
+        setAddress(credentials.address);
+
+        // Optionally navigate to the main screen
+        navigation.navigate('Bottom');
+      }
+    } catch (error) {
+      console.error('Error checking login status:', error);
+    }
+  };
+
+  // Call the checkLoginStatus function when the app starts
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
   return (
     <SafeAreaView>
       <LinearGradient
