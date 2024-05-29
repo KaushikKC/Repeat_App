@@ -229,11 +229,11 @@ module rabbit::rabbit {
         };
     }
 
-    public fun claim_staked_amount(staked_coin: &mut coin::Coin<SUI>,challenge_name: vector<u8>,habitude: &mut Habitude,ctx: &mut TxContext) {
+    public fun claim_staked_amount(challenge_name: vector<u8>,habitude: &mut Habitude,ctx: &mut TxContext) {
 
         let mut i = 0;
-    while (i < vector::length(&mut habitude.challenges)) {
-        let mut challenge = &mut habitude.challenges[i];
+    while (i < vector::length(& habitude.challenges)) {
+        let challenge = &mut habitude.challenges[i];
         if (challenge.name == challenge_name && challenge.completed) {
             let total_completed_participants = vector::length(&challenge.participants) as u64;
             let total_staked_amount = balance::value(&challenge.total_stack_amount);

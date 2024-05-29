@@ -107,7 +107,7 @@ const MyComponent = () => {
         await storeCredentials(address, web3auth.privKey);
         // console.log('working');
         setAddress(address);
-        navigation.navigate('Bottom');
+        navigation.navigate('CreateAccount');
       }
     } catch (e: any) {
       console.error(e.message);
@@ -124,7 +124,6 @@ const MyComponent = () => {
             .map((byte: any) => parseInt(byte, 16)),
         );
         const keyPair = Ed25519Keypair.fromSecretKey(privateKeyUint8Array);
-        // const address = keyPair.toSuiAddress();
 
         setKeypair(keyPair);
         setAddress(credentials.address);

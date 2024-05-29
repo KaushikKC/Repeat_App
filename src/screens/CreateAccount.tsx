@@ -1,5 +1,5 @@
 //import liraries
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -15,14 +15,16 @@ import ChooseContainer from '../components/ChooseContainer';
 import {useNavigation} from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useAddress} from '../../Context/AddressContext';
+import {web3auth} from '../../App';
 
 const dummyProfilePic = require('../assets/images/profile.webp');
 
 // create a component
 const CreateAccount = () => {
   const [name, setName] = useState('');
+  const {email, setEmail} = useAddress();
   const [age, setAge] = useState('');
-  const [email, setEmail] = useState('');
   const [selectedGender, setSelectedGender] = useState('Male');
   const [selectedImage, setSelectedImage] = useState(dummyProfilePic);
   var navigation = useNavigation();
@@ -43,6 +45,9 @@ const CreateAccount = () => {
       setSelectedImage({uri: image.path});
     });
   };
+  useEffect(() => {
+    setEmail(web3auth.userInfo()?.email);
+  }, []);
   return (
     <ScrollView style={styles.outerContainer}>
       <View style={styles.topHeader}>
@@ -85,7 +90,7 @@ const CreateAccount = () => {
             placeholder="Enter your email"
             keyboardType="email-address" // Set keyboard type to email
             value={email}
-            onChangeText={text => setEmail(text)}
+            editable={false}
           />
         </View>
         <View>

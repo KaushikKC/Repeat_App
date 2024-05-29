@@ -19,6 +19,7 @@ import {CHAIN_NAMESPACES} from '@web3auth/base';
 import {AddressProvider} from './Context/AddressContext';
 import SplashScreen from 'react-native-splash-screen';
 import {HabitudeProvider} from './Context/HabbitudeContext';
+import Toast from 'react-native-toast-message';
 
 export const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.OTHER,
@@ -54,6 +55,7 @@ function App(): React.JSX.Element {
         <AddressProvider>
           <HabitudeProvider>
             <MyStack />
+            <Toast />
           </HabitudeProvider>
         </AddressProvider>
       </NavigationContainer>

@@ -53,6 +53,7 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^15.2.0",
     "react-native-svg-transformer": "^1.4.0",
+    "react-native-toast-message": "^2.2.0",
     "readable-stream": "^4.5.2",
     "viem": "^1.21.4"
   },
