@@ -10,7 +10,7 @@ const habits = [
   {id: 1, emoji: '🏋️', name: 'Exercise'},
   {id: 2, emoji: '📖', name: 'Read'},
   {id: 3, emoji: '🧘‍♀️', name: 'Meditate'},
-  {id: 4, emoji: '💧', name: 'Drink water'},
+  {id: 4, emoji: '💻', name: 'GitHub'},
   {id: 5, emoji: '🚶', name: 'Walk'},
   // Add more habits as needed
 ];

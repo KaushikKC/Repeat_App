@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Platform,
   Image,
 } from 'react-native';
 import {COLORS} from '../constants/color';
@@ -17,6 +16,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useAddress} from '../../Context/AddressContext';
 import {web3auth} from '../../App';
+import githubUsername from 'github-username';
 
 const dummyProfilePic = require('../assets/images/profile.webp');
 
@@ -47,7 +47,13 @@ const CreateAccount = () => {
   };
   useEffect(() => {
     setEmail(web3auth.userInfo()?.email);
+    getUsername();
   }, []);
+
+  const getUsername = async () => {
+    console.log(await githubUsername(email));
+  };
+
   return (
     <ScrollView style={styles.outerContainer}>
       <View style={styles.topHeader}>

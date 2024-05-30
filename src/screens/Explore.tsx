@@ -12,9 +12,17 @@ import {
   HabitExploredata,
   LearnCarddata,
 } from '../constants/data';
+import {useHabitude} from '../../Context/HabbitudeContext';
+import {useAddress} from '../../Context/AddressContext';
+import {web3auth} from '../../App';
 
 // create a component
 const Explore = () => {
+  const {habitudeId} = useHabitude();
+  const {keypair} = useAddress();
+  console.log(keypair);
+  const userInfo = web3auth.userInfo();
+  console.log(userInfo?.email);
   return (
     <View>
       <View style={styles.topHeader}>

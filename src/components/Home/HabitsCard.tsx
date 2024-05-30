@@ -4,6 +4,7 @@ import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {COLORS} from '../../constants/color';
 import {wp} from '../../utils/ScreenDimension';
 import * as Progress from 'react-native-progress';
+import {useNavigation} from '@react-navigation/native';
 
 type HabitsCardProps = {
   emoji: string;
@@ -13,8 +14,20 @@ type HabitsCardProps = {
 };
 // create a component
 const HabitsCard = ({emoji, name, description, progress}: HabitsCardProps) => {
+  var navigation = useNavigation();
+  const completeHabbit = () => {
+    console.log('Here in complete habbit');
+  };
+  const claimPoints = () => {
+    if (progress === 1) {
+      completeHabbit();
+      navigation.navigate('ClaimPoints');
+    }
+  };
   return (
-    <View style={styles.OuterContainer}>
+    <TouchableOpacity
+      onPress={() => claimPoints()}
+      style={styles.OuterContainer}>
       <View style={styles.InnerContainer}>
         <View style={styles.NameContainer}>
           <Progress.Circle
@@ -37,7 +50,7 @@ const HabitsCard = ({emoji, name, description, progress}: HabitsCardProps) => {
           <Text style={styles.plusIcon}>+</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

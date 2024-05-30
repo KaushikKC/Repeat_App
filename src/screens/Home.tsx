@@ -93,7 +93,7 @@ const Home = () => {
               name="Water Plants"
               description="0/1 Times"
               emoji="🌿"
-              progress={0.8}
+              progress={1}
             />
           </View>
         </View>
