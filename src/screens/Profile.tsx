@@ -21,14 +21,22 @@ import {CoinBalance, SuiClient, getFullnodeUrl} from '@mysten/sui.js/client';
 import {MIST_PER_SUI} from '@mysten/sui.js/utils';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {useAddress} from '../../Context/AddressContext';
+import axios from 'axios';
+import {useHabitude} from '../../Context/HabbitudeContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 // create a component
 const Profile = () => {
   const [balanceAddress, setBalance] = useState(0);
-  const {address} = useAddress();
+  const {address, keypair, setAddress, setKeypair} = useAddress();
   const [selected, setSelected] = useState('Activity');
-  const rpcUrl = getFullnodeUrl('devnet');
+  const rpcUrl = getFullnodeUrl('testnet');
+  const {setHabitudeId} = useHabitude();
   const suiClient = new SuiClient({url: rpcUrl});
+  var navigation = useNavigation();
+
   useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     getBalances();
@@ -37,12 +45,69 @@ const Profile = () => {
     try {
       await requestSuiFromFaucetV0({
         // connect to Devnet
-        host: getFaucetHost('devnet'),
+        host: getFaucetHost('testnet'),
         recipient: address,
       });
       getBalances();
     } catch (e: any) {
       console.error(e.message);
+    }
+  };
+
+  const initialize = async () => {
+    const serverUrl = 'http://localhost:3000/initialize'; // Replace with your local IP address
+    Toast.show({
+      type: 'info',
+      text1: 'Request was sent',
+    });
+    try {
+      const response = await axios.post(
+        serverUrl,
+        {
+          keypair: {
+            keypair: {
+              publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
+              secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
+            },
+          },
+          address,
+        },
+        {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          transformResponse: res => {
+            // Do your own parsing here if needed ie JSON.parse(res);
+            return res;
+          },
+          responseType: 'json',
+        },
+      );
+      const responseData = response.data;
+      if (typeof responseData === 'string') {
+        console.log('Parsed data:', JSON.parse(responseData));
+        const parsedData = JSON.parse(responseData);
+        setHabitudeId(parsedData.habitudeId);
+        Toast.show({
+          type: 'success',
+          text1: 'Transaction Successfull!!',
+        });
+      } else {
+        console.log('Habitude ID:', responseData.habitudeId);
+        console.log('Transaction Digest:', responseData.transactionDigest);
+        console.log('Execution Status:', responseData.executionStatus);
+      }
+    } catch (error: any) {
+      if (error.response) {
+        // Server responded with a status other than 200 range
+        console.error('Error response:', error.response.data);
+      } else if (error.request) {
+        // Request was made but no response was received
+        console.error('Error request:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error message:', error.message);
+      }
+      console.error('Error config:', error.config);
     }
   };
   const getBalances = async () => {
@@ -51,7 +116,9 @@ const Profile = () => {
     setBalance(suiBalance);
   };
   const balance = (balance: CoinBalance) => {
-    return Number.parseInt(balance.totalBalance) / Number(MIST_PER_SUI);
+    const rawBalance =
+      Number.parseInt(balance.totalBalance) / Number(MIST_PER_SUI);
+    return Number(rawBalance.toFixed(2));
   };
   const copyToClipboard = () => {
     Clipboard.setString(address);
@@ -66,12 +133,33 @@ const Profile = () => {
 
     return `${firstChars}...${lastChars}`;
   };
+
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem('userAddress');
+      await AsyncStorage.removeItem('userPrivateKey');
+      setKeypair(null);
+      setAddress(null);
+
+      // Optionally navigate to the login screen
+      navigation.navigate('Onboarding');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
   return (
     <View>
       <View style={styles.topHeader}>
         <View style={styles.profileContainer}>
           <Text style={styles.headerTitle}>Your Profile</Text>
-          <Image source={require('../assets/images/Settings.png')} />
+          <View>
+            <TouchableOpacity
+              style={styles.depositButton}
+              onPress={() => logout()}>
+              <Text style={styles.depositButtonText}>Log out</Text>
+            </TouchableOpacity>
+            {/* <Image source={require('../assets/images/Settings.png')} /> */}
+          </View>
         </View>
         <View style={styles.usercontainer}>
           <Image
@@ -94,6 +182,9 @@ const Profile = () => {
               <Text style={styles.userPoints}>1452 Points</Text>
             </View>
           </View>
+          <TouchableOpacity onPress={() => initialize()}>
+            <Text>Initialize</Text>
+          </TouchableOpacity>
           <View style={styles.profileDetailContainer}>
             <Text style={styles.balanceTxt}>Balance: {balanceAddress}</Text>
             <TouchableOpacity
@@ -235,6 +326,7 @@ const styles = StyleSheet.create({
   profileContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 5,
   },
   usercontainer: {
     flexDirection: 'row',
