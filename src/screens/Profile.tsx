@@ -1,5 +1,5 @@
 //import liraries
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,64 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  LogBox,
 } from 'react-native';
 import {COLORS} from '../constants/color';
-import {wp} from '../utils/ScreenDimension';
+import {hp, wp} from '../utils/ScreenDimension';
 import PeopleCard from '../components/Profile/PeopleCard';
 import {AchievementData, Activitydata, Peopledata} from '../constants/data';
 import AchievementCard from '../components/Profile/AchievementCard';
 import ActivityCard from '../components/Profile/ActivityCard';
+import {getFaucetHost, requestSuiFromFaucetV0} from '@mysten/sui.js/faucet';
+import {CoinBalance, SuiClient, getFullnodeUrl} from '@mysten/sui.js/client';
+import {MIST_PER_SUI} from '@mysten/sui.js/utils';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {useAddress} from '../../Context/AddressContext';
 
 // create a component
 const Profile = () => {
+  const [balanceAddress, setBalance] = useState(0);
+  const {address} = useAddress();
   const [selected, setSelected] = useState('Activity');
+  const rpcUrl = getFullnodeUrl('devnet');
+  const suiClient = new SuiClient({url: rpcUrl});
+  useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    getBalances();
+  }, []);
+  const getTokens = async () => {
+    try {
+      await requestSuiFromFaucetV0({
+        // connect to Devnet
+        host: getFaucetHost('devnet'),
+        recipient: address,
+      });
+      getBalances();
+    } catch (e: any) {
+      console.error(e.message);
+    }
+  };
+  const getBalances = async () => {
+    const balanceResponse = await suiClient.getBalance({owner: address});
+    const suiBalance = balance(balanceResponse);
+    setBalance(suiBalance);
+  };
+  const balance = (balance: CoinBalance) => {
+    return Number.parseInt(balance.totalBalance) / Number(MIST_PER_SUI);
+  };
+  const copyToClipboard = () => {
+    Clipboard.setString(address);
+  };
+  const acountHumanReadable = () => {
+    if (!address) {
+      return '';
+    }
+
+    const firstChars = address.slice(0, 5);
+    const lastChars = address.slice(address.length - 3, address.length);
+
+    return `${firstChars}...${lastChars}`;
+  };
   return (
     <View>
       <View style={styles.topHeader}>
@@ -33,6 +80,12 @@ const Profile = () => {
           />
           <View>
             <Text style={styles.userName}>Kaushik</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.addressTxt}>{acountHumanReadable()}</Text>
+              <TouchableOpacity onPress={() => copyToClipboard()}>
+                <Text>📄</Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.userPointsContainer}>
               <Image
                 style={styles.userBadgeImage}
@@ -40,6 +93,14 @@ const Profile = () => {
               />
               <Text style={styles.userPoints}>1452 Points</Text>
             </View>
+          </View>
+          <View style={styles.profileDetailContainer}>
+            <Text style={styles.balanceTxt}>Balance: {balanceAddress}</Text>
+            <TouchableOpacity
+              onPress={() => getTokens()}
+              style={styles.depositButton}>
+              <Text style={styles.depositButtonText}>Deposit</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.HeaderMenu}>
@@ -50,7 +111,12 @@ const Profile = () => {
                 : styles.HeaderMenuTitle
             }
             onPress={() => setSelected('Activity')}>
-            <Text style={selected === 'Activity' && {color: COLORS.primary}}>
+            <Text
+              style={
+                selected === 'Activity'
+                  ? {color: COLORS.primary}
+                  : {color: COLORS.Black}
+              }>
               Activity
             </Text>
           </TouchableOpacity>
@@ -61,7 +127,12 @@ const Profile = () => {
                 : styles.HeaderMenuTitle
             }
             onPress={() => setSelected('People')}>
-            <Text style={selected === 'People' && {color: COLORS.primary}}>
+            <Text
+              style={
+                selected === 'People'
+                  ? {color: COLORS.primary}
+                  : {color: COLORS.Black}
+              }>
               People
             </Text>
           </TouchableOpacity>
@@ -73,7 +144,11 @@ const Profile = () => {
             }
             onPress={() => setSelected('Achievements')}>
             <Text
-              style={selected === 'Achievements' && {color: COLORS.primary}}>
+              style={
+                selected === 'Achievements'
+                  ? {color: COLORS.primary}
+                  : {color: COLORS.Black}
+              }>
               Achievements
             </Text>
           </TouchableOpacity>
@@ -147,12 +222,13 @@ const styles = StyleSheet.create({
   topHeader: {
     height: 251,
     backgroundColor: COLORS.WhiteBG,
-    paddingTop: 80,
+    paddingTop: 75,
     paddingHorizontal: 24,
     borderBottomWidth: 1,
     borderColor: COLORS.Gray,
   },
   headerTitle: {
+    color: COLORS.Black,
     fontSize: 24,
     fontFamily: 'Quicksand-SemiBold',
   },
@@ -170,6 +246,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userName: {
+    color: COLORS.Black,
     fontSize: 18,
     fontFamily: 'Quicksand-SemiBold',
   },
@@ -224,8 +301,32 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   connectedText: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-SemiBold',
+  },
+  depositButton: {
+    marginTop: 5,
+    backgroundColor: COLORS.primary,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  depositButtonText: {
+    color: COLORS.WhiteBG,
+    fontSize: 14,
+    fontFamily: 'Quicksand-SemiBold',
+  },
+  profileDetailContainer: {
+    flexDirection: 'column',
+    marginLeft: 'auto',
+  },
+  balanceTxt: {
+    color: COLORS.Black,
+  },
+  addressTxt: {
+    color: COLORS.Black,
   },
 });
 

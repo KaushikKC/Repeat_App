@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
   },
   name: {
+    color: COLORS.Black,
     fontSize: 16,
     fontFamily: 'Quicksand-SemiBold',
   },

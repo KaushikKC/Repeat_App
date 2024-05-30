@@ -18,6 +18,7 @@ export type StackParamList = {
   SelectHabit: undefined;
   ClaimPoints: undefined;
   ClaimSplit: undefined;
+  login: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();

@@ -45,10 +45,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   name: {
+    color: COLORS.Black,
     fontFamily: 'Quicksand-SemiBold',
     fontSize: 14,
   },
   points: {
+    color: COLORS.Black,
     fontFamily: 'Quicksand-Regular',
     fontSize: 12,
   },

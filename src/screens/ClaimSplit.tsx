@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 import {COLORS} from '../constants/color';
-import HabitsCard from '../components/Home/HabitsCard';
+import HabitsCard from '../components/JoinChallenge/HabitCard';
 import {hp, wp} from '../utils/ScreenDimension';
 
 // create a component
@@ -34,12 +34,14 @@ const ClaimSplit = () => {
           <HabitsCard
             name="Drink the water"
             description="500/2000 ML"
-            logo={require('../assets/images/Water.png')}
+            emoji="💧"
+            progress={0.3}
           />
           <HabitsCard
             name="Walk"
             description="0/10000 Steps"
-            logo={require('../assets/images/Walking.png')}
+            emoji="🏃‍♂️"
+            progress={0.7}
           />
         </View>
         <View>

@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   NativeScrollEvent,
@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
@@ -17,43 +18,25 @@ import google from '../assets/images/Google.png';
 import facebook from '../assets/images/facebook.png';
 import {slides} from '../constants/data';
 import {Slide} from '../components/Slide';
+import {COLORS} from '../constants/color';
+import {Ed25519Keypair} from '@mysten/sui.js/keypairs/ed25519';
+import {web3auth} from '../../App';
+import {LOGIN_PROVIDER} from '@web3auth/react-native-sdk';
+import {useAddress} from '../../Context/AddressContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { ConnectButton } from '@mysten/dapp-kit';
-
-import { Web3Auth } from "@web3auth/modal";
-import { CommonPrivateKeyProvider } from "@web3auth/base-provider";
-import { WEB3AUTH_NETWORK } from "@web3auth/base";
-import { assert } from '@mysten/sui.js/utils';
-const chainConfig = {
-  chainNamespace: CHAIN_NAMESPACES.OTHER,
-  chainId: "35834a8a",
-  rpcTarget: "https://fullnode.mainnet.sui.io:443",
-  displayName: "Sui Mainnet",
-  blockExplorerUrl: "https://suiexplorer.com/",
-  ticker: "SUI",
-  tickerName: "Sui",
-  logo: "https://cryptologos.cc/logos/sui-sui-logo.png?v=029",
+type storageProp = {
+  address: string;
+  privateKey: string;
 };
-const privateKeyProvider = new CommonPrivateKeyProvider({
-  config: { chainConfig: chainConfig }
-});
-const clientId =
-  "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ"; // get from https://dashboard.web3auth.io
-
-const web3auth = new Web3Auth({
-  // Get it from Web3Auth Dashboard
-  clientId,
-  web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
-  privateKeyProvider: privateKeyProvider,
-});
-
-
-
-
 const MyComponent = () => {
   var navigation = useNavigation();
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
+  const [email, setEmail] = useState<string>('');
   const ref = React.useRef<FlatList>(null);
+  const {setAddress, setKeypair} = useAddress();
+  const scheme = 'web3authrnbareauth0example'; // Or your desired app redirection scheme
+  const resolvedRedirectUrl = `${scheme}://openlogin`;
   const updateCurrentSlideIndex = (
     e: NativeSyntheticEvent<NativeScrollEvent>,
   ) => {
@@ -61,12 +44,102 @@ const MyComponent = () => {
     const currentIndex = Math.round(contentOffsetX / wp(100));
     setCurrentSlideIndex(currentIndex);
   };
+  useEffect(() => {
+    const init = async () => {
+      await web3auth.init();
+    };
+    init();
+  }, []);
 
+  const storeCredentials = async (address: string, privateKey: string) => {
+    try {
+      await AsyncStorage.setItem('userAddress', address);
+      await AsyncStorage.setItem('userPrivateKey', privateKey);
+    } catch (error) {
+      console.error('Error storing credentials:', error);
+    }
+  };
 
-  const test = async() => {
-    await web3auth.initModal();
-  }
+  // Function to retrieve user authentication credentials
+  const retrieveCredentials = async (): Promise<{
+    address: string | null;
+    privateKey: string | null;
+  }> => {
+    try {
+      const address = await AsyncStorage.getItem('userAddress');
+      const privateKey = await AsyncStorage.getItem('userPrivateKey');
+      return {address, privateKey};
+    } catch (error) {
+      console.error('Error retrieving credentials:', error);
+      return {address: null, privateKey: null};
+    }
+  };
 
+  const login = async () => {
+    try {
+      if (!web3auth.ready) {
+        return;
+      }
+      if (!email) {
+        return;
+      }
+      await web3auth.login({
+        loginProvider: LOGIN_PROVIDER.EMAIL_PASSWORDLESS,
+        redirectUrl: resolvedRedirectUrl,
+        extraLoginOptions: {
+          login_hint: email,
+        },
+      });
+
+      if (web3auth.privKey) {
+        // Create a Uint8Arrray from private key which is in hex format
+        const privateKeyUint8Array = new Uint8Array(
+          web3auth.privKey
+            .match(/.{1,2}/g)!
+            .map((byte: any) => parseInt(byte, 16)),
+        );
+
+        // Create an instance of the Sui local key pair manager
+        const keyPair = Ed25519Keypair.fromSecretKey(privateKeyUint8Array);
+        setKeypair(keyPair);
+
+        const address = keyPair.toSuiAddress();
+        await storeCredentials(address, web3auth.privKey);
+        // console.log('working');
+        setAddress(address);
+        navigation.navigate('CreateAccount');
+      }
+    } catch (e: any) {
+      console.error(e.message);
+    }
+  };
+
+  const checkLoginStatus = async () => {
+    try {
+      const credentials = await retrieveCredentials();
+      if (credentials.address && credentials.privateKey) {
+        const privateKeyUint8Array = new Uint8Array(
+          credentials.privateKey
+            .match(/.{1,2}/g)!
+            .map((byte: any) => parseInt(byte, 16)),
+        );
+        const keyPair = Ed25519Keypair.fromSecretKey(privateKeyUint8Array);
+
+        setKeypair(keyPair);
+        setAddress(credentials.address);
+
+        // Optionally navigate to the main screen
+        navigation.navigate('Bottom');
+      }
+    } catch (error) {
+      console.error('Error checking login status:', error);
+    }
+  };
+
+  // Call the checkLoginStatus function when the app starts
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
   return (
     <SafeAreaView>
       <LinearGradient
@@ -98,15 +171,25 @@ const MyComponent = () => {
         ))}
       </View>
       <View style={styles.btnContainer}>
+        {/* <ConnectButton /> */}
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          placeholderTextColor={COLORS.Grey}
+          keyboardType="email-address"
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
         <TouchableOpacity
           activeOpacity={1}
           style={styles.btn}
-          
-          onPress={() => navigation.navigate('CreateAccount')}>
-          <Text style={styles.btnText}>Connect with wallet</Text>
+          onPress={() => login()}>
+          <Text style={styles.btnText}>Login</Text>
         </TouchableOpacity>
         <View style={styles.bottomSocial}>
-          <TouchableOpacity style={styles.btnSocial}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CreateAccount')}
+            style={styles.btnSocial}>
             <Image source={apple} style={styles.socialImg} />
             <Text style={styles.btnText}>Apple</Text>
           </TouchableOpacity>
@@ -130,10 +213,7 @@ const MyComponent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     position: 'absolute',
-    padding: 16,
-    bottom: -162,
     height: hp(100),
     width: wp(100),
   },
@@ -161,7 +241,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 8,
     alignItems: 'center',
-    marginTop: hp(10),
+    marginTop: hp(5),
   },
   btn: {
     flex: 1,
@@ -175,7 +255,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontWeight: '600',
-    fontSize: 16,
+    fontSize: wp(100) * 0.04,
     color: '#040415',
     fontFamily: 'Quicksand-Regular',
   },
@@ -199,11 +279,21 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   terms: {
-    fontSize: 12,
+    fontSize: wp(100) * 0.03,
     opacity: 50,
     color: '#AFB4FF',
     marginTop: 10,
     fontFamily: 'Quicksand-Regular',
+  },
+  input: {
+    color: COLORS.white,
+    height: 40,
+    borderColor: COLORS.Grey,
+    borderBottomWidth: 2,
+    paddingHorizontal: 10,
+    fontFamily: 'Quicksand-Regular',
+    width: wp(100) - 48,
+    marginBottom: 5,
   },
 });
 

@@ -9,7 +9,7 @@ import LearnCard from '../components/Explore/LearnCard';
 import {
   ChallengeExploredata,
   Circlesdata,
-  HabbitExploredata,
+  HabitExploredata,
   LearnCarddata,
 } from '../constants/data';
 
@@ -27,14 +27,14 @@ const Explore = () => {
             <Text style={styles.SectionView}>VIEW ALL</Text>
           </View>
           <FlatList
-            data={HabbitExploredata}
+            data={HabitExploredata}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
               <HabitCard
                 name={item.name}
                 description={item.description}
-                logo={item.logo}
+                emoji={item.emoji}
                 color={item.color}
               />
             )}
@@ -54,7 +54,7 @@ const Explore = () => {
               <CircleCard
                 name={item.name}
                 description={item.description}
-                logo={item.logo}
+                emoji={item.emoji}
               />
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -74,6 +74,7 @@ const Explore = () => {
                 name={item.name}
                 description={item.description}
                 people={item.people}
+                progress={item.progress}
               />
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.Gray,
   },
   headerTitle: {
+    color: COLORS.Black,
     fontSize: 24,
     fontFamily: 'Quicksand-SemiBold',
   },
@@ -123,6 +125,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   SectionTitle: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-semiBold',
   },

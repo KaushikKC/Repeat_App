@@ -5,12 +5,12 @@ import {ScrollView} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import {hp, wp} from '../utils/ScreenDimension';
 import {COLORS} from '../constants/color';
-import HabitsCard from '../components/Home/HabitsCard';
+import HabitsCard from '../components/JoinChallenge/HabitCard';
 
 // create a component
 const JoinChallenge = () => {
   return (
-    <ScrollView>
+    <View>
       <LinearGradient
         colors={['#6B73FF', '#000DFF']}
         start={{x: 0, y: 0}}
@@ -30,31 +30,38 @@ const JoinChallenge = () => {
           <Text style={styles.createButtonText}>Join the Challenge</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.habitContainer}>
+      <ScrollView style={styles.habitContainer}>
         <View>
           <Text style={styles.habitTitle}>Habits</Text>
         </View>
         <HabitsCard
           name="Drink the water"
           description="500/2000 ML"
-          logo={require('../assets/images/Water.png')}
+          emoji="💧"
+          progress={0.2}
         />
         <HabitsCard
           name="Walk"
           description="0/10000 Steps"
-          logo={require('../assets/images/Walking.png')}
+          emoji="🏃‍♂️"
+          progress={0.8}
         />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 // define your styles
 const styles = StyleSheet.create({
+  Container: {
+    height: hp(100),
+    width: wp(100),
+  },
   container: {
     flex: 1,
     position: 'absolute',
     padding: 16,
+    // bottom: -289,
     height: hp(100),
     width: wp(100),
   },
@@ -75,6 +82,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 24,
     paddingTop: 100,
+    zIndex: 100,
   },
   emoji: {
     fontSize: 44,

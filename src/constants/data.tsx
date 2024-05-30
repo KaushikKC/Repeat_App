@@ -19,23 +19,23 @@ export const slides = [
   },
 ];
 
-export const HabbitExploredata = [
+export const HabitExploredata = [
   {
     name: 'Walk',
     description: '10 km',
-    logo: require('../assets/images/Walking.png'),
+    emoji: '🚶‍♂️',
     color: '#FCDCD3',
   },
   {
     name: 'Sleep',
     description: '8 hr',
-    logo: require('../assets/images/Sleeping.png'),
+    emoji: '😴',
     color: '#D7D9FF',
   },
   {
     name: 'Read',
     description: '20 min',
-    logo: require('../assets/images/Book.png'),
+    emoji: '📕',
     color: '#D5ECE0',
   },
   // Add more data for other HabitCards if needed
@@ -45,24 +45,34 @@ export const Circlesdata = [
   {
     name: 'Coders Owl',
     description: '462 members',
-    logo: require('../assets/images/Coders.png'),
+    emoji: '😻',
   },
   {
     name: 'Gym Stakers',
     description: '+500 members',
-    logo: require('../assets/images/Gym.png'),
+    emoji: '🏋️',
   },
   {
     name: 'Rnners',
     description: '336 members',
-    logo: require('../assets/images/Walking.png'),
+    emoji: '🏃‍♂️',
   },
   // Add more data for other CircleCards if needed
 ];
 
 export const ChallengeExploredata = [
-  {name: 'Daily Fit Routine! 🏃🏻‍♂️', description: '1 week challenge', people: '2'},
-  {name: 'Weekend Cycling! 🚴🏻‍', description: '2 days challenge', people: '1'},
+  {
+    name: 'Daily Fit Routine! 🏃🏻‍♂️',
+    description: '1 week challenge',
+    people: '2',
+    progress: 0.6,
+  },
+  {
+    name: 'Weekend Cycling! 🚴🏻‍',
+    description: '2 days challenge',
+    people: '1',
+    progress: 0.2,
+  },
   // Add more data for other ChallengesCards if needed
 ];
 
@@ -155,7 +165,7 @@ export const Activitydata = [
   },
   {
     id: '4',
-    name: 'Weekly winning streak is broken!',
+    name: 'Weekly winning streak is broken! Weekly winning streak is broken!',
     desc: '12 Jun, 16:14 PM',
     image: require('../assets/images/ArrowDown.png'),
   },
@@ -171,4 +181,16 @@ export const Activitydata = [
     desc: '10 Jun, 18:32 PM',
     image: require('../assets/images/ArrowUp.png'),
   },
+];
+
+export const leaderboardData = [
+  {id: '1', name: 'Kaushik', points: '1452', position: '2'},
+  {id: '2', name: 'Thiru', points: '1452', position: '1'},
+  {id: '3', name: 'Kaushik', points: '1452', position: '3'},
+  {id: '4', name: 'Jennings Stohler', points: '912', position: '4'},
+  {id: '5', name: 'Scotty Tovias', points: '846', position: '5'},
+  {id: '6', name: 'Amelina Aguila', points: '846', position: '6'},
+  {id: '7', name: 'Kally', points: '846', position: '7'},
+  {id: '8', name: 'Layla Schupbach', points: '846', position: '8'},
+  {id: '9', name: 'Scotty Tovias', points: '846', position: '9'},
 ];

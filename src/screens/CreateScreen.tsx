@@ -90,7 +90,7 @@ const CreateScreen = () => {
       </View>
       <ScrollView style={styles.CreateContent}>
         <View>
-          <Text>CREATE</Text>
+          <Text style={styles.createTxt}>CREATE</Text>
           <View style={styles.HeaderMenu}>
             <TouchableOpacity
               style={
@@ -99,7 +99,12 @@ const CreateScreen = () => {
                   : styles.HeaderMenuTitle
               }
               onPress={() => setSelected('Habit')}>
-              <Text style={selected === 'Habit' && {color: COLORS.primary}}>
+              <Text
+                style={
+                  selected === 'Habit'
+                    ? {color: COLORS.primary}
+                    : {color: COLORS.Black}
+                }>
                 Habit
               </Text>
             </TouchableOpacity>
@@ -110,7 +115,12 @@ const CreateScreen = () => {
                   : styles.HeaderMenuTitle
               }
               onPress={() => setSelected('Challenge')}>
-              <Text style={selected === 'Challenge' && {color: COLORS.primary}}>
+              <Text
+                style={
+                  selected === 'Challenge'
+                    ? {color: COLORS.primary}
+                    : {color: COLORS.Black}
+                }>
                 Challenge
               </Text>
             </TouchableOpacity>
@@ -122,7 +132,8 @@ const CreateScreen = () => {
               <Text style={styles.inputLabel}>Name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Name"
+                placeholder="Enter the Name"
+                placeholderTextColor={COLORS.Grey}
                 value={habitName}
                 onChangeText={text => setHabitName(text)}
               />
@@ -132,6 +143,7 @@ const CreateScreen = () => {
               <TextInput
                 style={styles.input}
                 placeholder="Icon"
+                placeholderTextColor={COLORS.Grey}
                 value={icon}
                 onChangeText={text => setIcon(text)}
               />
@@ -187,7 +199,9 @@ const CreateScreen = () => {
                   onPress={() => setDataSelected('Mobile')}>
                   <Text
                     style={
-                      dataselected === 'Mobile' && {color: COLORS.primary}
+                      dataselected === 'Mobile'
+                        ? {color: COLORS.primary}
+                        : {color: COLORS.Black}
                     }>
                     Mobile
                   </Text>
@@ -201,7 +215,9 @@ const CreateScreen = () => {
                   onPress={() => setDataSelected('Device')}>
                   <Text
                     style={
-                      dataselected === 'Device' && {color: COLORS.primary}
+                      dataselected === 'Device'
+                        ? {color: COLORS.primary}
+                        : {color: COLORS.Black}
                     }>
                     Device
                   </Text>
@@ -215,7 +231,8 @@ const CreateScreen = () => {
               <Text style={styles.inputLabel}>Name</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Name"
+                placeholder="Enter the Name"
+                placeholderTextColor={COLORS.Grey}
                 value={challengeName}
                 onChangeText={text => setChallengeName(text)}
               />
@@ -225,6 +242,7 @@ const CreateScreen = () => {
               <TextInput
                 style={styles.input}
                 placeholder="Enter stake amount"
+                placeholderTextColor={COLORS.Grey}
                 keyboardType="numeric"
                 value={stakeAmount}
                 onChangeText={text => setStakeAmount(text)}
@@ -239,9 +257,9 @@ const CreateScreen = () => {
                 onChangeText={text => setSelectedCurrency(text)}
               />
             </View>
-            <Text style={styles.inputLabel}>Habbits</Text>
+            <Text style={styles.inputLabel}>Habits</Text>
             <View>
-              <View style={styles.habbitinputContainer}>
+              <View style={styles.habitinputContainer}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -314,20 +332,26 @@ const CreateScreen = () => {
                     <View style={styles.regularBox}>
                       <View style={styles.limitDiv}>
                         <View style={styles.limitDiv}>
-                          <Text style={{marginRight: 5}}>Min:</Text>
+                          <Text style={{marginRight: 5, color: COLORS.Black}}>
+                            Min:
+                          </Text>
                           <TextInput
                             style={styles.limitinput}
                             placeholder="Enter Maxmimum peopley"
+                            placeholderTextColor={COLORS.Grey}
                             keyboardType="numeric"
                             value={minPeople}
                             onChangeText={text => setMinPeople(text)}
                           />
                         </View>
                         <View style={styles.limitDiv}>
-                          <Text style={{marginRight: 5}}>Max:</Text>
+                          <Text style={{marginRight: 5, color: COLORS.Black}}>
+                            Max:
+                          </Text>
                           <TextInput
                             style={styles.limitinput}
                             placeholder="Enter Maxmimum people"
+                            placeholderTextColor={COLORS.Grey}
                             keyboardType="numeric"
                             value={maxPeople}
                             onChangeText={text => setMaxPeople(text)}
@@ -349,7 +373,9 @@ const CreateScreen = () => {
                   onPress={() => setValidatorSelected('Enable')}>
                   <Text
                     style={
-                      validatorSelected === 'Enable' && {color: COLORS.primary}
+                      validatorSelected === 'Enable'
+                        ? {color: COLORS.primary}
+                        : {color: COLORS.Black}
                     }>
                     Enable
                   </Text>
@@ -363,7 +389,9 @@ const CreateScreen = () => {
                   onPress={() => setValidatorSelected('Disable')}>
                   <Text
                     style={
-                      validatorSelected === 'Disable' && {color: COLORS.primary}
+                      validatorSelected === 'Disable'
+                        ? {color: COLORS.primary}
+                        : {color: COLORS.Black}
                     }>
                     Disable
                   </Text>
@@ -397,6 +425,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.Gray,
   },
   headerTitle: {
+    color: COLORS.Black,
     fontSize: 24,
     fontFamily: 'Quicksand-SemiBold',
   },
@@ -422,6 +451,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     borderRadius: 10,
     fontFamily: 'Quicksand-Regular',
+    color: COLORS.Black,
   },
   HeaderMenuTitleActive: {
     height: 28,
@@ -439,11 +469,13 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   inputLabel: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-SemiBold',
     marginVertical: 8,
   },
   input: {
+    color: COLORS.Black,
     height: 40,
     borderColor: 'gray',
     borderBottomWidth: 1,
@@ -458,7 +490,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'space-between',
   },
-  habbitinputContainer: {
+  habitinputContainer: {
     width: wp(100) - 48,
     padding: 15,
     backgroundColor: COLORS.WhiteBG,
@@ -481,6 +513,7 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: 'Quicksand-semiBold',
     fontSize: 14,
+    color: COLORS.Black,
   },
   description: {
     fontFamily: 'Quicksand-Regular',
@@ -493,7 +526,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.Gray,
     borderRadius: 10,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   regularItems: {
     flexDirection: 'row',
@@ -502,6 +536,7 @@ const styles = StyleSheet.create({
   regularItemsText: {
     fontFamily: 'Quicksand-Regular',
     marginHorizontal: 4,
+    color: COLORS.Black,
   },
   regularItem: {
     flexDirection: 'row',
@@ -542,17 +577,20 @@ const styles = StyleSheet.create({
   habitAddText: {
     fontSize: 16,
     fontFamily: 'Quicksand-SemiBold',
+    color: COLORS.Black,
   },
   limitDiv: {
     flexDirection: 'row',
     marginRight: 10,
+    alignItems: 'center',
   },
   limitinput: {
-    height: 15,
+    height: 45,
+    width: wp(10),
     borderColor: 'gray',
-    borderBottomWidth: 1,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     fontFamily: 'Quicksand-Regular',
+    color: COLORS.Black,
   },
   habitsGridContainer: {
     flexDirection: 'column',
@@ -589,6 +627,12 @@ const styles = StyleSheet.create({
     color: COLORS.WhiteBG,
     fontSize: 18,
     fontFamily: 'Quicksand-Bold',
+  },
+  createTxt: {
+    color: COLORS.Black,
+    fontSize: 14,
+    fontFamily: 'Quicksand-SemiBold',
+    marginVertical: 8,
   },
 });
 

@@ -9,18 +9,21 @@ import {
   Platform,
 } from 'react-native';
 import {COLORS} from '../../constants/color';
+import {wp} from '../../utils/ScreenDimension';
 
 // create a component
 type CircleCardProps = {
-  logo: ImageSourcePropType;
+  emoji: string;
   name: string;
   description: string;
 };
 
-const CircleCard = ({logo, name, description}: CircleCardProps) => {
+const CircleCard = ({emoji, name, description}: CircleCardProps) => {
   return (
     <View style={styles.OuterContainer}>
-      <Image style={styles.logo} source={logo} />
+      <View style={styles.logo}>
+        <Text style={styles.emoji}>{emoji}</Text>
+      </View>
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.description}>{description}</Text>
     </View>
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'space-between',
     marginVertical: 5,
-    marginRight: 8,
+    marginHorizontal: 5,
     backgroundColor: COLORS.WhiteBG,
     ...Platform.select({
       ios: {
@@ -52,12 +55,14 @@ const styles = StyleSheet.create({
     }),
   },
   name: {
+    color: COLORS.Black,
     fontFamily: 'Quicksand-semiBold',
-    fontSize: 14,
+    fontSize: wp(100) * 0.035,
   },
   description: {
     fontFamily: 'Quicksand-Regular',
     color: COLORS.Grey,
+    fontSize: wp(100) * 0.03,
   },
   logo: {
     backgroundColor: COLORS.WhiteBG,
@@ -66,6 +71,12 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
     borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emoji: {
+    fontSize: 16,
   },
 });
 

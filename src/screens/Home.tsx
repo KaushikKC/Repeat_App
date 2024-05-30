@@ -30,7 +30,12 @@ const Home = () => {
                   : styles.HeaderMenuTitle
               }
               onPress={() => setSelected('Today')}>
-              <Text style={selected === 'Today' && {color: COLORS.primary}}>
+              <Text
+                style={
+                  selected === 'Today'
+                    ? {color: COLORS.primary}
+                    : {color: COLORS.Black}
+                }>
                 Today
               </Text>
             </TouchableOpacity>
@@ -41,7 +46,12 @@ const Home = () => {
                   : styles.HeaderMenuTitle
               }
               onPress={() => setSelected('Circles')}>
-              <Text style={selected === 'Circles' && {color: COLORS.primary}}>
+              <Text
+                style={
+                  selected === 'Circles'
+                    ? {color: COLORS.primary}
+                    : {color: COLORS.Black}
+                }>
                 Circles
               </Text>
             </TouchableOpacity>
@@ -59,6 +69,7 @@ const Home = () => {
               name="Daily Fit Challenge!"
               description="5 days left"
               people="4"
+              progress={0.8}
             />
           </View>
           <View>
@@ -69,23 +80,26 @@ const Home = () => {
             <HabitsCard
               name="Drink the water"
               description="500/2000 ML"
-              logo={require('../assets/images/Water.png')}
+              emoji="🚶‍♂️"
+              progress={0.4}
             />
             <HabitsCard
               name="Walk"
               description="0/10000 Steps"
-              logo={require('../assets/images/Walking.png')}
+              emoji="💧"
+              progress={0.2}
             />
             <HabitsCard
               name="Water Plants"
               description="0/1 Times"
-              logo={require('../assets/images/Plants.png')}
+              emoji="🌿"
+              progress={0.8}
             />
           </View>
         </View>
       ) : (
         <View style={styles.commingSoonContainer}>
-          <Text>Coming Soon...</Text>
+          <Text style={styles.commingSoonText}>Coming Soon...</Text>
         </View>
       )}
     </View>
@@ -106,6 +120,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   Headertitle: {
+    color: COLORS.Black,
     fontSize: 18,
     fontFamily: 'Quicksand-semiBold',
   },
@@ -156,6 +171,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   SectionTitle: {
+    color: COLORS.Black,
     fontSize: 14,
     fontFamily: 'Quicksand-semiBold',
   },
@@ -167,6 +183,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: hp(100) - 340,
+  },
+  commingSoonText: {
+    color: COLORS.Black,
   },
 });
 export default Home;
