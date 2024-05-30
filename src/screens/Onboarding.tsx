@@ -36,7 +36,7 @@ const MyComponent = () => {
   const [email, setEmail] = useState<string>('');
   const ref = React.useRef<FlatList>(null);
   const {setAddress, setKeypair} = useAddress();
-  const [existingUser, setExistingUser] = useState(false)
+  const [existingUser, setExistingUser] = useState(false);
   const scheme = 'web3authrnbareauth0example'; // Or your desired app redirection scheme
   const resolvedRedirectUrl = `${scheme}://openlogin`;
   const updateCurrentSlideIndex = (
@@ -77,17 +77,13 @@ const MyComponent = () => {
     }
   };
 
-
-  
-
   const login = async () => {
-
     try {
-const serverUrl = "http://192.168.0.100:3001/api/users/check"
+      const serverUrl = 'http://192.168.0.100:3001/api/users/check';
       const res = await axios.post(
         serverUrl,
         {
-          email: email
+          email: email,
         },
         {
           Accept: 'application/json',
@@ -99,17 +95,16 @@ const serverUrl = "http://192.168.0.100:3001/api/users/check"
           responseType: 'json',
         },
       );
-     
-    
+
       if (res.status === 200) {
-        console.log("User already exists");
-        setExistingUser(true)
+        console.log('User already exists');
+        setExistingUser(true);
       } else {
-        console.log("Login");
-setExistingUser(false) 
-     }
+        console.log('Login');
+        setExistingUser(false);
+      }
     } catch (error) {
-      console.log("Issue in checking", error);
+      console.log('Issue in checking', error);
       return;
     }
     try {
@@ -138,15 +133,12 @@ setExistingUser(false)
         // Create an instance of the Sui local key pair manager
         const keyPair = Ed25519Keypair.fromSecretKey(privateKeyUint8Array);
         setKeypair(keyPair);
-console.log("keypair",keyPair)
+        console.log('keypair', keyPair);
         const address = keyPair.toSuiAddress();
-        console.log("address",address)
+        console.log('address', address);
         await storeCredentials(address, web3auth.privKey);
         // console.log('working');
         setAddress(address);
-
-
-
 
         navigation.navigate('CreateAccount');
       }
