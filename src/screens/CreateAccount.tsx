@@ -17,6 +17,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useAddress} from '../../Context/AddressContext';
 import {web3auth} from '../../App';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const dummyProfilePic = require('../assets/images/profile.webp');
 
@@ -77,7 +78,7 @@ const CreateAccount = () => {
           <Text style={styles.inputLabel}>Age</Text>
           <TextInput
             style={styles.input}
-            placeholder="Enter stake amount"
+            placeholder="Enter your age"
             keyboardType="numeric"
             value={age}
             onChangeText={text => setAge(text)}
@@ -112,7 +113,17 @@ const CreateAccount = () => {
         </View>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('SelectHabit')}
+        // onPress={() => navigation.navigate('SelectHabit')}
+        onPress={ async() => {
+          console.log(name, age, email, selectedGender);
+          await AsyncStorage.setItem('name', name);
+          await AsyncStorage.setItem('age', age);
+          await AsyncStorage.setItem('email', email);
+          await AsyncStorage.setItem('selectedGender', selectedGender);
+          navigation.navigate('SelectHabit')
+          
+          
+        }}
         style={styles.createButton}>
         <Text style={styles.createButtonText}>Create Account</Text>
       </TouchableOpacity>

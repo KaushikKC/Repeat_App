@@ -24,6 +24,7 @@ import {web3auth} from '../../App';
 import {LOGIN_PROVIDER} from '@web3auth/react-native-sdk';
 import {useAddress} from '../../Context/AddressContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 type storageProp = {
   address: string;
@@ -35,6 +36,7 @@ const MyComponent = () => {
   const [email, setEmail] = useState<string>('');
   const ref = React.useRef<FlatList>(null);
   const {setAddress, setKeypair} = useAddress();
+  const [existingUser, setExistingUser] = useState(false)
   const scheme = 'web3authrnbareauth0example'; // Or your desired app redirection scheme
   const resolvedRedirectUrl = `${scheme}://openlogin`;
   const updateCurrentSlideIndex = (
@@ -75,7 +77,41 @@ const MyComponent = () => {
     }
   };
 
+
+  
+
   const login = async () => {
+
+    try {
+const serverUrl = "http://192.168.0.100:3001/api/users/check"
+      const res = await axios.post(
+        serverUrl,
+        {
+          email: email
+        },
+        {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          transformResponse: res => {
+            // Do your own parsing here if needed ie JSON.parse(res);
+            return res;
+          },
+          responseType: 'json',
+        },
+      );
+     
+    
+      if (res.status === 200) {
+        console.log("User already exists");
+        setExistingUser(true)
+      } else {
+        console.log("Login");
+setExistingUser(false) 
+     }
+    } catch (error) {
+      console.log("Issue in checking", error);
+      return;
+    }
     try {
       if (!web3auth.ready) {
         return;
@@ -102,11 +138,16 @@ const MyComponent = () => {
         // Create an instance of the Sui local key pair manager
         const keyPair = Ed25519Keypair.fromSecretKey(privateKeyUint8Array);
         setKeypair(keyPair);
-
+console.log("keypair",keyPair)
         const address = keyPair.toSuiAddress();
+        console.log("address",address)
         await storeCredentials(address, web3auth.privKey);
         // console.log('working');
         setAddress(address);
+
+
+
+
         navigation.navigate('CreateAccount');
       }
     } catch (e: any) {
