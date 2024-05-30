@@ -18,6 +18,38 @@ import facebook from '../assets/images/facebook.png';
 import {slides} from '../constants/data';
 import {Slide} from '../components/Slide';
 
+import { ConnectButton } from '@mysten/dapp-kit';
+
+import { Web3Auth } from "@web3auth/modal";
+import { CommonPrivateKeyProvider } from "@web3auth/base-provider";
+import { WEB3AUTH_NETWORK } from "@web3auth/base";
+import { assert } from '@mysten/sui.js/utils';
+const chainConfig = {
+  chainNamespace: CHAIN_NAMESPACES.OTHER,
+  chainId: "35834a8a",
+  rpcTarget: "https://fullnode.mainnet.sui.io:443",
+  displayName: "Sui Mainnet",
+  blockExplorerUrl: "https://suiexplorer.com/",
+  ticker: "SUI",
+  tickerName: "Sui",
+  logo: "https://cryptologos.cc/logos/sui-sui-logo.png?v=029",
+};
+const privateKeyProvider = new CommonPrivateKeyProvider({
+  config: { chainConfig: chainConfig }
+});
+const clientId =
+  "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ"; // get from https://dashboard.web3auth.io
+
+const web3auth = new Web3Auth({
+  // Get it from Web3Auth Dashboard
+  clientId,
+  web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_MAINNET,
+  privateKeyProvider: privateKeyProvider,
+});
+
+
+
+
 const MyComponent = () => {
   var navigation = useNavigation();
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
@@ -29,6 +61,11 @@ const MyComponent = () => {
     const currentIndex = Math.round(contentOffsetX / wp(100));
     setCurrentSlideIndex(currentIndex);
   };
+
+
+  const test = async() => {
+    await web3auth.initModal();
+  }
 
   return (
     <SafeAreaView>
@@ -64,6 +101,7 @@ const MyComponent = () => {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.btn}
+          
           onPress={() => navigation.navigate('CreateAccount')}>
           <Text style={styles.btnText}>Connect with wallet</Text>
         </TouchableOpacity>
@@ -81,6 +119,7 @@ const MyComponent = () => {
             <Text style={styles.btnText}>Facebook</Text>
           </TouchableOpacity>
         </View>
+
         <Text style={styles.terms}>
           By continuing you agree Terms of Services & Privacy Policy{' '}
         </Text>

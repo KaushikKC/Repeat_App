@@ -10,18 +10,27 @@
     "test": "jest"
   },
   "dependencies": {
+    "@mysten/dapp-kit": "^0.13.0",
+    "@mysten/sui.js": "^0.54.1",
     "@react-native-picker/picker": "^2.7.5",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
+    "@suiet/wallet-kit": "^0.2.24",
+    "@tanstack/react-query": "^5.36.0",
+    "@web3auth/base": "^8.4.1",
+    "@web3auth/base-provider": "^8.4.1",
+    "@web3auth/modal": "^8.4.1",
+    "crypto": "^1.0.1",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-gesture-handler": "^2.13.4",
     "react-native-image-picker": "^7.1.2",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-safe-area-context": "^4.7.4",
-    "react-native-screens": "^3.27.0"
+    "react-native-screens": "^3.27.0",
+    "web3": "^4.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
