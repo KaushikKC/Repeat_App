@@ -6,6 +6,9 @@ import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {wp} from '../utils/ScreenDimension';
 import EditableInputContainer from '../components/Create/InputContainer';
 import HabitPopup from '../components/Create/HabitPopup';
+import axios from 'axios';
+import {useHabitude} from '../../Context/HabbitudeContext';
+import {useAddress} from '../../Context/AddressContext';
 
 // create a component
 const CreateScreen = () => {
@@ -26,8 +29,113 @@ const CreateScreen = () => {
   const [maxPeople, setMaxPeople] = useState('10');
   const [habitPopupVisible, setHabitPopupVisible] = useState(false);
   const [selectedHabits, setSelectedHabits] = useState([]);
+  const {address, keypair} = useAddress();
+  const {habitudeId} = useHabitude();
 
   // Function to open image picker
+  const challengeData = {
+    name: 'Exercise Challenge',
+    perPersonStake: 1000000000,
+    habitsIncluded: ['Running', 'Swimming'],
+    habitudeObjectId: habitudeId,
+    keypair: {
+      keypair: {
+        publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
+        secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
+      },
+    },
+    address: address,
+  };
+
+  const CompleteData = {
+    ChallengeName: 'Exercise Challenge',
+    habitudeObjectId: habitudeId,
+    keypair: {
+      keypair: {
+        publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
+        secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
+      },
+    },
+    address: address,
+  };
+
+  const ClaimData = {
+    ChallengeName: 'Exercise Challenge',
+    habitudeObjectId: habitudeId,
+    keypair: {
+      keypair: {
+        publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
+        secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
+      },
+    },
+    address: address,
+  };
+
+  const creatFunction = async (selected: string) => {
+    if (selected === 'Habit') {
+      console.log('it is creation of Habbit');
+    } else if (selected === 'Challenge') {
+      console.log('it is creation of Challenge');
+    }
+  };
+
+  const createHabbit = () => {
+    console.log('Create a habbits');
+  };
+
+  const createChallenge = async () => {
+    try {
+      const serverUrl = 'http://192.168.1.4:3000/create_challenge'; // Replace with your server URL
+      const response = await axios.post(serverUrl, challengeData, {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        transformResponse: res => {
+          // Do your own parsing here if needed ie JSON.parse(res);
+          return res;
+        },
+        responseType: 'json',
+      });
+      console.log('Success:', response.data);
+    } catch (error) {
+      console.error('Error creating challenge:', error);
+    }
+  };
+
+  const CompleteChallenge = async () => {
+    try {
+      const serverUrl = 'http://192.168.1.4:3000/complete_challenge'; // Replace with your server URL
+      const response = await axios.post(serverUrl, CompleteData, {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        transformResponse: res => {
+          // Do your own parsing here if needed ie JSON.parse(res);
+          return res;
+        },
+        responseType: 'json',
+      });
+      console.log('Success:', response.data);
+    } catch (error) {
+      console.error('Error creating challenge:', error);
+    }
+  };
+
+  const ClaimStake = async () => {
+    try {
+      const serverUrl = 'http://192.168.1.4:3000/claim_stake'; // Replace with your server URL
+      const response = await axios.post(serverUrl, ClaimData, {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        transformResponse: res => {
+          // Do your own parsing here if needed ie JSON.parse(res);
+          return res;
+        },
+        responseType: 'json',
+      });
+      console.log('Success:', response.data);
+    } catch (error) {
+      console.error('Error Claim challenge:', error);
+    }
+  };
 
   const toggleReminder = () => {
     setIsReminderEnabled(previousState => !previousState);
@@ -223,6 +331,11 @@ const CreateScreen = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
+              <TouchableOpacity
+                style={styles.createButton}
+                onPress={() => createHabbit()}>
+                <Text style={styles.createButtonText}>Create Habbit</Text>
+              </TouchableOpacity>
             </View>
           </>
         ) : (
@@ -397,16 +510,25 @@ const CreateScreen = () => {
                   </Text>
                 </TouchableOpacity>
               </View>
+              {/* <TouchableOpacity onPress={() => createChallenge()}>
+                <Text>Create Challenge</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => CompleteChallenge()}>
+                <Text>Complete Challenge</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => ClaimStake()}>
+                <Text>Claim Challenge</Text>
+              </TouchableOpacity> */}
+              <TouchableOpacity
+                style={styles.createButton}
+                onPress={() => createChallenge()}>
+                <Text style={styles.createButtonText}>Create Challenge</Text>
+              </TouchableOpacity>
             </View>
           </View>
         )}
         <View style={styles.Container}></View>
       </ScrollView>
-      <TouchableOpacity style={styles.createButton}>
-        <Text style={styles.createButtonText}>
-          {selected === 'Habit' ? 'Create Habit' : 'Create Challenge'}
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -414,7 +536,7 @@ const CreateScreen = () => {
 // define your styles
 const styles = StyleSheet.create({
   Container: {
-    height: 300,
+    height: 250,
   },
   topHeader: {
     height: 135,
@@ -614,14 +736,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   createButton: {
-    position: 'absolute',
-    bottom: 240, // Adjust as needed to position the button above the bottom navigation
-    left: 24,
-    right: 24,
+    // position: 'absolute', // Ensure the button is positioned absolutely
+    // bottom: 20, // Adjust as needed to position above the bottom
+    // left: 16,
+    // right: 16,
     backgroundColor: COLORS.primary,
     paddingVertical: 12,
-    borderRadius: 10,
     alignItems: 'center',
+    borderRadius: 10,
   },
   createButtonText: {
     color: COLORS.WhiteBG,

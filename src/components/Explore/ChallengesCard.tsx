@@ -1,5 +1,5 @@
 //import liraries
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../../constants/color';
@@ -21,8 +21,16 @@ const ChallengesCard = ({
   progress,
 }: ChallengesCardProps) => {
   var navigation = useNavigation();
+  const [navigate, setNavigate] = useState('JoinChallenge');
+  const conmpleteChallenge = () => {};
+  useEffect(() => {
+    if (progress === 1) {
+      conmpleteChallenge();
+      setNavigate('ClaimSplit');
+    }
+  }, [progress]);
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('JoinChallenge')}>
+    <TouchableOpacity onPress={() => navigation.navigate(navigate)}>
       <LinearGradient
         colors={['#6B73FF', '#000DFF']}
         start={{x: 0, y: 0}}
@@ -52,7 +60,7 @@ const ChallengesCard = ({
 const styles = StyleSheet.create({
   OuterContainer: {
     width: 200,
-    height: 128,
+    height: 138,
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 10,

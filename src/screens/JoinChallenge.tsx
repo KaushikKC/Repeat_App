@@ -9,6 +9,9 @@ import HabitsCard from '../components/JoinChallenge/HabitCard';
 
 // create a component
 const JoinChallenge = () => {
+  const JointheChallenge = () => {
+    console.log('Joining the challenge');
+  };
   return (
     <View>
       <LinearGradient
@@ -26,7 +29,9 @@ const JoinChallenge = () => {
           dolore eu fugiat nulla pariatu. Duis aute irure dolor in reprehenderit
           in voluptate velit esse cillum dolore eu fugiat nulla pariatu.
         </Text>
-        <TouchableOpacity style={styles.createButton}>
+        <TouchableOpacity
+          style={styles.createButton}
+          onPress={() => JointheChallenge()}>
           <Text style={styles.createButtonText}>Join the Challenge</Text>
         </TouchableOpacity>
       </View>
