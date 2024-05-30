@@ -7,6 +7,7 @@ import CreateAccount from '../screens/CreateAccount';
 import SelectHabit from '../screens/SelectHabit';
 import ClaimPoints from '../screens/ClaimPoints';
 import ClaimSplit from '../screens/ClaimSplit';
+import { SuiClientProvider,WalletProvider } from '@mysten/dapp-kit';
 
 export type StackParamList = {
   Onboarding: undefined;
@@ -24,6 +25,7 @@ const Stack = createStackNavigator<StackParamList>();
 
 const MyStack = () => {
   return (
+    
     <Stack.Navigator
       screenOptions={{
         headerShown: false,

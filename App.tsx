@@ -6,6 +6,8 @@
  */
 
 import {NavigationContainer} from '@react-navigation/native';
+
+
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
@@ -51,6 +53,7 @@ function App(): React.JSX.Element {
   }, []);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.WhiteBG}}>
+    
       <NavigationContainer>
         <AddressProvider>
           <HabitudeProvider>
@@ -59,6 +62,8 @@ function App(): React.JSX.Element {
           </HabitudeProvider>
         </AddressProvider>
       </NavigationContainer>
+    
+   
     </SafeAreaView>
   );
 }

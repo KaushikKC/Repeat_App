@@ -4,6 +4,8 @@ import {COLORS} from '../constants/color';
 import {hp, wp} from '../utils/ScreenDimension'; // Import wp from utils
 import ChooseContainer from '../components/ChooseContainer';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 // List of habits (replace with your actual list)
 const habits = [
@@ -52,7 +54,67 @@ const SelectHabit = () => {
         ))}
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Bottom')}
+        // onPress={() => navigation.navigate('Bottom')}
+        onPress={ async() =>{
+          console.log(selectedHabits);
+          await AsyncStorage.setItem("habits", JSON.stringify(selectedHabits))
+
+        
+          const name = await AsyncStorage.getItem('name');
+          const age = await AsyncStorage.getItem('age');
+          const email = await AsyncStorage.getItem('email');
+          const selectedGender = await AsyncStorage.getItem('selectedGender');
+const address =       await AsyncStorage.getItem('userAddress');
+const activityNames = selectedHabits.map(selectedHabit => selectedHabit.name);
+
+console.log(activityNames);
+          console.log(name,age,email,selectedGender,address)
+
+
+
+          try {
+            const serverUrl = "http://192.168.0.100:3001/api/users/signup"
+
+            const res = await axios.post(serverUrl,{
+              
+                name: name,
+                dateOfBirth: age,
+                gender: selectedGender,
+                email: email,
+                address: address,
+                "favoriteHabits": activityNames.map(name => ({
+                  name,
+                  decidedFrequency: "10",
+                  currentProgress: "3",
+                  streak: "7"
+                }))
+              
+            },
+            {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              transformResponse: res => {
+                // Do your own parsing here if needed ie JSON.parse(res);
+                return res;
+              },
+              responseType: 'json',
+            })
+
+            if(res.status === 201){
+              console.log("success");
+                        navigation.navigate('Bottom')
+
+            }
+            else{
+              console.log("failed");
+              
+            }
+          } catch (error) {
+            console.log("error",error);
+            
+          }
+
+        }}
         style={styles.createButton}>
         <Text style={styles.createButtonText}>Create Account</Text>
       </TouchableOpacity>
