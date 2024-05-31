@@ -4,15 +4,32 @@ import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {COLORS} from '../../constants/color';
 import {wp} from '../../utils/ScreenDimension';
 import * as Progress from 'react-native-progress';
+import axios from 'axios';
 
 type HabitsCardProps = {
   emoji: string;
   name: string;
   description: string;
   progress: number;
+  akey:"string";
+  email: string;
+  onclick:any;
+  decidedFrequency:string;
+  currentProgress:string;
 };
 // create a component
-const HabitsCard = ({emoji, name, description, progress}: HabitsCardProps) => {
+const HabitsCard = ({emoji, name, description, progress, akey, email, onclick,decidedFrequency, currentProgress}: HabitsCardProps) => {
+  const handlePlusClick = async() => {
+    console.log(akey);
+    console.log(email);
+    try {
+      onclick(akey,email,name)
+      } catch (error) {
+      console.log(error);
+      
+    }
+  };
+
   return (
     <View style={styles.OuterContainer}>
       <View style={styles.InnerContainer}>
@@ -33,9 +50,9 @@ const HabitsCard = ({emoji, name, description, progress}: HabitsCardProps) => {
             <Text style={styles.description}>{description}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.plus}>
+   {currentProgress !== decidedFrequency &&      <TouchableOpacity style={styles.plus} onPress={handlePlusClick}>
           <Text style={styles.plusIcon}>+</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
       </View>
     </View>
   );

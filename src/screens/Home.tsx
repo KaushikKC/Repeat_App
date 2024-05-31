@@ -1,21 +1,81 @@
 //import liraries
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {COLORS} from '../constants/color';
 import {hp, wp} from '../utils/ScreenDimension';
 import ChallengesCard from '../components/Home/ChallegengesCard';
 import HabitsCard from '../components/Home/HabitsCard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 // create a component
 const Home = () => {
   const [selected, setSelected] = useState('Today');
+  const [Name, setName] = useState("")
+  const [Challenges, setChallenges] = useState({})
+  const [habits, setHabits] = useState([])
+  const [email, setEmail] = useState("")
+  const getter = async() => {
+    const res = await AsyncStorage.getItem("alldata");
+    console.log("res",res);
+
+    const js = JSON.parse(res)
+    console.log(js);
+
+    console.log(js.name);
+
+    try {
+      const res = await axios.post("http://192.168.0.100:3001/api/users/login",{
+        email:"thirumurugan82003@gmail.com"
+      })
+      console.log(res.data)
+      console.log(res.data.name)
+      console.log(res.data.habits)
+      setName(res.data.name)
+      setEmail(res.data.email)
+
+      setHabits(res.data.habits)
+    } catch (error) {
+      
+    }
+    
+    
+
+
+    
+  }
+  useEffect( ()=>{
+getter();
+  },[])
+
+  const handlePlusClick = async(akey:any, email:any, name:any) => {
+    console.log(akey);
+    console.log(email);
+    try {
+      const res = await axios.post("http://192.168.0.100:3001/api/users/update",{
+        email:email, habitId: akey, name
+      })
+
+if(res.status == 200)
+{
+  console.log(res.data)
+  getter()
+
+}    } catch (error) {
+      console.log(error);
+      
+    }
+  };
+
+
+
   return (
     <View style={styles.container}>
       <View style={styles.headerDiv}>
         <View style={styles.headerContainer}>
           <View style={styles.HeaderTitleContainer}>
             <View>
-              <Text style={styles.Headertitle}>Hi, Kaushik 👋🏻</Text>
+              <Text style={styles.Headertitle}>Hi, {Name.toUpperCase()} 👋🏻</Text>
               <Text style={styles.HeaderSubTitle}>
                 Let’s make habits together!
               </Text>
@@ -77,24 +137,20 @@ const Home = () => {
               <Text style={styles.SectionTitle}>Habits</Text>
               <Text style={styles.SectionView}>VIEW ALL</Text>
             </View>
-            <HabitsCard
-              name="Drink the water"
-              description="500/2000 ML"
-              emoji="🚶‍♂️"
-              progress={0.4}
-            />
-            <HabitsCard
-              name="Walk"
-              description="0/10000 Steps"
-              emoji="💧"
-              progress={0.2}
-            />
-            <HabitsCard
-              name="Water Plants"
-              description="0/1 Times"
-              emoji="🌿"
-              progress={0.8}
-            />
+            {habits && habits.map(habit => (
+              <HabitsCard
+                key={habit._id}
+                akey={habit._id}
+                name={habit.name}
+                email={email}
+                currentProgress={habit.currentProgress}
+                decidedFrequency={habit.decidedFrequency}
+                description={`${habit.currentProgress}/${habit.decidedFrequency}`}
+                emoji={habit.name === 'Drink water' ? '💧' : habit.name === 'Walk' ? '🚶‍♂️' : '🌿'}
+                progress={habit.currentProgress / habit.decidedFrequency}
+                onclick={handlePlusClick}
+              />
+            ))}
           </View>
         </View>
       ) : (

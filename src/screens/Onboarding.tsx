@@ -37,6 +37,7 @@ const MyComponent = () => {
   const ref = React.useRef<FlatList>(null);
   const {setAddress, setKeypair} = useAddress();
   const [existingUser, setExistingUser] = useState(false)
+  const [data, setdata] = useState()
   const scheme = 'web3authrnbareauth0example'; // Or your desired app redirection scheme
   const resolvedRedirectUrl = `${scheme}://openlogin`;
   const updateCurrentSlideIndex = (
@@ -83,7 +84,7 @@ const MyComponent = () => {
   const login = async () => {
 
     try {
-const serverUrl = "http://192.168.0.100:3001/api/users/check"
+const serverUrl = "http://192.168.0.100:3001/api/users/login"
       const res = await axios.post(
         serverUrl,
         {
@@ -100,10 +101,34 @@ const serverUrl = "http://192.168.0.100:3001/api/users/check"
         },
       );
      
-    
+    console.log(res.data.name)
       if (res.status === 200) {
         console.log("User already exists");
+        console.log(res.data);
         setExistingUser(true)
+
+        const {name, email} = res.data;
+        const resjson = JSON.stringify(res.data)
+        console.log(JSON.stringify(res.data))
+        setdata(res.data);
+
+        const js = JSON.parse(resjson)
+console.log(js);
+
+console.log("resd",res.data.token)
+
+        // console.log("name",name);
+        // console.log("name",name);
+        // console.log(res.data.email);
+        // console.log(res.data.habits);
+        // console.log(res.data.token)
+        await AsyncStorage.setItem("alldata", resjson)
+        
+        // await AsyncStorage.setItem("name",res.data.name);
+        // await AsyncStorage.setItem("email",res.data.email);
+        // await AsyncStorage.setItem("habits",res.data.habits);
+
+        
       } else {
         console.log("Login");
 setExistingUser(false) 
@@ -146,9 +171,20 @@ console.log("keypair",keyPair)
         setAddress(address);
 
 
+if(existingUser){
+  console.log("ex yser");
+if(data !== undefined && data !== null){
+  console.log(data.name);
 
+}  
+  navigation.navigate('Bottom');
 
-        navigation.navigate('CreateAccount');
+}
+else{
+  navigation.navigate('CreateAccount');
+
+}
+
       }
     } catch (e: any) {
       console.error(e.message);

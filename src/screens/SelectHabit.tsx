@@ -82,7 +82,7 @@ console.log(activityNames);
                 gender: selectedGender,
                 email: email,
                 address: address,
-                "favoriteHabits": activityNames.map(name => ({
+                favoriteHabits: activityNames.map(name => ({
                   name,
                   decidedFrequency: "10",
                   currentProgress: "3",
