@@ -9,6 +9,8 @@ import HabitPopup from '../components/Create/HabitPopup';
 import axios from 'axios';
 import {useHabitude} from '../../Context/HabbitudeContext';
 import {useAddress} from '../../Context/AddressContext';
+import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // create a component
 const CreateScreen = () => {
@@ -18,10 +20,10 @@ const CreateScreen = () => {
   const [habitName, setHabitName] = useState('');
   const [icon, setIcon] = useState('🚶‍♂️');
   const [challengeName, setChallengeName] = useState('');
-  const [goalName, setGoalName] = useState('1 times');
-  const [goalDescription, setGoalDescription] = useState('or more per day');
-  const [targetName, setTargetName] = useState('5,000 steps');
-  const [targetDescription, setTargetDescription] = useState('or more per day');
+  const [goalName, setGoalName] = useState('1');
+  const [goalDescription, setGoalDescription] = useState('times or more per day');
+  const [targetName, setTargetName] = useState('100');
+  const [targetDescription, setTargetDescription] = useState('days streak');
   const [isReminderEnabled, setIsReminderEnabled] = useState(false);
   const [stakeAmount, setStakeAmount] = useState('');
   const [selectedCurrency, setSelectedCurrency] = useState('USDC');
@@ -31,111 +33,167 @@ const CreateScreen = () => {
   const [selectedHabits, setSelectedHabits] = useState([]);
   const {address, keypair} = useAddress();
   const {habitudeId} = useHabitude();
+  var navigation = useNavigation();
 
   // Function to open image picker
-  const challengeData = {
-    name: 'Exercise Challenge',
-    perPersonStake: 1000000000,
-    habitsIncluded: ['Running', 'Swimming'],
-    habitudeObjectId: habitudeId,
-    keypair: {
-      keypair: {
-        publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
-        secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
-      },
-    },
-    address: address,
-  };
+  // const challengeData = {
+  //   name: 'Exercise Challenge',
+  //   perPersonStake: 1000000000,
+  //   habitsIncluded: ['Running', 'Swimming'],
+  //   habitudeObjectId: habitudeId,
+  //   keypair: {
+  //     keypair: {
+  //       publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
+  //       secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
+  //     },
+  //   },
+  //   address: address,
+  // };
 
-  const CompleteData = {
-    ChallengeName: 'Exercise Challenge',
-    habitudeObjectId: habitudeId,
-    keypair: {
-      keypair: {
-        publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
-        secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
-      },
-    },
-    address: address,
-  };
+  // const CompleteData = {
+  //   ChallengeName: 'Exercise Challenge',
+  //   habitudeObjectId: habitudeId,
+  //   keypair: {
+  //     keypair: {
+  //       publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
+  //       secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
+  //     },
+  //   },
+  //   address: address,
+  // };
 
-  const ClaimData = {
-    ChallengeName: 'Exercise Challenge',
-    habitudeObjectId: habitudeId,
-    keypair: {
-      keypair: {
-        publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
-        secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
-      },
-    },
-    address: address,
-  };
+  // const ClaimData = {
+  //   ChallengeName: 'Exercise Challenge',
+  //   habitudeObjectId: habitudeId,
+  //   keypair: {
+  //     keypair: {
+  //       publicKey: Array.from(keypair.keypair.publicKey), // Convert to array
+  //       secretKey: Array.from(keypair.keypair.secretKey), // Include secretKey if needed
+  //     },
+  //   },
+  //   address: address,
+  // };
 
-  const creatFunction = async (selected: string) => {
-    if (selected === 'Habit') {
-      console.log('it is creation of Habbit');
-    } else if (selected === 'Challenge') {
-      console.log('it is creation of Challenge');
-    }
-  };
+ 
 
-  const createHabbit = () => {
+  const createHabbit = async() => {
     console.log('Create a habbits');
+    console.log(habitName);
+    console.log(goalName);
+    console.log(targetName);
+const email = await AsyncStorage.getItem("email")
+    try {
+      const serverUrl = "http://192.168.0.100:3001/api/users/create"
+
+      const newHabit = {
+        name: habitName,
+        decidedFrequency: targetName,
+        currentProgress: 0,
+        streak: 0
+      };
+      
+      const res = await axios.post(serverUrl,{
+        email,newHabit , keypairr:keypair
+      },
+      {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        transformResponse: res => {
+          // Do your own parsing here if needed ie JSON.parse(res);
+          return res;
+        },
+        responseType: 'json',
+      })
+
+      if(res.status === 201){
+        console.log("success");
+                  navigation.navigate("Home")
+
+      }
+      else{
+        console.log("failed");
+        
+      }
+    } catch (error) {
+      console.log("error",error);
+      
+    }
+    
   };
 
   const createChallenge = async () => {
+
+console.log("Creatring cjhallenge");
+
+    const email = await AsyncStorage.getItem("email")
+
+    console.log("name", challengeName, challengeData, stakeAmount)
+
     try {
-      const serverUrl = 'http://192.168.1.4:3000/create_challenge'; // Replace with your server URL
-      const response = await axios.post(serverUrl, challengeData, {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        transformResponse: res => {
-          // Do your own parsing here if needed ie JSON.parse(res);
-          return res;
+      // const serverUrl = 'http://192.168.1.4:3000/create_challenge'; // Replace with your server URL
+      // const response = await axios.post(serverUrl, challengeData, {
+      //   Accept: 'application/json',
+      //   'Content-Type': 'application/json',
+      //   transformResponse: res => {
+      //     // Do your own parsing here if needed ie JSON.parse(res);
+      //     return res;
+      //   },
+      //   responseType: 'json',
+      // });
+      // console.log('Success:', response.data);
+      // navigation.navigate('Bottom')
+
+
+
+      try {
+        const serverUrl = "http://192.168.0.100:3001/api/users/create-challenge"
+        const newHabit = {
+          name: challengeName,
+          participants: [email],
+          stakeAmount: stakeAmount,
+          email: email
+        };
+        
+        const res = await axios.post(serverUrl,{
+          name: challengeName,
+          participants: [email],
+          stakeAmount: stakeAmount,
+          email: email,
+          keypairr:keypair
         },
-        responseType: 'json',
-      });
-      console.log('Success:', response.data);
+        {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          transformResponse: res => {
+            // Do your own parsing here if needed ie JSON.parse(res);
+            return res;
+          },
+          responseType: 'json',
+        })
+  console.log(res)
+        if(res.status === 201){
+          console.log("success");
+                    navigation.navigate("Home")
+  
+        }
+        else{
+          console.log("failed");
+          
+        }
+      } catch (error) {
+        console.log("error",error);
+        
+      }
+
+
+
     } catch (error) {
       console.error('Error creating challenge:', error);
     }
   };
 
-  const CompleteChallenge = async () => {
-    try {
-      const serverUrl = 'http://192.168.1.4:3000/complete_challenge'; // Replace with your server URL
-      const response = await axios.post(serverUrl, CompleteData, {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        transformResponse: res => {
-          // Do your own parsing here if needed ie JSON.parse(res);
-          return res;
-        },
-        responseType: 'json',
-      });
-      console.log('Success:', response.data);
-    } catch (error) {
-      console.error('Error creating challenge:', error);
-    }
-  };
+ 
 
-  const ClaimStake = async () => {
-    try {
-      const serverUrl = 'http://192.168.1.4:3000/claim_stake'; // Replace with your server URL
-      const response = await axios.post(serverUrl, ClaimData, {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        transformResponse: res => {
-          // Do your own parsing here if needed ie JSON.parse(res);
-          return res;
-        },
-        responseType: 'json',
-      });
-      console.log('Success:', response.data);
-    } catch (error) {
-      console.error('Error Claim challenge:', error);
-    }
-  };
 
   const toggleReminder = () => {
     setIsReminderEnabled(previousState => !previousState);

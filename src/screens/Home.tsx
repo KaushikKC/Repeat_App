@@ -1,6 +1,6 @@
 //import liraries
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity,FlatList} from 'react-native';
 import {COLORS} from '../constants/color';
 import {hp, wp} from '../utils/ScreenDimension';
 import ChallengesCard from '../components/Home/ChallegengesCard';
@@ -75,7 +75,7 @@ if(res.status == 200)
         <View style={styles.headerContainer}>
           <View style={styles.HeaderTitleContainer}>
             <View>
-              <Text style={styles.Headertitle}>Hi, {Name.toUpperCase()} 👋🏻</Text>
+              <Text style={styles.Headertitle}>Hi, {Name} 👋🏻</Text>
               <Text style={styles.HeaderSubTitle}>
                 Let’s make habits together!
               </Text>
@@ -123,7 +123,7 @@ if(res.status == 200)
           <View>
             <View style={styles.SectionHeading}>
               <Text style={styles.SectionTitle}>Challenges</Text>
-              <Text style={styles.SectionView}>VIEW ALL</Text>
+              <Text style={styles.SectionView} onPress={getter}>VIEW ALL</Text>
             </View>
             <ChallengesCard
               name="Daily Fit Challenge!"
@@ -137,20 +137,24 @@ if(res.status == 200)
               <Text style={styles.SectionTitle}>Habits</Text>
               <Text style={styles.SectionView}>VIEW ALL</Text>
             </View>
-            {habits && habits.map(habit => (
-              <HabitsCard
-                key={habit._id}
-                akey={habit._id}
-                name={habit.name}
-                email={email}
-                currentProgress={habit.currentProgress}
-                decidedFrequency={habit.decidedFrequency}
-                description={`${habit.currentProgress}/${habit.decidedFrequency}`}
-                emoji={habit.name === 'Drink water' ? '💧' : habit.name === 'Walk' ? '🚶‍♂️' : '🌿'}
-                progress={habit.currentProgress / habit.decidedFrequency}
-                onclick={handlePlusClick}
-              />
-            ))}
+            <FlatList
+              data={habits}
+              keyExtractor={habit => habit._id}
+              renderItem={({ item }) => (
+                <HabitsCard
+                  key={item._id}
+                  akey={item._id}
+                  name={item.name}
+                  email={email}
+                  currentProgress={item.currentProgress}
+                  decidedFrequency={item.decidedFrequency}
+                  description={`${item.currentProgress}/${item.decidedFrequency}`}
+                  emoji={item.name === 'Drink water' ? '💧' : item.name === 'Walk' ? '🚶‍♂️' : '🌿'}
+                  progress={item.currentProgress / item.decidedFrequency}
+                  onclick={handlePlusClick}
+                />
+              )}
+            />
           </View>
         </View>
       ) : (

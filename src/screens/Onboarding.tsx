@@ -120,9 +120,7 @@ console.log("resd",res.data.token)
         // console.log(res.data.token)
         await AsyncStorage.setItem("alldata", resjson)
         
-        // await AsyncStorage.setItem("name",res.data.name);
-        // await AsyncStorage.setItem("email",res.data.email);
-        // await AsyncStorage.setItem("habits",res.data.habits);
+      
 
         
       } else {
