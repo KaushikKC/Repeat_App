@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Platform,
   Image,
 } from 'react-native';
 import {COLORS} from '../constants/color';
@@ -17,6 +16,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useAddress} from '../../Context/AddressContext';
 import {web3auth} from '../../App';
+import githubUsername from 'github-username';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const dummyProfilePic = require('../assets/images/profile.webp');
@@ -48,7 +48,13 @@ const CreateAccount = () => {
   };
   useEffect(() => {
     setEmail(web3auth.userInfo()?.email);
+    getUsername();
   }, []);
+
+  const getUsername = async () => {
+    console.log(await githubUsername(email));
+  };
+
   return (
     <ScrollView style={styles.outerContainer}>
       <View style={styles.topHeader}>
@@ -114,15 +120,13 @@ const CreateAccount = () => {
       </View>
       <TouchableOpacity
         // onPress={() => navigation.navigate('SelectHabit')}
-        onPress={ async() => {
+        onPress={async () => {
           console.log(name, age, email, selectedGender);
           await AsyncStorage.setItem('name', name);
           await AsyncStorage.setItem('age', age);
           await AsyncStorage.setItem('email', email);
           await AsyncStorage.setItem('selectedGender', selectedGender);
-          navigation.navigate('SelectHabit')
-          
-          
+          navigation.navigate('SelectHabit');
         }}
         style={styles.createButton}>
         <Text style={styles.createButtonText}>Create Account</Text>

@@ -78,17 +78,13 @@ const MyComponent = () => {
     }
   };
 
-
-  
-
   const login = async () => {
-
     try {
 const serverUrl = "http://192.168.0.100:3001/api/users/login"
       const res = await axios.post(
         serverUrl,
         {
-          email: email
+          email: email,
         },
         {
           Accept: 'application/json',
@@ -130,11 +126,11 @@ console.log("resd",res.data.token)
 
         
       } else {
-        console.log("Login");
-setExistingUser(false) 
-     }
+        console.log('Login');
+        setExistingUser(false);
+      }
     } catch (error) {
-      console.log("Issue in checking", error);
+      console.log('Issue in checking', error);
       return;
     }
     try {
@@ -163,9 +159,9 @@ setExistingUser(false)
         // Create an instance of the Sui local key pair manager
         const keyPair = Ed25519Keypair.fromSecretKey(privateKeyUint8Array);
         setKeypair(keyPair);
-console.log("keypair",keyPair)
+        console.log('keypair', keyPair);
         const address = keyPair.toSuiAddress();
-        console.log("address",address)
+        console.log('address', address);
         await storeCredentials(address, web3auth.privKey);
         // console.log('working');
         setAddress(address);

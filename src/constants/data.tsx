@@ -65,7 +65,7 @@ export const ChallengeExploredata = [
     name: 'Daily Fit Routine! 🏃🏻‍♂️',
     description: '1 week challenge',
     people: '2',
-    progress: 0.6,
+    progress: 1,
   },
   {
     name: 'Weekend Cycling! 🚴🏻‍',

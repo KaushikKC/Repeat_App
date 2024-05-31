@@ -5,6 +5,7 @@ import {COLORS} from '../../constants/color';
 import {wp} from '../../utils/ScreenDimension';
 import * as Progress from 'react-native-progress';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
 
 type HabitsCardProps = {
   emoji: string;
@@ -30,8 +31,21 @@ const HabitsCard = ({emoji, name, description, progress, akey, email, onclick,de
     }
   };
 
+
+  var navigation = useNavigation();
+  const completeHabbit = () => {
+    console.log('Here in complete habbit');
+  };
+  const claimPoints = () => {
+    if (progress === 1) {
+      completeHabbit();
+      navigation.navigate('ClaimPoints');
+    }
+  };
   return (
-    <View style={styles.OuterContainer}>
+    <TouchableOpacity
+      onPress={() => claimPoints()}
+      style={styles.OuterContainer}>
       <View style={styles.InnerContainer}>
         <View style={styles.NameContainer}>
           <Progress.Circle
@@ -54,7 +68,7 @@ const HabitsCard = ({emoji, name, description, progress, akey, email, onclick,de
           <Text style={styles.plusIcon}>+</Text>
         </TouchableOpacity>}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
